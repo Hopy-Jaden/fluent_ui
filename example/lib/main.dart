@@ -158,6 +158,288 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       title: const Text('Home'),
       body: const SizedBox.shrink(),
     ),
+    //New Arrangement made, original theming pages, issue: indicator not appearing
+    PaneItemExpander(
+      icon: const Icon(FluentIcons.format_painter),
+      title: const Text('Styles'),
+      body: const SizedBox.shrink(),
+      items: [
+        //New colour contrast section to be added
+        PaneItem(
+          key: const ValueKey('/theming/colors'),
+          icon: const Icon(FluentIcons.color),
+          title: const Text('Colors'),
+          body: const SizedBox.shrink(),
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          icon: const Icon(FluentIcons.shapes),
+          title: const Text('Geometry'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(source: Text('NEW  ')),
+        ),
+        PaneItem(
+          //need new key value? what is the use?
+          key: const ValueKey('/theming/icons'),
+          icon: const Icon(FluentIcons.emoji_tab_symbols),
+          title: const Text('Icongraphy'), // title is modified
+          body: const SizedBox.shrink(),
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          icon: const Icon(FluentIcons.grid_view_medium),
+          title: const Text('Spacing'),
+          body: const SizedBox.shrink(), //need a new page
+          infoBadge: const InfoBadge(source: Text('NEW  ')),
+        ),
+        PaneItem(
+          key: const ValueKey('/theming/typography'),
+          icon: const Icon(FluentIcons.font),
+          title: const Text('Typography'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'),
+          icon: const Icon(FluentIcons.focus),
+          title: const Text('Reveal Focus'),
+          body: const SizedBox.shrink(),
+        ),
+      ],
+    ),
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+      icon: const Icon(FluentIcons.column_right_two_thirds),
+      title: const Text('Layouts'),
+      body: const SizedBox.shrink(),
+      infoBadge: const InfoBadge(source: Text('NEW  ')),
+      items: [
+        /*New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          icon: const Icon(FluentIcons.user_window),
+          title: const Text('Windows'),
+          body: const SizedBox.shrink(),
+          infoBadge:
+              const InfoBadge(source: Text('NEW  ')),  
+        ),*/
+      ],
+    ),
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+      icon: const Icon(FluentIcons.lightning_bolt),
+      title: const Text('Animations'),
+      body: const SizedBox.shrink(),
+      infoBadge: const InfoBadge(source: Text('NEW  ')),
+      items: [
+        /*New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          icon: const Icon(FluentIcons.user_window),
+          title: const Text('Windows'),
+          body: const SizedBox.shrink(),
+          infoBadge:
+              const InfoBadge(source: Text('NEW  ')),  
+        ),*/
+      ],
+    ),
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+      icon: const Icon(FluentIcons.system),
+      title: const Text('Platforms'),
+      body: const SizedBox.shrink(),
+      infoBadge: const InfoBadge(source: Text('NEW  ')),
+      items: [
+        //New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          icon: const Icon(FluentIcons.grid_view_medium),
+          title: const Text('Windows'),
+          body: const SizedBox.shrink(),
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          icon: const Icon(FluentIcons.this_p_c),
+          title: const Text('MacOS'),
+          body: const SizedBox.shrink(),
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          icon: const Icon(FluentIcons.globe),
+          title: const Text('Web'),
+          body: const SizedBox.shrink(),
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          icon: const Icon(FluentIcons.pc1),
+          title: const Text('Linux'),
+          body: const SizedBox.shrink(),
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          icon: const Icon(FluentIcons.cell_phone),
+          title: const Text('Android'),
+          body: const SizedBox.shrink(),
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          icon: const Icon(FluentIcons.italic),
+          title: const Text('IOS'),
+          body: const SizedBox.shrink(),
+        ),
+      ],
+    ),
+
+    PaneItemSeparator(),
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+      key: const ValueKey('/forms/textbox'),
+      icon: const Icon(FluentIcons.app_icon_default),
+      title: const Text('Fluent App'),
+      body: const SizedBox.shrink(),
+      infoBadge: const InfoBadge(source: Text('NEW  ')),
+      items: [
+        //New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/navigation/tab_view'), //need new key value?
+          icon: const Icon(FluentIcons.screen),
+          title: const Text('Splash Screen'),
+          body: const SizedBox.shrink(),
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/navigation/tree_view'), //need new key value?
+          icon: const Icon(FluentIcons.title),
+          title: const Text('Title Bar'),
+          body: const SizedBox.shrink(),
+        ),
+      ],
+    ),
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+      key: const ValueKey('/forms/textbox'),
+      icon: const Icon(FluentIcons.arrange_send_backward),
+      title: const Text('Surface'),
+      body: const SizedBox.shrink(),
+      items: [
+        PaneItem(
+          key: const ValueKey('/surfaces/acrylic'),
+          icon: const Icon(FluentIcons.un_set_color),
+          title: const Text('Acrylic'),
+          body: const SizedBox.shrink(),
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+            key: const ValueKey('/navigation/tree_view'), //need new key value?
+            icon: const Icon(FluentIcons.triple_column),
+            title: const Text('Carousel'),
+            body: const SizedBox.shrink(),
+            infoBadge: const InfoBadge(
+              source: Text('NOT ADDED YET  '),
+              color: Color(0xFF979593),
+              foregroundColor: Color(0xFFFFFFFF),
+            ),
+            enabled: false),
+        //New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/navigation/tree_view'), //need new key value?
+          icon: const Icon(FluentIcons.rectangle_shape),
+          title: const Text('Cards'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(source: Text('NEW  ')),
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+            key: const ValueKey('/navigation/tree_view'), //need new key value?
+            icon: const Icon(FluentIcons.page),
+            title: const Text('Sheets'),
+            body: const SizedBox.shrink(),
+            infoBadge: const InfoBadge(
+              source: Text('NOT ADDED YET  '),
+              color: Color(0xFF979593),
+              foregroundColor: Color(0xFFFFFFFF),
+            ),
+            enabled: false),
+      ],
+    ),
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+        key: const ValueKey('/forms/textbox'),
+        icon: const Icon(FluentIcons.checkbox_composite),
+        title: const Text('Basic Input'),
+        body: const SizedBox.shrink(),
+        items: [
+          PaneItem(
+            key: const ValueKey('/inputs/buttons'),
+            icon: const Icon(FluentIcons.button_control),
+            title: const Text('Button'),
+            body: const SizedBox.shrink(),
+          ),
+          PaneItem(
+            key: const ValueKey('/inputs/checkbox'),
+            icon: const Icon(FluentIcons.checkbox_composite),
+            title: const Text('Checkbox'),
+            body: const SizedBox.shrink(),
+          ),
+          PaneItem(
+            key: const ValueKey('/inputs/slider'),
+            icon: const Icon(FluentIcons.slider),
+            title: const Text('Slider'),
+            body: const SizedBox.shrink(),
+          ),
+          //New Page is needed for design guideline
+          PaneItem(
+              key:
+                  const ValueKey('/navigation/tree_view'), //need new key value?
+              icon: const Icon(FluentIcons.favorite_star),
+              title: const Text('Rating'),
+              body: const SizedBox.shrink(),
+              infoBadge: const InfoBadge(
+                source: Text('NOT ADDED YET  '),
+                color: Color(0xFF979593),
+                foregroundColor: Color(0xFFFFFFFF),
+              ),
+              enabled: false),
+          //New Page is needed for design guideline
+          PaneItem(
+              key:
+                  const ValueKey('/navigation/tree_view'), //need new key value?
+              icon: const Icon(FluentIcons.tag),
+              title: const Text('Chips'),
+              body: const SizedBox.shrink(),
+              infoBadge: const InfoBadge(
+                source: Text('NOT ADDED YET  '),
+                color: Color(0xFF979593),
+                foregroundColor: Color(0xFFFFFFFF),
+              ),
+              enabled: false),
+          PaneItem(
+            key: const ValueKey('/inputs/toggle_switch'),
+            icon: const Icon(FluentIcons.toggle_left),
+            title: const Text('ToggleSwitch'),
+            body: const SizedBox.shrink(),
+          ),
+          PaneItem(
+            key: const ValueKey('/forms/color_picker'),
+            icon: const Icon(FluentIcons.color),
+            title: const Text('ColorPicker'),
+            body: const SizedBox.shrink(),
+          ),
+        ]),
+
+    /* Moved to Basic Input Expander
     PaneItemHeader(header: const Text('Inputs')),
     PaneItem(
       key: const ValueKey('/inputs/buttons'),
@@ -182,8 +464,50 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       icon: const Icon(FluentIcons.toggle_left),
       title: const Text('ToggleSwitch'),
       body: const SizedBox.shrink(),
+    ),*/
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+      key: const ValueKey('/forms/textbox'),
+      icon: const Icon(FluentIcons.font),
+      title: const Text('Text'),
+      body: const SizedBox.shrink(),
+      items: [
+        PaneItem(
+          key: const ValueKey('/forms/text_box'),
+          icon: const Icon(FluentIcons.text_field),
+          title: const Text('TextBox'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/forms/auto_suggest_box'),
+          icon: const Icon(FluentIcons.page_list),
+          title: const Text('AutoSuggestBox'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/forms/combobox'),
+          icon: const Icon(FluentIcons.combobox),
+          title: const Text('ComboBox'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/forms/numberbox'),
+          icon: const Icon(FluentIcons.number),
+          title: const Text('NumberBox'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/forms/passwordbox'),
+          icon: const Icon(FluentIcons.password_field),
+          title: const Text('PasswordBox'),
+          body: const SizedBox.shrink(),
+        ),
+      ],
     ),
-    PaneItemHeader(header: const Text('Form')),
+
+    /*PaneItemHeader(header: const Text('Form')),*/
+    /* Moved to Text Expander
     PaneItem(
       key: const ValueKey('/forms/text_box'),
       icon: const Icon(FluentIcons.text_field),
@@ -213,7 +537,101 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       icon: const Icon(FluentIcons.password_field),
       title: const Text('PasswordBox'),
       body: const SizedBox.shrink(),
+    ),*/
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+      key: const ValueKey('/forms/textbox'),
+      icon: const Icon(FluentIcons.grid_view_small),
+      title: const Text('Collections'),
+      body: const SizedBox.shrink(),
+      items: [
+        PaneItem(
+          key: const ValueKey('/surfaces/tiles'),
+          icon: const Icon(FluentIcons.tiles),
+          title: const Text('Tiles'),
+          body: const SizedBox.shrink(),
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+            key: const ValueKey('/navigation/tree_view'), //need new key value?
+            icon: const Icon(FluentIcons.table),
+            title: const Text('Table'),
+            body: const SizedBox.shrink(),
+            infoBadge: const InfoBadge(
+              source: Text('NOT PLANNED  '),
+              color: Color(0xFF979593),
+              foregroundColor: Color(0xFFFFFFFF),
+            ),
+            enabled: false),
+        //New Page is needed for design guideline
+        PaneItem(
+            key: const ValueKey('/navigation/tree_view'), //need new key value?
+            icon: const Icon(FluentIcons.snap_to_grid),
+            title: const Text('Grid'),
+            body: const SizedBox.shrink(),
+            infoBadge: const InfoBadge(
+              source: Text('NOT ADDED YET  '),
+              color: Color(0xFF979593),
+              foregroundColor: Color(0xFFFFFFFF),
+            ),
+            enabled: false),
+        //New Page is needed for design guideline
+        PaneItem(
+            key: const ValueKey('/navigation/tree_view'), //need new key value?
+            icon: const Icon(FluentIcons.five_tile_grid),
+            title: const Text('Flip View'),
+            body: const SizedBox.shrink(),
+            infoBadge: const InfoBadge(
+              source: Text('NOT ADDED YET  '),
+              color: Color(0xFF979593),
+              foregroundColor: Color(0xFFFFFFFF),
+            ),
+            enabled: false),
+        PaneItem(
+          key: const ValueKey('/surfaces/expander'),
+          icon: const Icon(FluentIcons.expand_all),
+          title: const Text('Expander'),
+          body: const SizedBox.shrink(),
+        ),
+      ],
     ),
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+      key: const ValueKey('/forms/textbox'),
+      icon: const Icon(FluentIcons.date_time),
+      title: const Text('Date and Time'),
+      body: const SizedBox.shrink(),
+      items: [
+        PaneItem(
+          key: const ValueKey('/forms/time_picker'),
+          icon: const Icon(FluentIcons.time_picker),
+          title: const Text('TimePicker'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/forms/date_picker'),
+          icon: const Icon(FluentIcons.date_time),
+          title: const Text('DatePicker'),
+          body: const SizedBox.shrink(),
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+            key: const ValueKey('/navigation/tree_view'), //need new key value?
+            icon: const Icon(FluentIcons.calendar),
+            title: const Text('Calendar View'),
+            body: const SizedBox.shrink(),
+            infoBadge: const InfoBadge(
+              source: Text('NOT ADDED YET  '),
+              color: Color(0xFF979593),
+              foregroundColor: Color(0xFFFFFFFF),
+            ),
+            enabled: false),
+      ],
+    ),
+
+    /* Moved to Date and Time Expander
     PaneItem(
       key: const ValueKey('/forms/time_picker'),
       icon: const Icon(FluentIcons.time_picker),
@@ -225,13 +643,154 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       icon: const Icon(FluentIcons.date_time),
       title: const Text('DatePicker'),
       body: const SizedBox.shrink(),
-    ),
+    ),*/
+
+    /* Moved to Basic Input Expander
     PaneItem(
       key: const ValueKey('/forms/color_picker'),
       icon: const Icon(FluentIcons.color),
       title: const Text('ColorPicker'),
       body: const SizedBox.shrink(),
     ),
+    */
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+      key: const ValueKey('/forms/textbox'),
+      icon: const Icon(FluentIcons.chat),
+      title: const Text('Popups'),
+      body: const SizedBox.shrink(),
+      items: [
+        PaneItem(
+          key: const ValueKey('/popups/content_dialog'),
+          icon: const Icon(FluentIcons.comment_urgent),
+          title: const Text('ContentDialog'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/popups/flyout'),
+          icon: const Icon(FluentIcons.pop_expand),
+          title: const Text('Flyout'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/popups/teaching_tip'),
+          icon: const Icon(FluentIcons.field_filled),
+          title: const Text('Teaching Tip'),
+          body: const SizedBox.shrink(),
+        ),
+      ],
+    ),
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+      key: const ValueKey('/forms/textbox'),
+      icon: const Icon(FluentIcons.media),
+      title: const Text('Media'),
+      body: const SizedBox.shrink(),
+      items: [
+        //New Page is needed for design guideline
+        PaneItem(
+            key: const ValueKey('/navigation/tree_view'), //need new key value?
+            icon: const Icon(FluentIcons.people),
+            title: const Text('Avatar'),
+            body: const SizedBox.shrink(),
+            infoBadge: const InfoBadge(
+              source: Text('NOT ADDED YET  '),
+              color: Color(0xFF979593),
+              foregroundColor: Color(0xFFFFFFFF),
+            ),
+            enabled: false),
+        //New Page is needed for design guideline
+        PaneItem(
+            key: const ValueKey('/navigation/tree_view'), //need new key value?
+            icon: const Icon(FluentIcons.playback_rate1x),
+            title: const Text('Media Player'),
+            body: const SizedBox.shrink(),
+            infoBadge: const InfoBadge(
+              source: Text('NOT ADDED YET  '),
+              color: Color(0xFF979593),
+              foregroundColor: Color(0xFFFFFFFF),
+            ),
+            enabled: false),
+      ],
+    ),
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+      key: const ValueKey('/forms/textbox'),
+      icon: const Icon(FluentIcons.toolbox),
+      title: const Text('Menus and Toolbar'),
+      body: const SizedBox.shrink(),
+      items: [
+        PaneItem(
+          key: const ValueKey('/popups/menu_bar'),
+          icon: const Icon(FluentIcons.expand_menu),
+          title: const Text('MenuBar'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/popups/flyout'),
+          icon: const Icon(FluentIcons.pop_expand),
+          title: const Text('Flyout (new page only context)'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/surfaces/command_bar'),
+          icon: const Icon(FluentIcons.customize_toolbar),
+          title: const Text('CommandBar'),
+          body: const SizedBox.shrink(),
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+            key: const ValueKey('/navigation/tree_view'), //need new key value?
+            icon: const Icon(FluentIcons.inking_tool),
+            title: const Text('Ink Toolbar'),
+            body: const SizedBox.shrink(),
+            infoBadge: const InfoBadge(
+              source: Text('NOT ADDED YET  '),
+              color: Color(0xFF979593),
+              foregroundColor: Color(0xFFFFFFFF),
+            ),
+            enabled: false),
+      ],
+    ),
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+      key: const ValueKey('/forms/textbox'),
+      icon: const Icon(FluentIcons.collapse_menu),
+      title: const Text('Navigation'),
+      body: const SizedBox.shrink(),
+      items: [
+        PaneItem(
+          key: const ValueKey('/navigation/navigation_view'),
+          icon: const Icon(FluentIcons.navigation_flipper),
+          title: const Text('NavigationView'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/navigation/tab_view'),
+          icon: const Icon(FluentIcons.table_header_row),
+          title: const Text('TabView'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/navigation/tree_view'),
+          icon: const Icon(FluentIcons.bulleted_tree_list),
+          title: const Text('TreeView'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/navigation/breadcrumb_bar'),
+          icon: const Icon(FluentIcons.breadcrumb),
+          title: const Text('BreadcrumbBar'),
+          body: const SizedBox.shrink(),
+        ),
+      ],
+    ),
+
+    /* Moved to Navigation Expander
     PaneItemHeader(header: const Text('Navigation')),
     PaneItem(
       key: const ValueKey('/navigation/navigation_view'),
@@ -256,7 +815,97 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       icon: const Icon(FluentIcons.breadcrumb),
       title: const Text('BreadcrumbBar'),
       body: const SizedBox.shrink(),
+    ), */
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+      key: const ValueKey('/forms/textbox'),
+      icon: const Icon(FluentIcons.sort),
+      title: const Text('Scrolling'),
+      body: const SizedBox.shrink(),
+      items: [
+        //New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          icon: const Icon(FluentIcons.scroll_up_down),
+          title: const Text('ScrollBar'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(source: Text('NEW  ')),
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+            key: const ValueKey('/navigation/tab_view'), //need new key value?
+            icon: const Icon(FluentIcons.timeline),
+            title: const Text('Annotated Scroll'),
+            body: const SizedBox.shrink(),
+            infoBadge: const InfoBadge(
+              source: Text('NOT ADDED YET  '),
+              color: Color(0xFF979593),
+              foregroundColor: Color(0xFFFFFFFF),
+            ),
+            enabled: false),
+        //New Page is needed for design guideline
+        PaneItem(
+            key: const ValueKey('/navigation/tree_view'), //need new key value?
+            icon: const Icon(FluentIcons.page),
+            title: const Text('Pigs Page'),
+            body: const SizedBox.shrink(),
+            infoBadge: const InfoBadge(
+              source: Text('NOT ADDED YET  '),
+              color: Color(0xFF979593),
+              foregroundColor: Color(0xFFFFFFFF),
+            ),
+            enabled: false),
+      ],
     ),
+
+    //New Arrangement made, issue: indicator not appearing
+    PaneItemExpander(
+      key: const ValueKey('/forms/textbox'),
+      icon: const Icon(FluentIcons.collapse_menu),
+      title: const Text('Status and Info'),
+      body: const SizedBox.shrink(),
+      items: [
+        PaneItem(
+          key: const ValueKey('/surfaces/info_bar'),
+          icon: const Icon(FluentIcons.info_solid),
+          title: const Text('InfoBar'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/surfaces/progress_indicators'),
+          icon: const Icon(FluentIcons.progress_ring_dots),
+          title: const Text('Progress Indicators'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+            key: const ValueKey('/navigation/tree_view'), //need new key value?
+            icon: const Icon(FluentIcons.light),
+            title: const Text('Shimmer'),
+            body: const SizedBox.shrink(),
+            infoBadge: const InfoBadge(
+              source: Text('NOT ADDED YET  '),
+              color: Color(0xFF979593),
+              foregroundColor: Color(0xFFFFFFFF),
+            ),
+            enabled: false),
+        PaneItem(
+          key: const ValueKey('/popups/tooltip'),
+          icon: const Icon(FluentIcons.hint_text),
+          title: const Text('Tooltip'),
+          body: const SizedBox.shrink(),
+        ),
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          icon: const Icon(FluentIcons.scroll_up_down),
+          title: const Text('Badge'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(source: Text('NEW  ')),
+        ),
+      ],
+    ),
+
+    /* Moved to Surface Expander
     PaneItemHeader(header: const Text('Surfaces')),
     PaneItem(
       key: const ValueKey('/surfaces/acrylic'),
@@ -264,18 +913,24 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       title: const Text('Acrylic'),
       body: const SizedBox.shrink(),
     ),
+    */
+    /* Moved to menus and toolbar expander
     PaneItem(
       key: const ValueKey('/surfaces/command_bar'),
       icon: const Icon(FluentIcons.customize_toolbar),
       title: const Text('CommandBar'),
       body: const SizedBox.shrink(),
     ),
+    */
+    /* Moved to Collections Expander
     PaneItem(
       key: const ValueKey('/surfaces/expander'),
       icon: const Icon(FluentIcons.expand_all),
       title: const Text('Expander'),
       body: const SizedBox.shrink(),
     ),
+    */
+    /* Moved to Status and Info Expander
     PaneItem(
       key: const ValueKey('/surfaces/info_bar'),
       icon: const Icon(FluentIcons.info_solid),
@@ -288,12 +943,15 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       title: const Text('Progress Indicators'),
       body: const SizedBox.shrink(),
     ),
+    */
+    /* Moved to Collections Expander
     PaneItem(
       key: const ValueKey('/surfaces/tiles'),
       icon: const Icon(FluentIcons.tiles),
       title: const Text('Tiles'),
       body: const SizedBox.shrink(),
-    ),
+    ), */
+    /* Moved to Popups Expander
     PaneItemHeader(header: const Text('Popups')),
     PaneItem(
       key: const ValueKey('/popups/content_dialog'),
@@ -306,25 +964,31 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       icon: const Icon(FluentIcons.pop_expand),
       title: const Text('Flyout'),
       body: const SizedBox.shrink(),
-    ),
+    ),*/
+    /* Moved to menus and toolbar expander
     PaneItem(
-      key: const ValueKey('/popups/menu_bar'),
-      icon: const Icon(FluentIcons.expand_menu),
-      title: const Text('MenuBar'),
-      body: const SizedBox.shrink(),
-    ),
+        key: const ValueKey('/popups/menu_bar'),
+        icon: const Icon(FluentIcons.expand_menu),
+        title: const Text('MenuBar'),
+        body: const SizedBox.shrink(),
+        infoBadge: InfoBadge(
+          source: Text('NEW  '),
+        )),*/
+    /* Moved to Popup expander
     PaneItem(
       key: const ValueKey('/popups/teaching_tip'),
       icon: const Icon(FluentIcons.field_filled),
       title: const Text('Teaching Tip'),
       body: const SizedBox.shrink(),
-    ),
+    ),*/
+    /* Moved to Status and Info expander
     PaneItem(
       key: const ValueKey('/popups/tooltip'),
       icon: const Icon(FluentIcons.hint_text),
       title: const Text('Tooltip'),
       body: const SizedBox.shrink(),
-    ),
+    ),*/
+    /* Moved to the top for new arrangement
     PaneItemHeader(header: const Text('Theming')),
     PaneItem(
       key: const ValueKey('/theming/colors'),
@@ -349,7 +1013,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       icon: const Icon(FluentIcons.focus),
       title: const Text('Reveal Focus'),
       body: const SizedBox.shrink(),
-    ),
+    ),*/
     // TODO: Scrollbar, RatingBar
   ].map<NavigationPaneItem>((e) {
     PaneItem buildPaneItem(PaneItem item) {
@@ -358,6 +1022,8 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
         icon: item.icon,
         title: item.title,
         body: item.body,
+        infoBadge: item.infoBadge,
+        enabled: item.enabled,
         onTap: () {
           final path = (item.key as ValueKey).value;
           if (GoRouterState.of(context).uri.toString() != path) {
@@ -374,6 +1040,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
         icon: e.icon,
         title: e.title,
         body: e.body,
+        infoBadge: e.infoBadge,
         items: e.items.map((item) {
           if (item is PaneItem) return buildPaneItem(item);
           return item;
