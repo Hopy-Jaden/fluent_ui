@@ -99,12 +99,12 @@ class Person {
         builder: (context, followLink) {
           return Semantics(
             link: true,
-            child: IconButton(
-              onPressed: () {
+            child: GestureDetector(
+              onTap: () {
                 debugPrint('https://www.github.com/$username');
                 followLink;
               },
-              icon: CommunityMember(
+              child: MemberCard(
                 imageUrl: imageUrl,
                 username: username ?? name,
                 tag: tag,

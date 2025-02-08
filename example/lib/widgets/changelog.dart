@@ -46,7 +46,8 @@ class _ChangelogState extends State<Changelog> {
       flutter_markdown.loadLibrary,
       () => ContentDialog(
         style: const ContentDialogThemeData(padding: EdgeInsets.zero),
-        constraints: const BoxConstraints(maxWidth: 600),
+        constraints:
+            const BoxConstraints(maxWidth: 600, minWidth: 600, minHeight: 1200),
         content: () {
           if (changelog == null) return const ProgressRing();
           return SingleChildScrollView(
