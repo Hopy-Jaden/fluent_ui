@@ -24,4 +24,13 @@ mixin PageMixin {
       );
     });
   }
+
+  Widget titleLarge({required Widget content}) {
+    return Builder(builder: (context) {
+      return DefaultTextStyle(
+        style: FluentTheme.of(context).typography.titleLarge!,
+        child: content,
+      );
+    });
+  }
 }

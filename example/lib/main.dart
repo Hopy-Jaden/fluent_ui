@@ -863,7 +863,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
     //New Arrangement made, issue: indicator not appearing
     PaneItemExpander(
       key: const ValueKey('/forms/textbox'),
-      icon: const Icon(FluentIcons.collapse_menu),
+      icon: const Icon(FluentIcons.info),
       title: const Text('Status and Info'),
       body: const SizedBox.shrink(),
       items: [
@@ -1229,7 +1229,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       },
       pane: NavigationPane(
         selected: _calculateSelectedIndex(context),
-        header: SizedBox(
+        /*header: SizedBox(
           height: kOneLineTileHeight,
           child: ShaderMask(
             shaderCallback: (rect) {
@@ -1250,7 +1250,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
               duration: Duration.zero,
             ),
           ),
-        ),
+        ),*/
         displayMode: appTheme.displayMode,
         indicator: () {
           switch (appTheme.indicator) {

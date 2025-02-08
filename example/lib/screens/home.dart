@@ -25,8 +25,14 @@ class _HomePageState extends State<HomePage> with PageMixin {
 
     return ScaffoldPage.scrollable(
       header: PageHeader(
-        title: const Text('Fluent UI for Flutter Showcase App'),
-        commandBar: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            subtitle(content: const Text('Version 4')),
+            titleLarge(content: const Text('Fluent UI for Flutter Gallery')),
+          ],
+        ), //const Text('Fluent UI for Flutter Gallery'),
+        /*commandBar: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
           Link(
             uri: Uri.parse('https://github.com/bdlukaa/fluent_ui'),
             builder: (context, open) => Semantics(
@@ -40,9 +46,10 @@ class _HomePageState extends State<HomePage> with PageMixin {
               ),
             ),
           ),
-        ]),
+        ]),*/
       ),
       children: [
+        /*
         Card(
           child:
               Wrap(alignment: WrapAlignment.center, spacing: 10.0, children: [
@@ -146,113 +153,173 @@ class _HomePageState extends State<HomePage> with PageMixin {
             ),
           ]),
         ),
-        const SizedBox(height: 22.0),
-        IconButton(
-          onPressed: () {
-            showDialog(
-              context: context,
-              barrierDismissible: true,
-              builder: (context) => const Changelog(),
-            );
-          },
-          icon: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'What\'s new on 4.0.0',
-                style: theme.typography.body
-                    ?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              Text('June 21, 2022', style: theme.typography.caption),
-              Text(
-                'A native look-and-feel out of the box',
-                style: theme.typography.bodyLarge,
-              ),
-            ],
+        */
+        const SizedBox(height: 75.0),
+        Wrap(spacing: 10.0, runSpacing: 10.0, children: <Widget>[
+          PortalCard(
+            title: 'What\'s New',
+            icon: Icon(
+              FluentIcons.megaphone,
+              size: 55,
+            ),
+            description: 'A native look-and-feel out of the box',
+            function: () {
+              showDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (context) => const Changelog(),
+              );
+            },
           ),
-        ),
-        const SizedBox(height: 22.0),
-        Row(children: [
-          Text('SPONSORS', style: theme.typography.bodyStrong),
-          const SizedBox(width: 4.0),
-          const Icon(FluentIcons.heart_fill, size: 16.0),
-        ]),
-        const SizedBox(height: 4.0),
-        Wrap(
-          spacing: 10.0,
-          runSpacing: 10.0,
-          children: <Widget>[
-            ...sponsors.map((sponsor) {
-              return sponsor.build();
-            }),
-            IconButton(
-              onPressed: () {
+          Link(
+              uri: Uri.parse('https://fluent2.microsoft.design/'),
+              builder: (context, followLink) {
+                return Semantics(
+                  link: true,
+                  child: PortalCard(
+                      title: 'Design',
+                      icon: Icon(
+                        FluentIcons.color,
+                        size: 55,
+                      ),
+                      description:
+                          'Guidelines for creating stunning FluentUI experience',
+                      function: followLink),
+                );
+              }),
+          Link(
+              uri: Uri.parse('https://github.com/bdlukaa/fluent_ui'),
+              builder: (context, followLink) {
+                return Semantics(
+                  link: true,
+                  child: PortalCard(
+                      title: 'Github',
+                      icon: Icon(
+                        FluentIcons.code,
+                        size: 55,
+                      ),
+                      description:
+                          'Explore the FluentUI source code and repository',
+                      function: followLink),
+                );
+              }),
+          PortalCard(
+              function: () {
                 showDialog(
                   context: context,
                   builder: (context) => const SponsorDialog(),
                 );
               },
-              icon: Column(children: [
-                SizedBox(
-                  height: 60,
-                  width: 60,
-                  child: ShaderMask(
-                    shaderCallback: (rect) {
-                      return LinearGradient(
-                        colors: [
-                          Colors.white.withValues(alpha: 0.8),
-                          ...Colors.accentColors,
-                        ],
-                      ).createShader(rect);
-                    },
-                    blendMode: BlendMode.srcATop,
-                    child: const Icon(FluentIcons.diamond_user, size: 60),
-                  ),
-                ),
-                const Text('Become a Sponsor!'),
-              ]),
-            ),
-          ],
-        ),
-        Text('CONTRIBUTORS', style: theme.typography.bodyStrong),
+              icon: Icon(FluentIcons.diamond_user, size: 60),
+              title: 'Sponsor',
+              description: 'Become a Sponsor to support!'),
+        ]),
+        const SizedBox(height: 22.0),
+        subtitle(content: const Text('Community')),
+        const SizedBox(height: 4.0),
         Wrap(
           spacing: 10.0,
           runSpacing: 10.0,
-          children: contributors.map((contributor) {
-            return contributor.build();
+          children: community.map((member) {
+            return member.build();
           }).toList(),
         ),
+        const SizedBox(height: 22.0),
         subtitle(content: const Text('Equivalents with the material library')),
+        const SizedBox(height: 4.0),
         const MaterialEquivalents(),
       ],
     );
   }
 }
 
-class SponsorButton extends StatelessWidget {
-  const SponsorButton({
+class CommunityMember extends StatelessWidget {
+  const CommunityMember({
     super.key,
     required this.imageUrl,
     required this.username,
+    required this.tag,
   });
 
   final String imageUrl;
   final String username;
+  final String tag;
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Container(
-        height: 60,
-        width: 60,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: NetworkImage(imageUrl),
+    return SizedBox(
+      width: 250,
+      //height: 214,
+      child: Card(
+        child: ListTile(
+            leading: Container(
+              height: 60,
+              width: 60,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(imageUrl),
+                ),
+                shape: BoxShape.circle,
+              ),
+            ),
+            title: Text(username),
+            subtitle: InfoBadge(
+              source: Text('$tag   '),
+            )),
+      ),
+    );
+  }
+}
+
+class PortalCard extends StatelessWidget {
+  final String? title;
+  final String description;
+  final Icon icon;
+  void Function()? function;
+
+  PortalCard({
+    required this.title,
+    required this.description,
+    required this.icon,
+    required this.function,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: function,
+      child: SizedBox(
+        width: 218,
+        height: 214,
+        child: Card(
+          padding: EdgeInsets.all(24),
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              icon,
+              SizedBox(
+                height: 12,
+              ),
+              Text(
+                title ?? '',
+                style: FluentTheme.of(context).typography.subtitle!,
+              ),
+              SizedBox(
+                height: 6,
+              ),
+              Text(
+                description,
+                style: FluentTheme.of(context).typography.caption!,
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Icon(FluentIcons.pop_expand),
+            ],
           ),
-          shape: BoxShape.circle,
         ),
       ),
-      Text(username),
-    ]);
+    );
   }
 }
