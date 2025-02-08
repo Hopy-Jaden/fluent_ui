@@ -18,7 +18,8 @@ import 'routes/theming.dart' deferred as theming;
 import 'theme.dart';
 import 'widgets/deferred_widget.dart';
 
-const String appTitle = 'Win UI for Flutter';
+const String appTitle = 'Fluent UI for Flutter';
+const String appIcon = 'assets/FluentLogo.png';
 
 /// Checks if the current environment is a desktop environment.
 bool get isDesktop {
@@ -1167,13 +1168,33 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           if (kIsWeb) {
             return const Align(
               alignment: AlignmentDirectional.centerStart,
-              child: Text(appTitle),
+              child: Row(
+                children: [
+                  //Icon(FluentIcons.app_icon_default),
+                  ImageIcon(
+                    AssetImage(appIcon),
+                    size: 16,
+                  ),
+                  SizedBox(width: 12.0),
+                  Text(appTitle),
+                ],
+              ),
             );
           }
           return const DragToMoveArea(
             child: Align(
               alignment: AlignmentDirectional.centerStart,
-              child: Text(appTitle),
+              child: Row(
+                children: [
+                  //Icon(FluentIcons.app_icon_default),
+                  ImageIcon(
+                    AssetImage(appIcon),
+                    size: 20,
+                  ),
+                  SizedBox(width: 12.0),
+                  Text(appTitle),
+                ],
+              ),
             ),
           );
         }(),
