@@ -73,12 +73,21 @@ void main() async {
   runApp(const MyApp());
 
   Future.wait([
-    DeferredWidget.preload(popups.loadLibrary),
-    DeferredWidget.preload(forms.loadLibrary),
-    DeferredWidget.preload(inputs.loadLibrary),
-    DeferredWidget.preload(navigation.loadLibrary),
+    DeferredWidget.preload(styles.loadLibrary),
+    DeferredWidget.preload(layout.loadLibrary),
+    DeferredWidget.preload(platforms.loadLibrary),
+    DeferredWidget.preload(fluentapp.loadLibrary),
     DeferredWidget.preload(surfaces.loadLibrary),
-    DeferredWidget.preload(theming.loadLibrary),
+    DeferredWidget.preload(inputs.loadLibrary),
+    DeferredWidget.preload(text.loadLibrary),
+    DeferredWidget.preload(collections.loadLibrary),
+    DeferredWidget.preload(datetime.loadLibrary),
+    DeferredWidget.preload(popups.loadLibrary),
+    DeferredWidget.preload(media.loadLibrary),
+    DeferredWidget.preload(toolbar.loadLibrary),
+    DeferredWidget.preload(navigation.loadLibrary),
+    DeferredWidget.preload(scrolling.loadLibrary),
+    DeferredWidget.preload(status.loadLibrary),
   ]);
 }
 
@@ -176,14 +185,14 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       items: [
         //New colour contrast section to be added
         PaneItem(
-          key: const ValueKey('/theming/colors'),
+          key: const ValueKey('/styles/colors'),
           icon: const Icon(FluentIcons.color),
           title: const Text('Colors'),
           body: const SizedBox.shrink(),
         ),
         //New Page is needed for design guideline
         PaneItem(
-          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          key: const ValueKey('/styles/geometry'), //need new key value?
           icon: const Icon(FluentIcons.shapes),
           title: const Text('Geometry'),
           body: const SizedBox.shrink(),
@@ -191,19 +200,19 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
         ),
         PaneItem(
           //need new key value? what is the use?
-          key: const ValueKey('/theming/icons'),
+          key: const ValueKey('/styles/icongraphy'),
           icon: const Icon(FluentIcons.emoji_tab_symbols),
           title: const Text('Icongraphy'), // title is modified
           body: const SizedBox.shrink(),
         ),
         PaneItem(
-          key: const ValueKey('/theming/typography'),
+          key: const ValueKey('/styles/typography'),
           icon: const Icon(FluentIcons.font),
           title: const Text('Typography'),
           body: const SizedBox.shrink(),
         ),
         PaneItem(
-          key: const ValueKey('/theming/reveal_focus'),
+          key: const ValueKey('/styles/reveal_focus'),
           icon: const Icon(FluentIcons.focus),
           title: const Text('Reveal Focus'),
           body: const SizedBox.shrink(),
@@ -220,21 +229,22 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       items: [
         //New Page is needed for design guideline
         PaneItem(
-          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          key: const ValueKey('/layout/spacing'), //need new key value?
           icon: const Icon(FluentIcons.grid_view_medium),
           title: const Text('Spacing'),
           body: const SizedBox.shrink(), //need a new page
         ),
         //New Page is needed for design guideline
         PaneItem(
-          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          key: const ValueKey('/layout/windows_size'), //need new key value?
           icon: const Icon(FluentIcons.grid_view_medium),
           title: const Text('Windows Size'),
           body: const SizedBox.shrink(), //need a new page
         ),
         //New Page is needed for design guideline
         PaneItem(
-          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          key: const ValueKey(
+              '/layout/hardware_consideration'), //need new key value?
           icon: const Icon(FluentIcons.user_window),
           title: const Text('Hardware Considerations'),
           body: const SizedBox.shrink(),
@@ -252,42 +262,42 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       items: [
         //New Page is needed for design guideline
         PaneItem(
-          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          key: const ValueKey('/platforms/windows'), //need new key value?
           icon: const Icon(FluentIcons.grid_view_medium),
           title: const Text('Windows'),
           body: const SizedBox.shrink(),
         ),
         //New Page is needed for design guideline
         PaneItem(
-          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          key: const ValueKey('/platforms/macos'), //need new key value?
           icon: const Icon(FluentIcons.this_p_c),
           title: const Text('MacOS'),
           body: const SizedBox.shrink(),
         ),
         //New Page is needed for design guideline
         PaneItem(
-          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          key: const ValueKey('/platforms/web'), //need new key value?
           icon: const Icon(FluentIcons.globe),
           title: const Text('Web'),
           body: const SizedBox.shrink(),
         ),
         //New Page is needed for design guideline
         PaneItem(
-          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          key: const ValueKey('/platforms/linux'), //need new key value?
           icon: const Icon(FluentIcons.pc1),
           title: const Text('Linux'),
           body: const SizedBox.shrink(),
         ),
         //New Page is needed for design guideline
         PaneItem(
-          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          key: const ValueKey('/platforms/android'), //need new key value?
           icon: const Icon(FluentIcons.cell_phone),
           title: const Text('Android'),
           body: const SizedBox.shrink(),
         ),
         //New Page is needed for design guideline
         PaneItem(
-          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          key: const ValueKey('/platforms/ios'), //need new key value?
           icon: const Icon(FluentIcons.italic),
           title: const Text('IOS'),
           body: const SizedBox.shrink(),
@@ -299,7 +309,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
 
     //New Arrangement made, issue: indicator not appearing
     PaneItemExpander(
-      key: const ValueKey('/forms/textbox'),
+      key: const ValueKey('/fluentapp'),
       icon: const Icon(FluentIcons.app_icon_default),
       title: const Text('Fluent App'),
       body: const SizedBox.shrink(),
@@ -307,16 +317,16 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       items: [
         //New Page is needed for design guideline
         PaneItem(
-          key: const ValueKey('/navigation/tab_view'), //need new key value?
+          key: const ValueKey('/fluentapp/splash_screen'), //need new key value?
           icon: const Icon(FluentIcons.screen),
           title: const Text('Splash Screen'),
           body: const SizedBox.shrink(),
         ),
         //New Page is needed for design guideline
         PaneItem(
-          key: const ValueKey('/navigation/tree_view'), //need new key value?
+          key: const ValueKey('/fluentapp/appbar'), //need new key value?
           icon: const Icon(FluentIcons.title),
-          title: const Text('Title Bar'),
+          title: const Text('App Bar'),
           body: const SizedBox.shrink(),
         ),
       ],
@@ -324,32 +334,33 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
 
     //New Arrangement made, issue: indicator not appearing
     PaneItemExpander(
-      key: const ValueKey('/forms/textbox'),
+      key: const ValueKey('/surfaces'),
       icon: const Icon(FluentIcons.arrange_send_backward),
-      title: const Text('Surface'),
+      title: const Text('Surfaces'),
       body: const SizedBox.shrink(),
       items: [
         PaneItem(
-          key: const ValueKey('/surfaces/acrylic'),
+          key: const ValueKey('/surfaces/materials'),
           icon: const Icon(FluentIcons.un_set_color),
           title: const Text('Acrylic'),
           body: const SizedBox.shrink(),
         ),
         //New Page is needed for design guideline
         PaneItem(
-            key: const ValueKey('/navigation/tree_view'), //need new key value?
-            icon: const Icon(FluentIcons.triple_column),
-            title: const Text('Carousel'),
-            body: const SizedBox.shrink(),
-            infoBadge: const InfoBadge(
-              source: Text('NOT ADDED YET  '),
-              color: Color(0xFF979593),
-              foregroundColor: Color(0xFFFFFFFF),
-            ),
-            enabled: false),
+          key: const ValueKey('/surfaces/carousel'), //need new key value?
+          icon: const Icon(FluentIcons.triple_column),
+          title: const Text('Carousel'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(
+            source: Text('NOT ADDED YET  '),
+            color: Color(0xFF979593),
+            foregroundColor: Color(0xFFFFFFFF),
+          ),
+          //enabled: false
+        ),
         //New Page is needed for design guideline
         PaneItem(
-          key: const ValueKey('/navigation/tree_view'), //need new key value?
+          key: const ValueKey('/surfaces/cards'), //need new key value?
           icon: const Icon(FluentIcons.rectangle_shape),
           title: const Text('Cards'),
           body: const SizedBox.shrink(),
@@ -357,16 +368,17 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
         ),
         //New Page is needed for design guideline
         PaneItem(
-            key: const ValueKey('/navigation/tree_view'), //need new key value?
-            icon: const Icon(FluentIcons.page),
-            title: const Text('Sheets'),
-            body: const SizedBox.shrink(),
-            infoBadge: const InfoBadge(
-              source: Text('NOT ADDED YET  '),
-              color: Color(0xFF979593),
-              foregroundColor: Color(0xFFFFFFFF),
-            ),
-            enabled: false),
+          key: const ValueKey('/surfaces/sheets'), //need new key value?
+          icon: const Icon(FluentIcons.page),
+          title: const Text('Sheets'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(
+            source: Text('NOT ADDED YET  '),
+            color: Color(0xFF979593),
+            foregroundColor: Color(0xFFFFFFFF),
+          ),
+          //enabled: false
+        ),
       ],
     ),
 
@@ -397,30 +409,30 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           ),
           //New Page is needed for design guideline
           PaneItem(
-              key:
-                  const ValueKey('/navigation/tree_view'), //need new key value?
-              icon: const Icon(FluentIcons.favorite_star),
-              title: const Text('Rating'),
-              body: const SizedBox.shrink(),
-              infoBadge: const InfoBadge(
-                source: Text('NOT ADDED YET  '),
-                color: Color(0xFF979593),
-                foregroundColor: Color(0xFFFFFFFF),
-              ),
-              enabled: false),
+            key: const ValueKey('/inputs/rating'), //need new key value?
+            icon: const Icon(FluentIcons.favorite_star),
+            title: const Text('Rating'),
+            body: const SizedBox.shrink(),
+            infoBadge: const InfoBadge(
+              source: Text('NOT ADDED YET  '),
+              color: Color(0xFF979593),
+              foregroundColor: Color(0xFFFFFFFF),
+            ),
+            //enabled: false
+          ),
           //New Page is needed for design guideline
           PaneItem(
-              key:
-                  const ValueKey('/navigation/tree_view'), //need new key value?
-              icon: const Icon(FluentIcons.tag),
-              title: const Text('Chips'),
-              body: const SizedBox.shrink(),
-              infoBadge: const InfoBadge(
-                source: Text('NOT ADDED YET  '),
-                color: Color(0xFF979593),
-                foregroundColor: Color(0xFFFFFFFF),
-              ),
-              enabled: false),
+            key: const ValueKey('/inputs/chips'), //need new key value?
+            icon: const Icon(FluentIcons.tag),
+            title: const Text('Chips'),
+            body: const SizedBox.shrink(),
+            infoBadge: const InfoBadge(
+              source: Text('NOT ADDED YET  '),
+              color: Color(0xFF979593),
+              foregroundColor: Color(0xFFFFFFFF),
+            ),
+            //enabled: false
+          ),
           PaneItem(
             key: const ValueKey('/inputs/toggle_switch'),
             icon: const Icon(FluentIcons.toggle_left),
@@ -428,7 +440,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             body: const SizedBox.shrink(),
           ),
           PaneItem(
-            key: const ValueKey('/forms/color_picker'),
+            key: const ValueKey('/inputs/color_picker'),
             icon: const Icon(FluentIcons.color),
             title: const Text('ColorPicker'),
             body: const SizedBox.shrink(),
@@ -464,37 +476,37 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
 
     //New Arrangement made, issue: indicator not appearing
     PaneItemExpander(
-      key: const ValueKey('/forms/textbox'),
+      key: const ValueKey('/text'),
       icon: const Icon(FluentIcons.font),
       title: const Text('Text'),
       body: const SizedBox.shrink(),
       items: [
         PaneItem(
-          key: const ValueKey('/forms/text_box'),
+          key: const ValueKey('/text/text_box'),
           icon: const Icon(FluentIcons.text_field),
           title: const Text('TextBox'),
           body: const SizedBox.shrink(),
         ),
         PaneItem(
-          key: const ValueKey('/forms/auto_suggest_box'),
+          key: const ValueKey('/text/auto_suggest_box'),
           icon: const Icon(FluentIcons.page_list),
           title: const Text('AutoSuggestBox'),
           body: const SizedBox.shrink(),
         ),
         PaneItem(
-          key: const ValueKey('/forms/combobox'),
+          key: const ValueKey('/text/combobox'),
           icon: const Icon(FluentIcons.combobox),
           title: const Text('ComboBox'),
           body: const SizedBox.shrink(),
         ),
         PaneItem(
-          key: const ValueKey('/forms/numberbox'),
+          key: const ValueKey('/text/numberbox'),
           icon: const Icon(FluentIcons.number),
           title: const Text('NumberBox'),
           body: const SizedBox.shrink(),
         ),
         PaneItem(
-          key: const ValueKey('/forms/passwordbox'),
+          key: const ValueKey('/text/passwordbox'),
           icon: const Icon(FluentIcons.password_field),
           title: const Text('PasswordBox'),
           body: const SizedBox.shrink(),
@@ -537,55 +549,58 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
 
     //New Arrangement made, issue: indicator not appearing
     PaneItemExpander(
-      key: const ValueKey('/forms/textbox'),
+      key: const ValueKey('/collections'),
       icon: const Icon(FluentIcons.grid_view_small),
       title: const Text('Collections'),
       body: const SizedBox.shrink(),
       items: [
         PaneItem(
-          key: const ValueKey('/surfaces/tiles'),
+          key: const ValueKey('/collections/tiles'),
           icon: const Icon(FluentIcons.tiles),
           title: const Text('Tiles'),
           body: const SizedBox.shrink(),
         ),
         //New Page is needed for design guideline
         PaneItem(
-            key: const ValueKey('/navigation/tree_view'), //need new key value?
-            icon: const Icon(FluentIcons.table),
-            title: const Text('Table'),
-            body: const SizedBox.shrink(),
-            infoBadge: const InfoBadge(
-              source: Text('NOT PLANNED  '),
-              color: Color(0xFF979593),
-              foregroundColor: Color(0xFFFFFFFF),
-            ),
-            enabled: false),
+          key: const ValueKey('/collections/table'), //need new key value?
+          icon: const Icon(FluentIcons.table),
+          title: const Text('Table'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(
+            source: Text('NOT PLANNED  '),
+            color: Color(0xFF979593),
+            foregroundColor: Color(0xFFFFFFFF),
+          ),
+          //enabled: false
+        ),
         //New Page is needed for design guideline
         PaneItem(
-            key: const ValueKey('/navigation/tree_view'), //need new key value?
-            icon: const Icon(FluentIcons.snap_to_grid),
-            title: const Text('Grid'),
-            body: const SizedBox.shrink(),
-            infoBadge: const InfoBadge(
-              source: Text('NOT ADDED YET  '),
-              color: Color(0xFF979593),
-              foregroundColor: Color(0xFFFFFFFF),
-            ),
-            enabled: false),
+          key: const ValueKey('/collections/grid'), //need new key value?
+          icon: const Icon(FluentIcons.snap_to_grid),
+          title: const Text('Grid'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(
+            source: Text('NOT ADDED YET  '),
+            color: Color(0xFF979593),
+            foregroundColor: Color(0xFFFFFFFF),
+          ),
+          //enabled: false
+        ),
         //New Page is needed for design guideline
         PaneItem(
-            key: const ValueKey('/navigation/tree_view'), //need new key value?
-            icon: const Icon(FluentIcons.five_tile_grid),
-            title: const Text('Flip View'),
-            body: const SizedBox.shrink(),
-            infoBadge: const InfoBadge(
-              source: Text('NOT ADDED YET  '),
-              color: Color(0xFF979593),
-              foregroundColor: Color(0xFFFFFFFF),
-            ),
-            enabled: false),
+          key: const ValueKey('/collections/flip_view'), //need new key value?
+          icon: const Icon(FluentIcons.five_tile_grid),
+          title: const Text('Flip View'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(
+            source: Text('NOT ADDED YET  '),
+            color: Color(0xFF979593),
+            foregroundColor: Color(0xFFFFFFFF),
+          ),
+          //enabled: false
+        ),
         PaneItem(
-          key: const ValueKey('/surfaces/expander'),
+          key: const ValueKey('/collections/expander'),
           icon: const Icon(FluentIcons.expand_all),
           title: const Text('Expander'),
           body: const SizedBox.shrink(),
@@ -595,35 +610,36 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
 
     //New Arrangement made, issue: indicator not appearing
     PaneItemExpander(
-      key: const ValueKey('/forms/textbox'),
+      key: const ValueKey('/datetime'),
       icon: const Icon(FluentIcons.date_time),
       title: const Text('Date and Time'),
       body: const SizedBox.shrink(),
       items: [
         PaneItem(
-          key: const ValueKey('/forms/time_picker'),
+          key: const ValueKey('/datetime/time_picker'),
           icon: const Icon(FluentIcons.time_picker),
           title: const Text('TimePicker'),
           body: const SizedBox.shrink(),
         ),
         PaneItem(
-          key: const ValueKey('/forms/date_picker'),
+          key: const ValueKey('/datetime/date_picker'),
           icon: const Icon(FluentIcons.date_time),
           title: const Text('DatePicker'),
           body: const SizedBox.shrink(),
         ),
         //New Page is needed for design guideline
         PaneItem(
-            key: const ValueKey('/navigation/tree_view'), //need new key value?
-            icon: const Icon(FluentIcons.calendar),
-            title: const Text('Calendar View'),
-            body: const SizedBox.shrink(),
-            infoBadge: const InfoBadge(
-              source: Text('NOT ADDED YET  '),
-              color: Color(0xFF979593),
-              foregroundColor: Color(0xFFFFFFFF),
-            ),
-            enabled: false),
+          key: const ValueKey('/datetime/calendar_view'), //need new key value?
+          icon: const Icon(FluentIcons.calendar),
+          title: const Text('Calendar View'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(
+            source: Text('NOT ADDED YET  '),
+            color: Color(0xFF979593),
+            foregroundColor: Color(0xFFFFFFFF),
+          ),
+          //enabled: false
+        ),
       ],
     ),
 
@@ -652,7 +668,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
 
     //New Arrangement made, issue: indicator not appearing
     PaneItemExpander(
-      key: const ValueKey('/forms/textbox'),
+      key: const ValueKey('/popups'),
       icon: const Icon(FluentIcons.chat),
       title: const Text('Popups'),
       body: const SizedBox.shrink(),
@@ -680,81 +696,84 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
 
     //New Arrangement made, issue: indicator not appearing
     PaneItemExpander(
-      key: const ValueKey('/forms/textbox'),
+      key: const ValueKey('/media'),
       icon: const Icon(FluentIcons.media),
       title: const Text('Media'),
       body: const SizedBox.shrink(),
       items: [
         //New Page is needed for design guideline
         PaneItem(
-            key: const ValueKey('/navigation/tree_view'), //need new key value?
-            icon: const Icon(FluentIcons.people),
-            title: const Text('Avatar'),
-            body: const SizedBox.shrink(),
-            infoBadge: const InfoBadge(
-              source: Text('NOT ADDED YET  '),
-              color: Color(0xFF979593),
-              foregroundColor: Color(0xFFFFFFFF),
-            ),
-            enabled: false),
+          key: const ValueKey('/media/avatar'), //need new key value?
+          icon: const Icon(FluentIcons.people),
+          title: const Text('Avatar'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(
+            source: Text('NOT ADDED YET  '),
+            color: Color(0xFF979593),
+            foregroundColor: Color(0xFFFFFFFF),
+          ),
+          //enabled: false
+        ),
         //New Page is needed for design guideline
         PaneItem(
-            key: const ValueKey('/navigation/tree_view'), //need new key value?
-            icon: const Icon(FluentIcons.playback_rate1x),
-            title: const Text('Media Player'),
-            body: const SizedBox.shrink(),
-            infoBadge: const InfoBadge(
-              source: Text('NOT ADDED YET  '),
-              color: Color(0xFF979593),
-              foregroundColor: Color(0xFFFFFFFF),
-            ),
-            enabled: false),
+          key: const ValueKey('/media/media_player'), //need new key value?
+          icon: const Icon(FluentIcons.playback_rate1x),
+          title: const Text('Media Player'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(
+            source: Text('NOT ADDED YET  '),
+            color: Color(0xFF979593),
+            foregroundColor: Color(0xFFFFFFFF),
+          ),
+          //enabled: false
+        ),
       ],
     ),
 
     //New Arrangement made, issue: indicator not appearing
     PaneItemExpander(
-      key: const ValueKey('/forms/textbox'),
+      key: const ValueKey('/toolbar'),
       icon: const Icon(FluentIcons.toolbox),
       title: const Text('Menus and Toolbar'),
       body: const SizedBox.shrink(),
       items: [
         PaneItem(
-          key: const ValueKey('/popups/menu_bar'),
+          key: const ValueKey('/toolbar/menu_bar'),
           icon: const Icon(FluentIcons.expand_menu),
           title: const Text('MenuBar'),
           body: const SizedBox.shrink(),
         ),
         PaneItem(
-          key: const ValueKey('/popups/flyout'),
+          key: const ValueKey('/toolbar/context_menu'),
           icon: const Icon(FluentIcons.pop_expand),
-          title: const Text('Flyout (new page only context)'),
+          title: const Text('Context Menu'),
           body: const SizedBox.shrink(),
         ),
         PaneItem(
-          key: const ValueKey('/surfaces/command_bar'),
+          key: const ValueKey('/toolbar/command_bar'),
           icon: const Icon(FluentIcons.customize_toolbar),
           title: const Text('CommandBar'),
           body: const SizedBox.shrink(),
         ),
         //New Page is needed for design guideline
         PaneItem(
-            key: const ValueKey('/navigation/tree_view'), //need new key value?
-            icon: const Icon(FluentIcons.inking_tool),
-            title: const Text('Ink Toolbar'),
-            body: const SizedBox.shrink(),
-            infoBadge: const InfoBadge(
-              source: Text('NOT ADDED YET  '),
-              color: Color(0xFF979593),
-              foregroundColor: Color(0xFFFFFFFF),
-            ),
-            enabled: false),
+          key: const ValueKey('/toolbar/ink_toolbar'), //need new key value?
+          icon: const Icon(FluentIcons.inking_tool),
+          title: const Text('Ink Toolbar'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(
+            source: Text('NOT ADDED YET  '),
+            color: Color(0xFF979593),
+            foregroundColor: Color(0xFFFFFFFF),
+          ),
+          //enabled: false
+        ),
       ],
     ),
 
     //New Arrangement made, issue: indicator not appearing
     PaneItemExpander(
-      key: const ValueKey('/forms/textbox'),
+      key: const ValueKey('/navigation'),
       icon: const Icon(FluentIcons.collapse_menu),
       title: const Text('Navigation'),
       body: const SizedBox.shrink(),
@@ -815,14 +834,14 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
 
     //New Arrangement made, issue: indicator not appearing
     PaneItemExpander(
-      key: const ValueKey('/forms/textbox'),
+      key: const ValueKey('/scrolling'),
       icon: const Icon(FluentIcons.sort),
       title: const Text('Scrolling'),
       body: const SizedBox.shrink(),
       items: [
         //New Page is needed for design guideline
         PaneItem(
-          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          key: const ValueKey('/scrolling/scroll_bar'), //need new key value?
           icon: const Icon(FluentIcons.scroll_up_down),
           title: const Text('ScrollBar'),
           body: const SizedBox.shrink(),
@@ -830,69 +849,73 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
         ),
         //New Page is needed for design guideline
         PaneItem(
-            key: const ValueKey('/navigation/tab_view'), //need new key value?
-            icon: const Icon(FluentIcons.timeline),
-            title: const Text('Annotated Scroll'),
-            body: const SizedBox.shrink(),
-            infoBadge: const InfoBadge(
-              source: Text('NOT ADDED YET  '),
-              color: Color(0xFF979593),
-              foregroundColor: Color(0xFFFFFFFF),
-            ),
-            enabled: false),
+          key: const ValueKey(
+              '/scrolling/annotated_scroll'), //need new key value?
+          icon: const Icon(FluentIcons.timeline),
+          title: const Text('Annotated Scroll'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(
+            source: Text('NOT ADDED YET  '),
+            color: Color(0xFF979593),
+            foregroundColor: Color(0xFFFFFFFF),
+          ),
+          //enabled: false
+        ),
         //New Page is needed for design guideline
         PaneItem(
-            key: const ValueKey('/navigation/tree_view'), //need new key value?
-            icon: const Icon(FluentIcons.page),
-            title: const Text('Pigs Page'),
-            body: const SizedBox.shrink(),
-            infoBadge: const InfoBadge(
-              source: Text('NOT ADDED YET  '),
-              color: Color(0xFF979593),
-              foregroundColor: Color(0xFFFFFFFF),
-            ),
-            enabled: false),
+          key: const ValueKey('/scrolling/pigs_page'), //need new key value?
+          icon: const Icon(FluentIcons.page),
+          title: const Text('Pigs Page'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(
+            source: Text('NOT ADDED YET  '),
+            color: Color(0xFF979593),
+            foregroundColor: Color(0xFFFFFFFF),
+          ),
+          //enabled: false
+        ),
       ],
     ),
 
     //New Arrangement made, issue: indicator not appearing
     PaneItemExpander(
-      key: const ValueKey('/forms/textbox'),
+      key: const ValueKey('/status'),
       icon: const Icon(FluentIcons.info),
       title: const Text('Status and Info'),
       body: const SizedBox.shrink(),
       items: [
         PaneItem(
-          key: const ValueKey('/surfaces/info_bar'),
+          key: const ValueKey('/status/info_bar'),
           icon: const Icon(FluentIcons.info_solid),
           title: const Text('InfoBar'),
           body: const SizedBox.shrink(),
         ),
         PaneItem(
-          key: const ValueKey('/surfaces/progress_indicators'),
+          key: const ValueKey('/status/progress_indicators'),
           icon: const Icon(FluentIcons.progress_ring_dots),
           title: const Text('Progress Indicators'),
           body: const SizedBox.shrink(),
         ),
         PaneItem(
-            key: const ValueKey('/navigation/tree_view'), //need new key value?
-            icon: const Icon(FluentIcons.light),
-            title: const Text('Shimmer'),
-            body: const SizedBox.shrink(),
-            infoBadge: const InfoBadge(
-              source: Text('NOT ADDED YET  '),
-              color: Color(0xFF979593),
-              foregroundColor: Color(0xFFFFFFFF),
-            ),
-            enabled: false),
+          key: const ValueKey('/status/shimmer'), //need new key value?
+          icon: const Icon(FluentIcons.light),
+          title: const Text('Shimmer'),
+          body: const SizedBox.shrink(),
+          infoBadge: const InfoBadge(
+            source: Text('NOT ADDED YET  '),
+            color: Color(0xFF979593),
+            foregroundColor: Color(0xFFFFFFFF),
+          ),
+          //enabled: false
+        ),
         PaneItem(
-          key: const ValueKey('/popups/tooltip'),
+          key: const ValueKey('/status/tooltip'),
           icon: const Icon(FluentIcons.hint_text),
           title: const Text('Tooltip'),
           body: const SizedBox.shrink(),
         ),
         PaneItem(
-          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          key: const ValueKey('/status/badge'), //need new key value?
           icon: const Icon(FluentIcons.scroll_up_down),
           title: const Text('Badge'),
           body: const SizedBox.shrink(),
@@ -1464,32 +1487,6 @@ final router = GoRouter(navigatorKey: rootNavigatorKey, routes: [
         ),
       ),
 
-      /// /// Platforms Expander
-      /// Windows
-      GoRoute(
-        path: '/platforms/spacing', <--- last edited
-        builder: (context, state) => DeferredWidget(
-          layout.loadLibrary,
-          () => layout.SpacingPage(),
-        ),
-      ),
-      /// Spacing
-      GoRoute(
-        path: '/layout/windows_size',
-        builder: (context, state) => DeferredWidget(
-          layout.loadLibrary,
-          () => layout.WindowSizePage(),
-        ),
-      ),
-      /// Spacing
-      GoRoute(
-        path: '/layout/hardware_consideration',
-        builder: (context, state) => DeferredWidget(
-          layout.loadLibrary,
-          () => layout.HardwareConsiderationPage(),
-        ),
-      ),
-
       /// /// Layout Expander
       /// Spacing
       GoRoute(
@@ -1500,7 +1497,136 @@ final router = GoRouter(navigatorKey: rootNavigatorKey, routes: [
         ),
       ),
 
-      /// /// Input
+      /// Windows Size
+      GoRoute(
+        path: '/layout/windows_size',
+        builder: (context, state) => DeferredWidget(
+          layout.loadLibrary,
+          () => layout.WindowsSizePage(),
+        ),
+      ),
+
+      /// Hardware Consideration
+      GoRoute(
+        path: '/layout/hardware_consideration',
+        builder: (context, state) => DeferredWidget(
+          layout.loadLibrary,
+          () => layout.HardwareConsiderationPage(),
+        ),
+      ),
+
+      /// /// Platforms Expander
+      /// Windows
+      GoRoute(
+        path: '/platforms/windows',
+        builder: (context, state) => DeferredWidget(
+          platforms.loadLibrary,
+          () => platforms.WindowsPage(),
+        ),
+      ),
+
+      /// Mac OS
+      GoRoute(
+        path: '/platforms/macos',
+        builder: (context, state) => DeferredWidget(
+          platforms.loadLibrary,
+          () => platforms.MacOSPage(),
+        ),
+      ),
+
+      /// Web
+      GoRoute(
+        path: '/platforms/web',
+        builder: (context, state) => DeferredWidget(
+          platforms.loadLibrary,
+          () => platforms.WebPage(),
+        ),
+      ),
+
+      /// Linux
+      GoRoute(
+        path: '/platforms/linux',
+        builder: (context, state) => DeferredWidget(
+          platforms.loadLibrary,
+          () => platforms.LinuxPage(),
+        ),
+      ),
+
+      /// Android
+      GoRoute(
+        path: '/platforms/android',
+        builder: (context, state) => DeferredWidget(
+          platforms.loadLibrary,
+          () => platforms.AndroidPage(),
+        ),
+      ),
+
+      /// Ios
+      GoRoute(
+        path: '/platforms/ios',
+        builder: (context, state) => DeferredWidget(
+          platforms.loadLibrary,
+          () => platforms.IosPage(),
+        ),
+      ),
+
+      /// /// Fluent App Expander
+      /// Splash Screen
+      GoRoute(
+        path: '/fluentapp/splash_screen',
+        builder: (context, state) => DeferredWidget(
+          fluentapp.loadLibrary,
+          () => fluentapp.SplashScreenPage(),
+        ),
+      ),
+
+      /// Appbar
+      GoRoute(
+        path: '/fluentapp/appbar',
+        builder: (context, state) => DeferredWidget(
+          fluentapp.loadLibrary,
+          () => fluentapp.AppBarPage(),
+        ),
+      ),
+
+      /// /// Surfaces Expander
+      /// Material
+      GoRoute(
+        path: '/surfaces/materials',
+        builder: (context, state) => DeferredWidget(
+          surfaces.loadLibrary,
+          () => surfaces.MaterialsPage(),
+        ),
+      ),
+
+      /// Carousel
+      GoRoute(
+        path: '/surfaces/carousel',
+        builder: (context, state) => DeferredWidget(
+          surfaces.loadLibrary,
+          () => surfaces.CarouselPage(),
+        ),
+      ),
+
+      /// Cards
+      GoRoute(
+        path: '/surfaces/cards',
+        builder: (context, state) => DeferredWidget(
+          surfaces.loadLibrary,
+          () => surfaces.CardsPage(),
+        ),
+      ),
+
+      /// Sheets
+      GoRoute(
+        path: '/surfaces/sheets',
+        builder: (context, state) => DeferredWidget(
+          surfaces.loadLibrary,
+          () => surfaces.SheetsPage(),
+        ),
+      ),
+
+      /// /// Input Expander
       /// Buttons
       GoRoute(
         path: '/inputs/buttons',
@@ -1528,6 +1654,24 @@ final router = GoRouter(navigatorKey: rootNavigatorKey, routes: [
         ),
       ),
 
+      // Rating
+      GoRoute(
+        path: '/inputs/rating',
+        builder: (context, state) => DeferredWidget(
+          inputs.loadLibrary,
+          () => inputs.RatingPage(),
+        ),
+      ),
+
+      // Chips
+      GoRoute(
+        path: '/inputs/chips',
+        builder: (context, state) => DeferredWidget(
+          inputs.loadLibrary,
+          () => inputs.ChipsPage(),
+        ),
+      ),
+
       /// ToggleSwitch
       GoRoute(
         path: '/inputs/toggle_switch',
@@ -1537,75 +1681,215 @@ final router = GoRouter(navigatorKey: rootNavigatorKey, routes: [
         ),
       ),
 
-      /// /// Form
+      /// ColorPicker
+      GoRoute(
+        path: '/inputs/color_picker',
+        builder: (context, state) => DeferredWidget(
+          inputs.loadLibrary,
+          () => inputs.ColorPickerPage(),
+        ),
+      ),
+
+      /// /// Text
       /// TextBox
       GoRoute(
-        path: '/forms/text_box',
+        path: '/text/text_box',
         builder: (context, state) => DeferredWidget(
-          forms.loadLibrary,
-          () => forms.TextBoxPage(),
+          text.loadLibrary,
+          () => text.TextBoxPage(),
         ),
       ),
 
       /// AutoSuggestBox
       GoRoute(
-        path: '/forms/auto_suggest_box',
+        path: '/text/auto_suggest_box',
         builder: (context, state) => DeferredWidget(
-          forms.loadLibrary,
-          () => forms.AutoSuggestBoxPage(),
+          text.loadLibrary,
+          () => text.AutoSuggestBoxPage(),
         ),
       ),
 
       /// ComboBox
       GoRoute(
-        path: '/forms/combobox',
+        path: '/text/combobox',
         builder: (context, state) => DeferredWidget(
-          forms.loadLibrary,
-          () => forms.ComboBoxPage(),
+          text.loadLibrary,
+          () => text.ComboBoxPage(),
         ),
       ),
 
       /// NumberBox
       GoRoute(
-        path: '/forms/numberbox',
+        path: '/text/numberbox',
         builder: (context, state) => DeferredWidget(
-          forms.loadLibrary,
-          () => forms.NumberBoxPage(),
+          text.loadLibrary,
+          () => text.NumberBoxPage(),
         ),
       ),
 
       GoRoute(
-        path: '/forms/passwordbox',
+        path: '/text/passwordbox',
         builder: (context, state) => DeferredWidget(
-          forms.loadLibrary,
-          () => forms.PasswordBoxPage(),
+          text.loadLibrary,
+          () => text.PasswordBoxPage(),
         ),
       ),
 
+      /// /// Collections
+      /// Tiles
+      GoRoute(
+        path: '/collections/tiles',
+        builder: (context, state) => DeferredWidget(
+          collections.loadLibrary,
+          () => collections.TilesPage(),
+        ),
+      ),
+
+      /// Table
+      GoRoute(
+        path: '/collections/table',
+        builder: (context, state) => DeferredWidget(
+          collections.loadLibrary,
+          () => collections.TablePage(),
+        ),
+      ),
+
+      /// Tiles
+      GoRoute(
+        path: '/collections/grid',
+        builder: (context, state) => DeferredWidget(
+          collections.loadLibrary,
+          () => collections.GridPage(),
+        ),
+      ),
+
+      /// Tiles
+      GoRoute(
+        path: '/collections/flip_view',
+        builder: (context, state) => DeferredWidget(
+          collections.loadLibrary,
+          () => collections.FlipViewPage(),
+        ),
+      ),
+
+      /// Expander
+      GoRoute(
+        path: '/collections/expander',
+        builder: (context, state) => DeferredWidget(
+          collections.loadLibrary,
+          () => collections.ExpanderPage(),
+        ),
+      ),
+
+      /// /// Date and Time
       /// TimePicker
       GoRoute(
-        path: '/forms/time_picker',
+        path: '/datetime/time_picker',
         builder: (context, state) => DeferredWidget(
-          forms.loadLibrary,
-          () => forms.TimePickerPage(),
+          datetime.loadLibrary,
+          () => datetime.TimePickerPage(),
         ),
       ),
 
       /// DatePicker
       GoRoute(
-        path: '/forms/date_picker',
+        path: '/datetime/date_picker',
         builder: (context, state) => DeferredWidget(
-          forms.loadLibrary,
-          () => forms.DatePickerPage(),
+          datetime.loadLibrary,
+          () => datetime.DatePickerPage(),
         ),
       ),
 
-      /// ColorPicker
+      /// DatePicker
       GoRoute(
-        path: '/forms/color_picker',
+        path: '/datetime/calendar_view',
         builder: (context, state) => DeferredWidget(
-          forms.loadLibrary,
-          () => forms.ColorPickerPage(),
+          datetime.loadLibrary,
+          () => datetime.CalendarViewPage(),
+        ),
+      ),
+
+      /// Popups
+      /// ContentDialog
+      GoRoute(
+        path: '/popups/content_dialog',
+        builder: (context, state) => DeferredWidget(
+          popups.loadLibrary,
+          () => popups.ContentDialogPage(),
+        ),
+      ),
+
+      /// Flyout
+      GoRoute(
+        path: '/popups/flyout',
+        builder: (context, state) => DeferredWidget(
+          popups.loadLibrary,
+          () => popups.Flyout2Screen(),
+        ),
+      ),
+
+      /// Teaching Tip
+      GoRoute(
+        path: '/popups/teaching_tip',
+        builder: (context, state) => DeferredWidget(
+          popups.loadLibrary,
+          () => popups.TeachingTipPage(),
+        ),
+      ),
+
+      /// /// Media
+      /// Avatar
+      GoRoute(
+        path: '/media/avatar',
+        builder: (context, state) => DeferredWidget(
+          media.loadLibrary,
+          () => media.AvatarPage(),
+        ),
+      ),
+
+      /// Media Player
+      GoRoute(
+        path: '/media/media_player',
+        builder: (context, state) => DeferredWidget(
+          media.loadLibrary,
+          () => media.MediaPlayerPage(),
+        ),
+      ),
+
+      /// /// Toolbar
+      /// MenuBar
+      GoRoute(
+        path: '/toolbar/menu_bar',
+        builder: (context, state) => DeferredWidget(
+          toolbar.loadLibrary,
+          () => toolbar.MenuBarPage(),
+        ),
+      ),
+
+      /// MenuBar
+      GoRoute(
+        path: '/toolbar/context_menu',
+        builder: (context, state) => DeferredWidget(
+          toolbar.loadLibrary,
+          () => toolbar.ContextMenuPage(),
+        ),
+      ),
+
+      /// CommandBar
+      GoRoute(
+        path: '/toolbar/command_bar',
+        builder: (context, state) => DeferredWidget(
+          toolbar.loadLibrary,
+          () => toolbar.CommandBarsPage(),
+        ),
+      ),
+
+      /// Ink Toolbar
+      GoRoute(
+        path: '/toolbar/ink_toolbar',
+        builder: (context, state) => DeferredWidget(
+          toolbar.loadLibrary,
+          () => toolbar.InkToolbarPage(),
         ),
       ),
 
@@ -1653,104 +1937,77 @@ final router = GoRouter(navigatorKey: rootNavigatorKey, routes: [
         ),
       ),
 
-      /// /// Surfaces
-      /// Acrylic
+      /// /// Scrolling
+      /// Scroll Bar
       GoRoute(
-        path: '/surfaces/acrylic',
+        path: '/scrolling/scroll_bar',
         builder: (context, state) => DeferredWidget(
-          surfaces.loadLibrary,
-          () => surfaces.MaterialsPage(),
+          scrolling.loadLibrary,
+          () => scrolling.ScrollbarPage(),
         ),
       ),
 
-      /// CommandBar
+      /// Scroll Bar
       GoRoute(
-        path: '/surfaces/command_bar',
+        path: '/scrolling/annotated_scroll',
         builder: (context, state) => DeferredWidget(
-          surfaces.loadLibrary,
-          () => surfaces.CommandBarsPage(),
+          scrolling.loadLibrary,
+          () => scrolling.AnnotatedScrollPage(),
         ),
       ),
 
-      /// Expander
+      /// Pigs Page
       GoRoute(
-        path: '/surfaces/expander',
+        path: '/scrolling/pigs_page',
         builder: (context, state) => DeferredWidget(
-          surfaces.loadLibrary,
-          () => surfaces.ExpanderPage(),
+          scrolling.loadLibrary,
+          () => scrolling.PigsPagePage(),
         ),
       ),
 
+      /// /// Status
       /// InfoBar
       GoRoute(
-        path: '/surfaces/info_bar',
+        path: '/status/info_bar',
         builder: (context, state) => DeferredWidget(
-          surfaces.loadLibrary,
-          () => surfaces.InfoBarsPage(),
+          status.loadLibrary,
+          () => status.InfoBarsPage(),
         ),
       ),
 
       /// Progress Indicators
       GoRoute(
-        path: '/surfaces/progress_indicators',
+        path: '/status/progress_indicators',
         builder: (context, state) => DeferredWidget(
-          surfaces.loadLibrary,
-          () => surfaces.ProgressIndicatorsPage(),
-        ),
-      ),
-
-      /// Tiles
-      GoRoute(
-        path: '/surfaces/tiles',
-        builder: (context, state) => DeferredWidget(
-          surfaces.loadLibrary,
-          () => surfaces.TilesPage(),
-        ),
-      ),
-
-      /// Popups
-      /// ContentDialog
-      GoRoute(
-        path: '/popups/content_dialog',
-        builder: (context, state) => DeferredWidget(
-          surfaces.loadLibrary,
-          () => popups.ContentDialogPage(),
-        ),
-      ),
-
-      /// MenuBar
-      GoRoute(
-        path: '/popups/menu_bar',
-        builder: (context, state) => DeferredWidget(
-          surfaces.loadLibrary,
-          () => popups.MenuBarPage(),
+          status.loadLibrary,
+          () => status.ProgressIndicatorsPage(),
         ),
       ),
 
       /// Tooltip
       GoRoute(
-        path: '/popups/tooltip',
+        path: '/status/shimmer',
         builder: (context, state) => DeferredWidget(
-          surfaces.loadLibrary,
-          () => popups.TooltipPage(),
+          status.loadLibrary,
+          () => status.ShimmerPage(),
         ),
       ),
 
-      /// Flyout
+      /// Tooltip
       GoRoute(
-        path: '/popups/flyout',
+        path: '/status/tooltip',
         builder: (context, state) => DeferredWidget(
-          surfaces.loadLibrary,
-          () => popups.Flyout2Screen(),
+          status.loadLibrary,
+          () => status.TooltipPage(),
         ),
       ),
 
-      /// Teaching Tip
+      /// Badge
       GoRoute(
-        path: '/popups/teaching_tip',
+        path: '/status/badge',
         builder: (context, state) => DeferredWidget(
-          surfaces.loadLibrary,
-          () => popups.TeachingTipPage(),
+          status.loadLibrary,
+          () => status.BadgePage(),
         ),
       ),
     ],
