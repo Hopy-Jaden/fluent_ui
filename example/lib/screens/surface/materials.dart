@@ -23,14 +23,14 @@ InlineSpan _buildLabel(String label, String description) {
   );
 }
 
-class AcrylicPage extends StatefulWidget {
-  const AcrylicPage({super.key});
+class MaterialsPage extends StatefulWidget {
+  const MaterialsPage({super.key});
 
   @override
-  State<AcrylicPage> createState() => _AcrylicPageState();
+  State<MaterialsPage> createState() => _MaterialsPageState();
 }
 
-class _AcrylicPageState extends State<AcrylicPage> with PageMixin {
+class _MaterialsPageState extends State<MaterialsPage> with PageMixin {
   double tintOpacity = 0.8;
   double luminosityOpacity = 0.8;
   double blurAmout = 30;

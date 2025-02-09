@@ -187,14 +187,6 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           title: const Text('Icongraphy'), // title is modified
           body: const SizedBox.shrink(),
         ),
-        //New Page is needed for design guideline
-        PaneItem(
-          key: const ValueKey('/theming/reveal_focus'), //need new key value?
-          icon: const Icon(FluentIcons.grid_view_medium),
-          title: const Text('Spacing'),
-          body: const SizedBox.shrink(), //need a new page
-          infoBadge: const InfoBadge(source: Text('NEW  ')),
-        ),
         PaneItem(
           key: const ValueKey('/theming/typography'),
           icon: const Icon(FluentIcons.font),
@@ -217,34 +209,28 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       body: const SizedBox.shrink(),
       infoBadge: const InfoBadge(source: Text('NEW  ')),
       items: [
-        /*New Page is needed for design guideline
+        //New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          icon: const Icon(FluentIcons.grid_view_medium),
+          title: const Text('Spacing'),
+          body: const SizedBox.shrink(), //need a new page
+        ),
+        //New Page is needed for design guideline
+        PaneItem(
+          key: const ValueKey('/theming/reveal_focus'), //need new key value?
+          icon: const Icon(FluentIcons.grid_view_medium),
+          title: const Text('Windows Size'),
+          body: const SizedBox.shrink(), //need a new page
+        ),
+        //New Page is needed for design guideline
         PaneItem(
           key: const ValueKey('/theming/reveal_focus'), //need new key value?
           icon: const Icon(FluentIcons.user_window),
-          title: const Text('Windows'),
+          title: const Text('Hardware Considerations'),
           body: const SizedBox.shrink(),
-          infoBadge:
-              const InfoBadge(source: Text('NEW  ')),  
-        ),*/
-      ],
-    ),
-
-    //New Arrangement made, issue: indicator not appearing
-    PaneItemExpander(
-      icon: const Icon(FluentIcons.lightning_bolt),
-      title: const Text('Animations'),
-      body: const SizedBox.shrink(),
-      infoBadge: const InfoBadge(source: Text('NEW  ')),
-      items: [
-        /*New Page is needed for design guideline
-        PaneItem(
-          key: const ValueKey('/theming/reveal_focus'), //need new key value?
-          icon: const Icon(FluentIcons.user_window),
-          title: const Text('Windows'),
-          body: const SizedBox.shrink(),
-          infoBadge:
-              const InfoBadge(source: Text('NEW  ')),  
-        ),*/
+          infoBadge: const InfoBadge(source: Text('NEW  ')),
+        ),
       ],
     ),
 
@@ -379,7 +365,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
     PaneItemExpander(
         key: const ValueKey('/forms/textbox'),
         icon: const Icon(FluentIcons.checkbox_composite),
-        title: const Text('Basic Input'),
+        title: const Text('Input'),
         body: const SizedBox.shrink(),
         items: [
           PaneItem(
@@ -1582,7 +1568,7 @@ final router = GoRouter(navigatorKey: rootNavigatorKey, routes: [
         path: '/surfaces/acrylic',
         builder: (context, state) => DeferredWidget(
           surfaces.loadLibrary,
-          () => surfaces.AcrylicPage(),
+          () => surfaces.MaterialsPage(),
         ),
       ),
 

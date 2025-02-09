@@ -1,4 +1,4 @@
-export '../screens/theming/colors.dart';
-export '../screens/theming/icons.dart';
-export '../screens/theming/reveal_focus.dart';
-export '../screens/theming/typography.dart';
+export '../screens/styles/colors.dart';
+export '../screens/styles/icons.dart';
+export '../screens/styles/reveal_focus.dart';
+export '../screens/styles/typography.dart';
