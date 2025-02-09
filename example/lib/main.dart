@@ -9,12 +9,21 @@ import 'package:system_theme/system_theme.dart';
 import 'package:url_launcher/link.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'routes/text.dart' deferred as forms;
-import 'routes/inputs.dart' deferred as inputs;
-import 'routes/navigation.dart' deferred as navigation;
-import 'routes/popups.dart' deferred as popups;
+import 'routes/styles.dart' deferred as styles;
+import 'routes/layout.dart' deferred as layout;
+import 'routes/platforms.dart' deferred as platforms;
+import 'routes/fluentapp.dart' deferred as fluentapp;
 import 'routes/surfaces.dart' deferred as surfaces;
-import 'routes/styles.dart' deferred as theming;
+import 'routes/inputs.dart' deferred as inputs;
+import 'routes/text.dart' deferred as text;
+import 'routes/collections.dart' deferred as collections;
+import 'routes/datetime.dart' deferred as datetime;
+import 'routes/popups.dart' deferred as popups;
+import 'routes/media.dart' deferred as media;
+import 'routes/toolbar.dart' deferred as toolbar;
+import 'routes/navigation.dart' deferred as navigation;
+import 'routes/scrolling.dart' deferred as scrolling;
+import 'routes/status.dart' deferred as status;
 import 'theme.dart';
 import 'widgets/deferred_widget.dart';
 
@@ -1409,6 +1418,88 @@ final router = GoRouter(navigatorKey: rootNavigatorKey, routes: [
       /// Settings
       GoRoute(path: '/settings', builder: (context, state) => const Settings()),
 
+      /// /// Styles Expander
+      /// Colors
+      GoRoute(
+        path: '/styles/colors',
+        builder: (context, state) => DeferredWidget(
+          styles.loadLibrary,
+          () => styles.ColorsPage(),
+        ),
+      ),
+
+      /// Geometry
+      GoRoute(
+        path: '/styles/geometry',
+        builder: (context, state) => DeferredWidget(
+          styles.loadLibrary,
+          () => styles.GeometryPage(),
+        ),
+      ),
+
+      /// Typography
+      GoRoute(
+        path: '/styles/typography',
+        builder: (context, state) => DeferredWidget(
+          styles.loadLibrary,
+          () => styles.TypographyPage(),
+        ),
+      ),
+
+      /// Icongraphy
+      GoRoute(
+        path: '/styles/icongraphy',
+        builder: (context, state) => DeferredWidget(
+          styles.loadLibrary,
+          () => styles.IcongraphyPage(),
+        ),
+      ),
+
+      /// Reveal Focus
+      GoRoute(
+        path: '/styles/reveal_focus',
+        builder: (context, state) => DeferredWidget(
+          styles.loadLibrary,
+          () => styles.RevealFocusPage(),
+        ),
+      ),
+
+      /// /// Platforms Expander
+      /// Windows
+      GoRoute(
+        path: '/platforms/spacing', <--- last edited
+        builder: (context, state) => DeferredWidget(
+          layout.loadLibrary,
+          () => layout.SpacingPage(),
+        ),
+      ),
+      /// Spacing
+      GoRoute(
+        path: '/layout/windows_size',
+        builder: (context, state) => DeferredWidget(
+          layout.loadLibrary,
+          () => layout.WindowSizePage(),
+        ),
+      ),
+      /// Spacing
+      GoRoute(
+        path: '/layout/hardware_consideration',
+        builder: (context, state) => DeferredWidget(
+          layout.loadLibrary,
+          () => layout.HardwareConsiderationPage(),
+        ),
+      ),
+
+      /// /// Layout Expander
+      /// Spacing
+      GoRoute(
+        path: '/layout/spacing',
+        builder: (context, state) => DeferredWidget(
+          layout.loadLibrary,
+          () => layout.SpacingPage(),
+        ),
+      ),
+
       /// /// Input
       /// Buttons
       GoRoute(
@@ -1660,43 +1751,6 @@ final router = GoRouter(navigatorKey: rootNavigatorKey, routes: [
         builder: (context, state) => DeferredWidget(
           surfaces.loadLibrary,
           () => popups.TeachingTipPage(),
-        ),
-      ),
-
-      /// /// Theming
-      /// Colors
-      GoRoute(
-        path: '/theming/colors',
-        builder: (context, state) => DeferredWidget(
-          theming.loadLibrary,
-          () => theming.ColorsPage(),
-        ),
-      ),
-
-      /// Typography
-      GoRoute(
-        path: '/theming/typography',
-        builder: (context, state) => DeferredWidget(
-          theming.loadLibrary,
-          () => theming.TypographyPage(),
-        ),
-      ),
-
-      /// Icons
-      GoRoute(
-        path: '/theming/icons',
-        builder: (context, state) => DeferredWidget(
-          theming.loadLibrary,
-          () => theming.IconsPage(),
-        ),
-      ),
-
-      /// Reveal Focus
-      GoRoute(
-        path: '/theming/reveal_focus',
-        builder: (context, state) => DeferredWidget(
-          theming.loadLibrary,
-          () => theming.RevealFocusPage(),
         ),
       ),
     ],

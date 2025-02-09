@@ -26,14 +26,14 @@ Future<void> showCopiedSnackbar(BuildContext context, String copiedText) {
   );
 }
 
-class IconsPage extends StatefulWidget {
-  const IconsPage({super.key});
+class IcongraphyPage extends StatefulWidget {
+  const IcongraphyPage({super.key});
 
   @override
-  State<IconsPage> createState() => _IconsPageState();
+  State<IcongraphyPage> createState() => _IcongraphyPageState();
 }
 
-class _IconsPageState extends State<IconsPage> {
+class _IcongraphyPageState extends State<IcongraphyPage> {
   String filterText = '';
 
   @override
