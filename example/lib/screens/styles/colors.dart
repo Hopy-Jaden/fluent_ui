@@ -14,9 +14,15 @@ const _primaryNames = [
   'Green',
 ];
 
-class ColorsPage extends StatelessWidget {
+class ColorsPage extends StatefulWidget {
   const ColorsPage({super.key});
 
+  @override
+  State<ColorsPage> createState() => _ColorsPageState();
+}
+
+class _ColorsPageState extends State<ColorsPage> {
+  int topIndex = 0;
   @override
   Widget build(BuildContext context) {
     const Divider divider = Divider(
@@ -25,112 +31,147 @@ class ColorsPage extends StatelessWidget {
         horizontalMargin: EdgeInsets.all(10),
       ),
     );
-    return ScaffoldPage.scrollable(
-      header: const PageHeader(title: Text('Colors Showcase')),
-      bottomBar: const SizedBox(
-        width: double.infinity,
-        child: InfoBar(
-          title: Text('Tip:'),
-          content:
-              Text('You can click on any color to copy it to the clipboard!'),
-        ),
-      ),
-      children: [
-        const SizedBox(height: 14.0),
-        InfoLabel(
-          label: 'Primary Colors',
-          child: Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: List.generate(Colors.accentColors.length, (index) {
-              final name = _primaryNames[index];
-              final color = Colors.accentColors[index];
-              return ColorBlock(
-                name: name,
-                color: color,
-                clipboard: 'Colors.${name.toLowerCase()}',
-              );
-            }),
-          ),
-        ),
-        divider,
-        InfoLabel(
-          label: 'Info Colors',
-          child: Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: [
-              const ColorBlock(
-                name: 'Warning 1',
-                color: Colors.warningPrimaryColor,
-                clipboard: 'Colors.warningPrimaryColor',
-              ),
-              ColorBlock(
-                name: 'Warning 2',
-                color: Colors.warningSecondaryColor,
-                clipboard: 'Colors.warningSecondaryColor',
-              ),
-              const ColorBlock(
-                name: 'Error 1',
-                color: Colors.errorPrimaryColor,
-                clipboard: 'Colors.errorPrimaryColor',
-              ),
-              ColorBlock(
-                name: 'Error 2',
-                color: Colors.errorSecondaryColor,
-                clipboard: 'Colors.errorSecondaryColor',
-              ),
-              const ColorBlock(
-                name: 'Success 1',
-                color: Colors.successPrimaryColor,
-                clipboard: 'Colors.successPrimaryColor',
-              ),
-              ColorBlock(
-                name: 'Success 2',
-                color: Colors.successSecondaryColor,
-                clipboard: 'Colors.successSecondaryColor',
-              ),
-            ],
-          ),
-        ),
-        divider,
-        InfoLabel(
-          label: 'All Shades',
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Row(children: [
-              ColorBlock(
-                name: 'Black',
-                color: Colors.black,
-                clipboard: 'Colors.black',
-              ),
-              ColorBlock(
-                name: 'White',
-                color: Colors.white,
-                clipboard: 'Colors.white',
-              ),
-            ]),
-            const SizedBox(height: 10),
-            Wrap(
-              children: List.generate(22, (index) {
-                final factor = (index + 1) * 10;
+    var defaultColorSetPage = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 14.0),
+          InfoLabel(
+            label: 'Primary Colors',
+            child: Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: List.generate(Colors.accentColors.length, (index) {
+                final name = _primaryNames[index];
+                final color = Colors.accentColors[index];
                 return ColorBlock(
-                  name: 'Grey#$factor',
-                  color: Colors.grey[factor],
-                  clipboard: 'Colors.grey[$factor]',
+                  name: name,
+                  color: color,
+                  clipboard: 'Colors.${name.toLowerCase()}',
                 );
               }),
             ),
-            const SizedBox(height: 10),
-            Wrap(
-              runSpacing: 10,
+          ),
+          divider,
+          InfoLabel(
+            label: 'Info Colors',
+            child: Wrap(
               spacing: 10,
-              children: accent,
+              runSpacing: 10,
+              children: [
+                const ColorBlock(
+                  name: 'Warning 1',
+                  color: Colors.warningPrimaryColor,
+                  clipboard: 'Colors.warningPrimaryColor',
+                ),
+                ColorBlock(
+                  name: 'Warning 2',
+                  color: Colors.warningSecondaryColor,
+                  clipboard: 'Colors.warningSecondaryColor',
+                ),
+                const ColorBlock(
+                  name: 'Error 1',
+                  color: Colors.errorPrimaryColor,
+                  clipboard: 'Colors.errorPrimaryColor',
+                ),
+                ColorBlock(
+                  name: 'Error 2',
+                  color: Colors.errorSecondaryColor,
+                  clipboard: 'Colors.errorSecondaryColor',
+                ),
+                const ColorBlock(
+                  name: 'Success 1',
+                  color: Colors.successPrimaryColor,
+                  clipboard: 'Colors.successPrimaryColor',
+                ),
+                ColorBlock(
+                  name: 'Success 2',
+                  color: Colors.successSecondaryColor,
+                  clipboard: 'Colors.successSecondaryColor',
+                ),
+              ],
             ),
-          ]),
-        ),
-      ],
+          ),
+          divider,
+          InfoLabel(
+            label: 'All Shades',
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Row(children: [
+                ColorBlock(
+                  name: 'Black',
+                  color: Colors.black,
+                  clipboard: 'Colors.black',
+                ),
+                ColorBlock(
+                  name: 'White',
+                  color: Colors.white,
+                  clipboard: 'Colors.white',
+                ),
+              ]),
+              const SizedBox(height: 10),
+              Wrap(
+                children: List.generate(22, (index) {
+                  final factor = (index + 1) * 10;
+                  return ColorBlock(
+                    name: 'Grey#$factor',
+                    color: Colors.grey[factor],
+                    clipboard: 'Colors.grey[$factor]',
+                  );
+                }),
+              ),
+              const SizedBox(height: 10),
+              Wrap(
+                runSpacing: 10,
+                spacing: 10,
+                children: accent,
+              ),
+            ]),
+          ),
+        ],
+      ),
     );
+    return ScaffoldPage(
+        header: const PageHeader(title: Text('Colors')),
+        bottomBar: const SizedBox(
+          width: double.infinity,
+          child: InfoBar(
+            title: Text('Tip:'),
+            content:
+                Text('You can click on any color to copy it to the clipboard!'),
+          ),
+        ),
+        content: NavigationView(
+          pane: NavigationPane(
+              selected: topIndex,
+              /*onItemPressed: (index) {
+                // Do anything you want to do, such as:
+                if (index == topIndex) {
+                  if (displayMode == PaneDisplayMode.open) {
+                    setState(() => this.displayMode = PaneDisplayMode.compact);
+                  } else if (displayMode == PaneDisplayMode.compact) {
+                    setState(() => this.displayMode = PaneDisplayMode.open);
+                  }
+                }
+              },*/
+              onChanged: (index) => setState(() => topIndex = index),
+              displayMode: PaneDisplayMode.top,
+              items: [
+                PaneItem(
+                    icon: Icon(FluentIcons.color),
+                    title: Text('Default Color Set'),
+                    body: SingleChildScrollView(child: defaultColorSetPage)),
+                PaneItem(
+                    icon: Icon(FluentIcons.inking_tool),
+                    title: Text('Fluent Theme Builder'),
+                    body: SingleChildScrollView(child: Container())),
+                PaneItem(
+                    icon: Icon(FluentIcons.contrast),
+                    title: Text('Color Contrast'),
+                    body: SingleChildScrollView(child: Container()))
+              ]),
+        ));
   }
 
   List<Widget> get accent {
