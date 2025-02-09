@@ -9,12 +9,12 @@ import 'package:system_theme/system_theme.dart';
 import 'package:url_launcher/link.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'routes/forms.dart' deferred as forms;
+import 'routes/text.dart' deferred as forms;
 import 'routes/inputs.dart' deferred as inputs;
 import 'routes/navigation.dart' deferred as navigation;
 import 'routes/popups.dart' deferred as popups;
 import 'routes/surfaces.dart' deferred as surfaces;
-import 'routes/theming.dart' deferred as theming;
+import 'routes/styles.dart' deferred as theming;
 import 'theme.dart';
 import 'widgets/deferred_widget.dart';
 
