@@ -25,6 +25,42 @@ class _ColorsPageState extends State<ColorsPage> {
   int topIndex = 0;
   @override
   Widget build(BuildContext context) {
+    return ScaffoldPage(
+        header: const PageHeader(title: Text('Colors')),
+        content: NavigationView(
+          pane: NavigationPane(
+              selected: topIndex,
+              onChanged: (index) => setState(() => topIndex = index),
+              displayMode: PaneDisplayMode.top,
+              items: [
+                PaneItem(
+                    icon: Icon(FluentIcons.color),
+                    title: Text('Default Color Set'),
+                    body: SingleChildScrollView(child: ColorSetsPage())),
+                PaneItem(
+                    icon: Icon(FluentIcons.inking_tool),
+                    title: Text('Fluent Theme Builder'),
+                    body: SingleChildScrollView(child: Container())),
+                PaneItem(
+                    icon: Icon(FluentIcons.contrast),
+                    title: Text('Color Contrast'),
+                    body: SingleChildScrollView(child: Container()))
+              ]),
+        ));
+  }
+}
+
+class ColorSetsPage extends StatefulWidget {
+  const ColorSetsPage({super.key});
+
+  @override
+  State<ColorSetsPage> createState() => _ColorSetsPageState();
+}
+
+class _ColorSetsPageState extends State<ColorSetsPage> {
+  int topIndex = 0;
+  @override
+  Widget build(BuildContext context) {
     const Divider divider = Divider(
       style: DividerThemeData(
         verticalMargin: EdgeInsets.all(10),
@@ -36,6 +72,15 @@ class _ColorsPageState extends State<ColorsPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 14.0),
+          SizedBox(
+            width: double.infinity,
+            child: InfoBar(
+              title: Text('Tip:'),
+              content: Text(
+                  'You can click on any color to copy it to the clipboard!'),
+            ),
+          ),
           const SizedBox(height: 14.0),
           InfoLabel(
             label: 'Primary Colors',
@@ -132,46 +177,7 @@ class _ColorsPageState extends State<ColorsPage> {
         ],
       ),
     );
-    return ScaffoldPage(
-        header: const PageHeader(title: Text('Colors')),
-        bottomBar: const SizedBox(
-          width: double.infinity,
-          child: InfoBar(
-            title: Text('Tip:'),
-            content:
-                Text('You can click on any color to copy it to the clipboard!'),
-          ),
-        ),
-        content: NavigationView(
-          pane: NavigationPane(
-              selected: topIndex,
-              /*onItemPressed: (index) {
-                // Do anything you want to do, such as:
-                if (index == topIndex) {
-                  if (displayMode == PaneDisplayMode.open) {
-                    setState(() => this.displayMode = PaneDisplayMode.compact);
-                  } else if (displayMode == PaneDisplayMode.compact) {
-                    setState(() => this.displayMode = PaneDisplayMode.open);
-                  }
-                }
-              },*/
-              onChanged: (index) => setState(() => topIndex = index),
-              displayMode: PaneDisplayMode.top,
-              items: [
-                PaneItem(
-                    icon: Icon(FluentIcons.color),
-                    title: Text('Default Color Set'),
-                    body: SingleChildScrollView(child: defaultColorSetPage)),
-                PaneItem(
-                    icon: Icon(FluentIcons.inking_tool),
-                    title: Text('Fluent Theme Builder'),
-                    body: SingleChildScrollView(child: Container())),
-                PaneItem(
-                    icon: Icon(FluentIcons.contrast),
-                    title: Text('Color Contrast'),
-                    body: SingleChildScrollView(child: Container()))
-              ]),
-        ));
+    return SingleChildScrollView(child: defaultColorSetPage);
   }
 
   List<Widget> get accent {
