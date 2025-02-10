@@ -187,10 +187,16 @@ class _SettingsState extends State<Settings> with PageMixin {
         spacer,
         Expander(
           header: Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.0),
-            child: ListTile(
-              leading: Icon(FluentIcons.format_painter),
-              title: Text('Accent Color'),
+            padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 12.0),
+            child: Row(
+              children: [
+                Icon(FluentIcons.format_painter),
+                SizedBox(width: 12.0),
+                Text(
+                  'Accent Color',
+                  style: FluentTheme.of(context).typography.body,
+                ),
+              ],
             ),
           ),
           content: Wrap(children: [
