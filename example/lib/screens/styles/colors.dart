@@ -1,5 +1,6 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:url_launcher/link.dart';
 
 import 'icongraphy.dart';
 
@@ -26,7 +27,19 @@ class _ColorsPageState extends State<ColorsPage> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldPage(
-        header: const PageHeader(title: Text('Colors')),
+        header: PageHeader(
+          title: Text('Colors'),
+          commandBar: Link(
+            // from the url_launcher package
+            uri: Uri.parse('https://fluent2.microsoft.design/color'),
+            builder: (Context, open) {
+              return Button(
+                child: Text('Documentation'),
+                onPressed: open,
+              );
+            },
+          ),
+        ),
         content: NavigationView(
           pane: NavigationPane(
               selected: topIndex,
