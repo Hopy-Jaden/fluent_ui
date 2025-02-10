@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:url_launcher/link.dart';
 
 import '../settings.dart';
 
@@ -34,46 +35,16 @@ class _TypographyPageState extends State<TypographyPage> {
     const Widget spacer = SizedBox(height: 4.0);
     return ScaffoldPage.withPadding(
       header: PageHeader(
-        title: const Text('Typography showcase'),
-        commandBar: SizedBox(
-          width: 180.0,
-          child: Tooltip(
-            message: 'Pick a text color',
-            child: ComboBox<Color>(
-              placeholder: const Text('Text Color'),
-              onChanged: (c) => setState(() => color = c),
-              value: color,
-              items: [
-                ComboBoxItem(
-                  value: Colors.white,
-                  child: Row(children: [
-                    buildColorBox(Colors.white),
-                    const SizedBox(width: 10.0),
-                    const Text('White'),
-                  ]),
-                ),
-                ComboBoxItem(
-                  value: const Color(0xE4000000),
-                  child: Row(children: [
-                    buildColorBox(const Color(0xE4000000)),
-                    const SizedBox(width: 10.0),
-                    const Text('Black'),
-                  ]),
-                ),
-                ...List.generate(Colors.accentColors.length, (index) {
-                  final color = Colors.accentColors[index];
-                  return ComboBoxItem(
-                    value: color,
-                    child: Row(children: [
-                      buildColorBox(color),
-                      const SizedBox(width: 10.0),
-                      Text(accentColorNames[index + 1]),
-                    ]),
-                  );
-                }),
-              ],
-            ),
-          ),
+        title: const Text('Typography'),
+        commandBar: Link(
+          // from the url_launcher package
+          uri: Uri.parse('https://fluent2.microsoft.design/typography'),
+          builder: (Context, open) {
+            return Button(
+              child: Text('Documentation'),
+              onPressed: open,
+            );
+          },
         ),
       ),
       content: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -82,15 +53,52 @@ class _TypographyPageState extends State<TypographyPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Divider(
-                style: DividerThemeData(horizontalMargin: EdgeInsets.zero),
-              ),
               const SizedBox(height: 4.0),
               const Text(
-                'The Windows type ramp establishes crucial relationships '
-                'between the type styles on a page, helping users read content '
-                'easily.',
+                'Typography helps provide structure and hierarchy to UI, making it easy for people to find their way through an experience. The default font is Segoe UI Variable. Best practice is to use Regular weight for most text, use Semibold for titles. The minimum values should be 12px Regular, 14px Semibold.',
               ),
+              const SizedBox(height: 10.0),
+              SizedBox(
+                width: 180.0,
+                child: Tooltip(
+                  message: 'Pick a text color',
+                  child: ComboBox<Color>(
+                    placeholder: const Text('Text Color'),
+                    onChanged: (c) => setState(() => color = c),
+                    value: color,
+                    items: [
+                      ComboBoxItem(
+                        value: Colors.white,
+                        child: Row(children: [
+                          buildColorBox(Colors.white),
+                          const SizedBox(width: 10.0),
+                          const Text('White'),
+                        ]),
+                      ),
+                      ComboBoxItem(
+                        value: const Color(0xE4000000),
+                        child: Row(children: [
+                          buildColorBox(const Color(0xE4000000)),
+                          const SizedBox(width: 10.0),
+                          const Text('Black'),
+                        ]),
+                      ),
+                      ...List.generate(Colors.accentColors.length, (index) {
+                        final color = Colors.accentColors[index];
+                        return ComboBoxItem(
+                          value: color,
+                          child: Row(children: [
+                            buildColorBox(color),
+                            const SizedBox(width: 10.0),
+                            Text(accentColorNames[index + 1]),
+                          ]),
+                        );
+                      }),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20.0),
               Expanded(
                 child: ListView(children: [
                   Text('Display',
