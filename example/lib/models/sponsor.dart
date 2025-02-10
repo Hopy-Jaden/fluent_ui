@@ -94,24 +94,27 @@ class Person {
 
   Widget build() {
     return Builder(builder: (context) {
-      return Link(
-        uri: Uri.parse('https://www.github.com/$username'),
-        builder: (context, followLink) {
-          return Semantics(
-            link: true,
-            child: GestureDetector(
-              onTap: () {
-                debugPrint('https://www.github.com/$username');
-                followLink;
-              },
-              child: MemberCard(
-                imageUrl: imageUrl,
-                username: username ?? name,
-                tag: tag,
+      return FocusOnHoverWidget(
+        borderRadius: BorderRadius.circular(4.0),
+        child: Link(
+          uri: Uri.parse('https://www.github.com/$username'),
+          builder: (context, followLink) {
+            return Semantics(
+              link: true,
+              child: GestureDetector(
+                onTap: () {
+                  debugPrint('https://www.github.com/$username');
+                  followLink;
+                },
+                child: MemberCard(
+                  imageUrl: imageUrl,
+                  username: username ?? name,
+                  tag: tag,
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       );
     });
   }

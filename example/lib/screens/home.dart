@@ -67,63 +67,75 @@ class _HomePageState extends State<HomePage> with PageMixin {
             titleLarge(content: const Text('Fluent UI for Flutter Gallery')),
             const SizedBox(height: 75.0),
             Wrap(spacing: 10.0, runSpacing: 10.0, children: <Widget>[
-              PortalCard(
-                title: 'What\'s New',
-                icon: Icon(
-                  FluentIcons.megaphone,
-                  size: 55,
-                ),
-                description: 'A native look-and-feel out of the box',
-                function: () {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: true,
-                    builder: (context) => const Changelog(),
-                  );
-                },
-              ),
-              Link(
-                  uri: Uri.parse('https://fluent2.microsoft.design/'),
-                  builder: (context, followLink) {
-                    return Semantics(
-                      link: true,
-                      child: PortalCard(
-                          title: 'Design',
-                          icon: Icon(
-                            FluentIcons.color,
-                            size: 55,
-                          ),
-                          description:
-                              'Guidelines for creating stunning FluentUI experience',
-                          function: followLink),
-                    );
-                  }),
-              Link(
-                  uri: Uri.parse('https://github.com/bdlukaa/fluent_ui'),
-                  builder: (context, followLink) {
-                    return Semantics(
-                      link: true,
-                      child: PortalCard(
-                          title: 'Github',
-                          icon: Icon(
-                            FluentIcons.code,
-                            size: 55,
-                          ),
-                          description:
-                              'Explore the FluentUI source code and repository',
-                          function: followLink),
-                    );
-                  }),
-              PortalCard(
+              FocusOnHoverWidget(
+                borderRadius: BorderRadius.circular(12.0),
+                child: PortalCard(
+                  title: 'What\'s New',
+                  icon: Icon(
+                    FluentIcons.megaphone,
+                    size: 55,
+                  ),
+                  description: 'A native look-and-feel out of the box',
                   function: () {
                     showDialog(
                       context: context,
-                      builder: (context) => const SponsorDialog(),
+                      barrierDismissible: true,
+                      builder: (context) => const Changelog(),
                     );
                   },
-                  icon: Icon(FluentIcons.diamond_user, size: 60),
-                  title: 'Sponsor',
-                  description: 'Become a Sponsor to support!'),
+                ),
+              ),
+              FocusOnHoverWidget(
+                borderRadius: BorderRadius.circular(12.0),
+                child: Link(
+                    uri: Uri.parse('https://fluent2.microsoft.design/'),
+                    builder: (context, followLink) {
+                      return Semantics(
+                        link: true,
+                        child: PortalCard(
+                            title: 'Design',
+                            icon: Icon(
+                              FluentIcons.color,
+                              size: 55,
+                            ),
+                            description:
+                                'Guidelines for creating stunning FluentUI experience',
+                            function: followLink),
+                      );
+                    }),
+              ),
+              FocusOnHoverWidget(
+                borderRadius: BorderRadius.circular(12.0),
+                child: Link(
+                    uri: Uri.parse('https://github.com/bdlukaa/fluent_ui'),
+                    builder: (context, followLink) {
+                      return Semantics(
+                        link: true,
+                        child: PortalCard(
+                            title: 'Github',
+                            icon: Icon(
+                              FluentIcons.code,
+                              size: 55,
+                            ),
+                            description:
+                                'Explore the FluentUI source code and repository',
+                            function: followLink),
+                      );
+                    }),
+              ),
+              FocusOnHoverWidget(
+                borderRadius: BorderRadius.circular(12.0),
+                child: PortalCard(
+                    function: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => const SponsorDialog(),
+                      );
+                    },
+                    icon: Icon(FluentIcons.diamond_user, size: 60),
+                    title: 'Sponsor',
+                    description: 'Become a Sponsor to support!'),
+              ),
             ]),
           ],
         ),
@@ -337,6 +349,41 @@ class PortalCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class FocusOnHoverWidget extends StatelessWidget {
+  final Widget child;
+  final BorderRadiusGeometry borderRadius;
+  const FocusOnHoverWidget({
+    required this.borderRadius,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return HoverButton(
+      onPressed: () {},
+      builder: (context, states) {
+        return FocusBorder(
+          focused: states.isFocused,
+          renderOutside: false,
+          child: RepaintBoundary(
+            child: AnimatedContainer(
+                duration: FluentTheme.of(context).fasterAnimationDuration,
+                decoration: BoxDecoration(
+                  color: ButtonThemeData.uncheckedInputColor(
+                    FluentTheme.of(context),
+                    states,
+                    transparentWhenNone: true,
+                  ),
+                  borderRadius: borderRadius,
+                ),
+                child: child),
+          ),
+        );
+      },
     );
   }
 }
