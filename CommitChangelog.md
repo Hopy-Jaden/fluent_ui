@@ -1,3 +1,5 @@
+### Enhancements to Fluent UI: New Widgets, Widget Improvements, and App Redesign
+
 Although the following fluent ui widget is still not supported by the library:
 1. Segmented
 2. Calendar view
