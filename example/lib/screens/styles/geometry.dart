@@ -46,48 +46,56 @@ class _GeometryPageState extends State<GeometryPage> with PageMixin {
         ),
         FlyoutTarget(
             controller: controller,
-            child: IconButton(
-              icon: const Icon(
-                FluentIcons.info,
-                size: 12,
+            child: SizedBox(
+              width: 12,
+              child: Button(
+                child: const Icon(
+                  FluentIcons.info,
+                  size: 12,
+                ),
+                onPressed: () {
+                  controller.showFlyout(
+                    autoModeConfiguration: FlyoutAutoConfiguration(
+                      preferredMode: FlyoutPlacementMode.topCenter,
+                    ),
+                    barrierDismissible: true,
+                    dismissOnPointerMoveAway: false,
+                    dismissWithEsc: true,
+                    navigatorKey: rootNavigatorKey.currentState,
+                    barrierColor: Colors.transparent,
+                    builder: (context) {
+                      //if (context.hasData){
+                      return FlyoutContent(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ColorPicker(
+                              color: selectedColor,
+                              onChanged: (color) =>
+                                  setState(() => selectedColor = color),
+                              colorSpectrumShape: spectrumShape,
+                              isMoreButtonVisible: true,
+                              isColorSliderVisible: true,
+                              isColorChannelTextInputVisible: true,
+                              isHexInputVisible: true,
+                              isAlphaEnabled: false,
+                            ),
+                            const SizedBox(height: 12.0),
+                            Button(
+                              onPressed: Flyout.of(context).close,
+                              child: const Text('Done'),
+                            ),
+                          ],
+                        ),
+                      );
+                      //} else {
+                      //return Text("Loading"); // whatever you want here
+                      //}
+                    },
+                  );
+                },
               ),
-              onPressed: () {
-                controller.showFlyout(
-                  autoModeConfiguration: FlyoutAutoConfiguration(
-                    preferredMode: FlyoutPlacementMode.topCenter,
-                  ),
-                  barrierDismissible: true,
-                  dismissOnPointerMoveAway: false,
-                  dismissWithEsc: true,
-                  navigatorKey: rootNavigatorKey.currentState,
-                  builder: (context) {
-                    return FlyoutContent(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ColorPicker(
-                            color: selectedColor,
-                            onChanged: (color) =>
-                                setState(() => selectedColor = color),
-                            colorSpectrumShape: spectrumShape,
-                            isMoreButtonVisible: true,
-                            isColorSliderVisible: true,
-                            isColorChannelTextInputVisible: true,
-                            isHexInputVisible: true,
-                            isAlphaEnabled: false,
-                          ),
-                          const SizedBox(height: 12.0),
-                          Button(
-                            onPressed: Flyout.of(context).close,
-                            child: const Text('Done'),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
             ))
       ],
     );
