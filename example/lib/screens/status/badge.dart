@@ -51,6 +51,14 @@ Checkbox(
             ),
           ]),
         ),
+        Text(
+          'Badging is a non-intrusive and intuitive way to display '
+          'notifications or bring focus to an area within an app - '
+          'whether that be for notifications, indicating new content, '
+          'or showing an alert. An InfoBadge is a small piece of UI '
+          'that can be added into an app and customized to display a '
+          'number, icon, or a simple dot.',
+        ),
       ],
     );
   }

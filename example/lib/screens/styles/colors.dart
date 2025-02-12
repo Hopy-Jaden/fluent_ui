@@ -1,4 +1,5 @@
 import 'package:clipboard/clipboard.dart';
+import 'package:example/widgets/card_highlight.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:url_launcher/link.dart';
 
@@ -53,7 +54,8 @@ class _ColorsPageState extends State<ColorsPage> {
                 PaneItem(
                     icon: Icon(FluentIcons.inking_tool),
                     title: Text('Fluent Theme Builder'),
-                    body: SingleChildScrollView(child: Container())),
+                    body:
+                        SingleChildScrollView(child: FluentThemeBuilderPage())),
                 PaneItem(
                     icon: Icon(FluentIcons.contrast),
                     title: Text('Color Contrast'),
@@ -278,5 +280,131 @@ class ColorBlock extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+class FluentThemeBuilderPage extends StatefulWidget {
+  const FluentThemeBuilderPage({super.key});
+
+  @override
+  State<FluentThemeBuilderPage> createState() => _FluentThemeBuilderPageState();
+}
+
+class _FluentThemeBuilderPageState extends State<FluentThemeBuilderPage> {
+  static const double itemHeight = 500.0;
+
+  int topIndex = 0;
+  PaneDisplayMode displayMode = PaneDisplayMode.open;
+
+  @override
+  Widget build(BuildContext context) {
+    var pageDescription = Text(
+        'Welcome to the Fluent Theme Builder! Effortlessly craft your perfect Fluent UI color theme that resonates with your brand or personal style! Additionally, you can copy the fluent theme data source code for future use, making it easier than ever to manage your themes.');
+    var spacer = SizedBox(
+      height: 10.0,
+    );
+    var sampleApp = CardHighlight(
+      codeSnippet: '''
+// Do not define the `items` inside the `Widget Build` function
+// otherwise on running `setstate`, new item can not be added.
+)''',
+      child: SizedBox(
+        height: itemHeight,
+        child: NavigationView(
+          appBar: const NavigationAppBar(
+            title: Text('NavigationView'),
+          ),
+          onDisplayModeChanged: (mode) {
+            debugPrint('Changed to $mode');
+          },
+          pane: NavigationPane(
+            selected: topIndex,
+            onItemPressed: (index) {
+              // Do anything you want to do, such as:
+              // if (index == topIndex) {
+              //   if (displayMode == PaneDisplayMode.open) {
+              //     setState(() => this.displayMode = PaneDisplayMode.compact);
+              //   } else if (displayMode == PaneDisplayMode.compact) {
+              //     setState(() => this.displayMode = PaneDisplayMode.open);
+              //   }
+              // }
+            },
+
+            onChanged: (index) {
+              setState(() => topIndex = index);
+              debugPrint(index.toString());
+            },
+            //displayMode: displayMode,
+            //indicator: indicators[indicator],
+            header: const Text('Pane Header'),
+            //items: items,
+            items: [
+              PaneItemExpander(
+                icon: const Icon(FluentIcons.account_management),
+                title: const Text('Sample Page 1'),
+                initiallyExpanded: true,
+                body: Container(),
+                onTap: () => debugPrint('Tapped account'),
+                items: [
+                  PaneItem(
+                    icon: const Icon(FluentIcons.mail),
+                    title: const Text('Sample Page 2'),
+                    body: Container(),
+                    onTap: () => debugPrint('Tapped mail'),
+                  ),
+                  PaneItem(
+                    icon: const Icon(FluentIcons.calendar),
+                    title: const Text('Sample Page 3'),
+                    body: Container(),
+                    onTap: () => debugPrint('Tapped calendar'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          /*transitionBuilder: pageTransition == 'Default'
+                ? null
+                : (child, animation) {
+                    switch (pageTransition) {
+                      case 'Entrance':
+                        return EntrancePageTransition(
+                          animation: animation,
+                          child: child,
+                        );
+                      case 'Drill in':
+                        return DrillInPageTransition(
+                          animation: animation,
+                          child: child,
+                        );
+                      case 'Horizontal':
+                        return HorizontalSlidePageTransition(
+                          animation: animation,
+                          child: child,
+                        );
+                      default:
+                        throw UnsupportedError(
+                          '$pageTransition is not a supported transition',
+                        );
+                    }
+                  },
+          
+          */
+        ),
+      ),
+    );
+    var pageWidgetList = <Widget>[
+      spacer,
+      pageDescription,
+      spacer,
+      spacer,
+      sampleApp
+    ];
+    var pageContent = Padding(
+      padding: EdgeInsets.all(12.0),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: pageWidgetList),
+    );
+    return pageContent;
   }
 }
