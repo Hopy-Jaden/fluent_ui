@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> with PageMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             subtitle(content: const Text('Version 4')),
-            titleLarge(content: const Text('Fluent UI for Flutter Gallery')),
+            titleLarge(content: const Text('Fluent UI for Flutter')),
             const SizedBox(height: 75.0),
             Wrap(spacing: 10.0, runSpacing: 10.0, children: <Widget>[
               FocusOnHoverWidget(

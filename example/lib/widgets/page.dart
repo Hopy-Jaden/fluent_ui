@@ -25,6 +25,15 @@ mixin PageMixin {
     });
   }
 
+  Widget title({required Widget content}) {
+    return Builder(builder: (context) {
+      return DefaultTextStyle(
+        style: FluentTheme.of(context).typography.title!,
+        child: content,
+      );
+    });
+  }
+
   Widget titleLarge({required Widget content}) {
     return Builder(builder: (context) {
       return DefaultTextStyle(

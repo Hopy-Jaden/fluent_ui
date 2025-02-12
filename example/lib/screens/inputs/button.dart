@@ -17,6 +17,134 @@ class ButtonPage extends StatefulWidget {
 }
 
 class _ButtonPageState extends State<ButtonPage> with PageMixin {
+  int topIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    final pageDescription = Text(
+      'The Button control provides a Click event to respond to user input from a touch, mouse, keyboard, stylus, or other input device. You can put different kinds of content in a button, such as text or an image, or you can restyle a button to give it a new look.',
+      style: FluentTheme.of(context).typography.body,
+    );
+    return ScaffoldPage(
+      header: PageHeader(
+          title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Button',
+              ),
+              Link(
+                // from the url_launcher package
+                uri: Uri.parse(
+                    'https://fluent2.microsoft.design/components/web/react/button/usage'),
+                builder: (Context, open) {
+                  return Button(
+                    child: Text('Documentation'),
+                    onPressed: open,
+                  );
+                },
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
+          pageDescription,
+        ],
+      )),
+      content: NavigationView(
+        pane: NavigationPane(
+            selected: topIndex,
+            onChanged: (index) {
+              setState(() => topIndex = index);
+            },
+            displayMode: PaneDisplayMode.top,
+            items: [
+              PaneItem(
+                  icon: Icon(FluentIcons.info),
+                  title: Text('Overview'),
+                  body: ButtonOverviewPage()),
+              PaneItem(
+                  icon: Icon(FluentIcons.brush),
+                  title: Text('Specs'),
+                  body: ButtonSpecsPage()),
+              PaneItem(
+                  icon: Icon(FluentIcons.code),
+                  title: Text('Sample Code'),
+                  body: ButtonSampleCodePage()),
+            ]),
+      ),
+    );
+  }
+}
+
+class ButtonOverviewPage extends StatefulWidget {
+  const ButtonOverviewPage({super.key});
+
+  @override
+  State<ButtonOverviewPage> createState() => _ButtonOverviewPageState();
+}
+
+class _ButtonOverviewPageState extends State<ButtonOverviewPage>
+    with PageMixin {
+  @override
+  Widget build(BuildContext context) {
+    final spacer = SizedBox(
+      height: 10.0,
+    );
+    final pageDescription = const Text(
+      'The Button control provides a Click event to respond to user input from a touch, mouse, keyboard, stylus, or other input device. You can put different kinds of content in a button, such as text or an image, or you can restyle a button to give it a new look.',
+    );
+    final pageWidgetsList = <Widget>[spacer, pageDescription];
+    final pageContent = SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: pageWidgetsList,
+        ),
+      ),
+    );
+    return pageContent;
+  }
+}
+
+class ButtonSpecsPage extends StatefulWidget with PageMixin {
+  const ButtonSpecsPage({super.key});
+
+  @override
+  State<ButtonSpecsPage> createState() => _ButtonSpecsPageState();
+}
+
+class _ButtonSpecsPageState extends State<ButtonSpecsPage> {
+  @override
+  Widget build(BuildContext context) {
+    final pageDescription = const Text(
+      'You can restyle the buttons below to give it a new look. After customization, you can copy the source code of the theme data in fluent theme builder page to easily manage your theme',
+    );
+    final pageWidgetsList = <Widget>[pageDescription];
+    final pageContent = SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: pageWidgetsList,
+        ),
+      ),
+    );
+    return pageContent;
+  }
+}
+
+class ButtonSampleCodePage extends StatefulWidget {
+  const ButtonSampleCodePage({super.key});
+
+  @override
+  State<ButtonSampleCodePage> createState() => _ButtonSampleCodePageState();
+}
+
+class _ButtonSampleCodePageState extends State<ButtonSampleCodePage>
+    with PageMixin {
   bool simpleDisabled = false;
   bool filledDisabled = false;
   bool hyperlinkDisabled = false;
@@ -30,7 +158,6 @@ class _ButtonPageState extends State<ButtonPage> with PageMixin {
   int radioButtonSelected = -1;
 
   AccentColor splitButtonColor = Colors.red;
-
   @override
   Widget build(BuildContext context) {
     final theme = FluentTheme.of(context);
@@ -61,70 +188,67 @@ class _ButtonPageState extends State<ButtonPage> with PageMixin {
         }).toList(),
       ),
     );
-
-    return ScaffoldPage.scrollable(
-      header: const PageHeader(title: Text('Button')),
-      children: [
-        const Text(
-          'The Button control provides a Click event to respond to user input from a touch, mouse, keyboard, stylus, or other input device. You can put different kinds of content in a button, such as text or an image, or you can restyle a button to give it a new look.',
-        ),
-        subtitle(content: const Text('A simple button with text content')),
-        description(
-          content: const Text('A button that initiates an immediate action.'),
-        ),
-        CardHighlight(
-          codeSnippet: '''Button(
+    var button = [
+      Text(
+        'A simple button with text content',
+        style: FluentTheme.of(context).typography.subtitle,
+      ),
+      description(
+        content: const Text('A button that initiates an immediate action.'),
+      ),
+      CardHighlight(
+        codeSnippet: '''Button(
   child: const Text('Standard Button'),
   onPressed: disabled ? null : () => debugPrint('pressed button'),
 )''',
-          child: Row(children: [
-            Button(
-              onPressed: simpleDisabled ? null : () {},
-              child: const Text('Standard Button'),
-            ),
-            const Spacer(),
-            ToggleSwitch(
-              checked: simpleDisabled,
-              onChanged: (v) {
-                setState(() {
-                  simpleDisabled = v;
-                });
-              },
-              content: const Text('Disabled'),
-            ),
-          ]),
-        ),
-        subtitle(content: const Text('Accent Style applied to Button')),
-        CardHighlight(
-          codeSnippet: '''FilledButton(
+        child: Row(children: [
+          Button(
+            onPressed: simpleDisabled ? null : () {},
+            child: const Text('Standard Button'),
+          ),
+          const Spacer(),
+          ToggleSwitch(
+            checked: simpleDisabled,
+            onChanged: (v) {
+              setState(() {
+                simpleDisabled = v;
+              });
+            },
+            content: const Text('Disabled'),
+          ),
+        ]),
+      ),
+      subtitle(content: const Text('Accent Style applied to Button')),
+      CardHighlight(
+        codeSnippet: '''FilledButton(
   child: const Text('Filled Button'),
   onPressed: disabled ? null : () => debugPrint('pressed button'),
 )''',
-          child: Row(children: [
-            FilledButton(
-              onPressed: filledDisabled ? null : () {},
-              child: const Text('Filled Button'),
-            ),
-            const Spacer(),
-            ToggleSwitch(
-              checked: filledDisabled,
-              onChanged: (v) {
-                setState(() {
-                  filledDisabled = v;
-                });
-              },
-              content: const Text('Disabled'),
-            ),
-          ]),
-        ),
-        subtitle(content: const Text('Hyperlink Button')),
-        const Text(
-          'Hyperlinks navigate the user to another part of the app, to another '
-          'app, or launch a specific uniform resource identifier (URI) using a '
-          'separate browser app.',
-        ),
-        CardHighlight(
-          codeSnippet: '''Link( // from the url_launcher package
+        child: Row(children: [
+          FilledButton(
+            onPressed: filledDisabled ? null : () {},
+            child: const Text('Filled Button'),
+          ),
+          const Spacer(),
+          ToggleSwitch(
+            checked: filledDisabled,
+            onChanged: (v) {
+              setState(() {
+                filledDisabled = v;
+              });
+            },
+            content: const Text('Disabled'),
+          ),
+        ]),
+      ),
+      subtitle(content: const Text('Hyperlink Button')),
+      const Text(
+        'Hyperlinks navigate the user to another part of the app, to another '
+        'app, or launch a specific uniform resource identifier (URI) using a '
+        'separate browser app.',
+      ),
+      CardHighlight(
+        codeSnippet: '''Link( // from the url_launcher package
   uri: Uri.parse('https://github.com/bdlukaa/fluent_ui')
   builder: (Context, open) {
     return HyperlinkButton(
@@ -133,139 +257,138 @@ class _ButtonPageState extends State<ButtonPage> with PageMixin {
     );
   },
 )''',
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Link(
-                uri: Uri.parse('https://github.com/bdlukaa/fluent_ui'),
-                builder: (context, open) {
-                  return Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: HyperlinkButton(
-                      onPressed: hyperlinkDisabled ? null : open,
-                      child: Semantics(
-                        link: true,
-                        child: Text('Fluent UI homepage'),
-                      ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Link(
+              uri: Uri.parse('https://github.com/bdlukaa/fluent_ui'),
+              builder: (context, open) {
+                return Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: HyperlinkButton(
+                    onPressed: hyperlinkDisabled ? null : open,
+                    child: Semantics(
+                      link: true,
+                      child: Text('Fluent UI homepage'),
                     ),
-                  );
-                },
-              ),
-              ToggleSwitch(
-                checked: hyperlinkDisabled,
-                onChanged: (v) {
-                  setState(() {
-                    hyperlinkDisabled = v;
-                  });
-                },
-                content: const Text('Disabled'),
-              ),
-            ],
-          ),
+                  ),
+                );
+              },
+            ),
+            ToggleSwitch(
+              checked: hyperlinkDisabled,
+              onChanged: (v) {
+                setState(() {
+                  hyperlinkDisabled = v;
+                });
+              },
+              content: const Text('Disabled'),
+            ),
+          ],
         ),
-        subtitle(
-          content: const Text('A Button with graphical content (IconButton)'),
-        ),
-        CardHighlight(
-          codeSnippet: () {
-            if (iconSmall) {
-              return '''SmallIconButton(
+      ),
+      subtitle(
+        content: const Text('A Button with graphical content (IconButton)'),
+      ),
+      CardHighlight(
+        codeSnippet: () {
+          if (iconSmall) {
+            return '''SmallIconButton(
   child: IconButton(
     icon: const Icon(FluentIcons.graph_symbol, size: 20.0),
     onPressed: disabled ? null : () => debugPrint('pressed button'),
   ),
 )''';
-            }
+          }
 
-            return '''IconButton(
+          return '''IconButton(
   icon: const Icon(FluentIcons.graph_symbol, size: 24.0),
   onPressed: disabled ? null : () => debugPrint('pressed button'),
 )''';
+        }(),
+        child: Row(children: [
+          () {
+            final button = IconButton(
+              icon: Icon(
+                FluentIcons.graph_symbol,
+                size: iconSmall ? 20.0 : 24.0,
+              ),
+              onPressed: iconDisabled ? null : () {},
+            );
+
+            if (iconSmall) return SmallIconButton(child: button);
+
+            return button;
           }(),
-          child: Row(children: [
-            () {
-              final button = IconButton(
-                icon: Icon(
-                  FluentIcons.graph_symbol,
-                  size: iconSmall ? 20.0 : 24.0,
-                ),
-                onPressed: iconDisabled ? null : () {},
-              );
-
-              if (iconSmall) return SmallIconButton(child: button);
-
-              return button;
-            }(),
-            const Spacer(),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Checkbox(
-                checked: iconSmall,
-                onChanged: (v) {
-                  setState(() {
-                    iconSmall = v ?? !iconSmall;
-                  });
-                },
-                content: const Text('Small'),
-              ),
-              const SizedBox(height: 4.0),
-              Checkbox(
-                checked: iconDisabled,
-                onChanged: (v) {
-                  setState(() {
-                    iconDisabled = v ?? !iconDisabled;
-                  });
-                },
-                content: const Text('Disabled'),
-              ),
-            ]),
+          const Spacer(),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Checkbox(
+              checked: iconSmall,
+              onChanged: (v) {
+                setState(() {
+                  iconSmall = v ?? !iconSmall;
+                });
+              },
+              content: const Text('Small'),
+            ),
+            const SizedBox(height: 4.0),
+            Checkbox(
+              checked: iconDisabled,
+              onChanged: (v) {
+                setState(() {
+                  iconDisabled = v ?? !iconDisabled;
+                });
+              },
+              content: const Text('Disabled'),
+            ),
           ]),
+        ]),
+      ),
+      subtitle(content: const Text('A simple ToggleButton with text content')),
+      description(
+        content: const Text(
+          'A ToggleButton looks like a Button, but works like a CheckBox. It '
+          'typically has two states, checked (on) or unchecked (off).',
         ),
-        subtitle(
-            content: const Text('A simple ToggleButton with text content')),
-        description(
-          content: const Text(
-            'A ToggleButton looks like a Button, but works like a CheckBox. It '
-            'typically has two states, checked (on) or unchecked (off).',
-          ),
-        ),
-        CardHighlight(
-          codeSnippet: '''bool checked = false;
+      ),
+      CardHighlight(
+        codeSnippet: '''bool checked = false;
 
 ToggleButton(
   child: const Text('Toggle Button'),
   checked: checked,
   onPressed: disabled ? null : (v) => setState(() => checked = v),
 )''',
-          child: Row(children: [
-            ToggleButton(
-              checked: toggleState,
-              onChanged: toggleDisabled
-                  ? null
-                  : (v) {
-                      setState(() {
-                        toggleState = v;
-                      });
-                    },
-              child: const Text('Toggle Button'),
-            ),
-            const Spacer(),
-            ToggleSwitch(
-              checked: toggleDisabled,
-              onChanged: (v) {
-                setState(() {
-                  toggleDisabled = v;
-                });
-              },
-              content: const Text('Disabled'),
-            ),
-          ]),
-        ),
-        subtitle(content: const Text('DropDownButton')),
-        const Text(
-          'A control that drops down a flyout of choices from which one can be chosen',
-        ),
-        CardHighlight(
-          codeSnippet: '''DropDownButton(
+        child: Row(children: [
+          ToggleButton(
+            checked: toggleState,
+            onChanged: toggleDisabled
+                ? null
+                : (v) {
+                    setState(() {
+                      toggleState = v;
+                    });
+                  },
+            child: const Text('Toggle Button'),
+          ),
+          const Spacer(),
+          ToggleSwitch(
+            checked: toggleDisabled,
+            onChanged: (v) {
+              setState(() {
+                toggleDisabled = v;
+              });
+            },
+            content: const Text('Disabled'),
+          ),
+        ]),
+      ),
+      subtitle(content: const Text('DropDownButton')),
+      const Text(
+        'A control that drops down a flyout of choices from which one can be chosen',
+      ),
+      CardHighlight(
+        codeSnippet: '''DropDownButton(
   title: Text('Email'),
   items: [
     MenuFlyoutItem(text: const Text('Send'), onPressed: () {}),
@@ -274,49 +397,49 @@ ToggleButton(
     MenuFlyoutItem(text: const Text('Reply all'), onPressed: () {}),
   ],
 )''',
-          child: Row(children: [
-            DropDownButton(
-              title: Text('Email'),
-              items: [
-                MenuFlyoutItem(text: const Text('Send'), onPressed: () {}),
-                MenuFlyoutSeparator(),
-                MenuFlyoutItem(text: const Text('Reply'), onPressed: null),
-                MenuFlyoutItem(text: const Text('Reply all'), onPressed: () {}),
-              ],
-            ),
-            SizedBox(width: 10.0),
-            DropDownButton(
-              title: Icon(FluentIcons.mail),
-              items: [
-                MenuFlyoutItem(
-                  leading: Icon(FluentIcons.send),
-                  text: const Text('Send'),
-                  onPressed: () {},
-                ),
-                MenuFlyoutItem(
-                  leading: Icon(FluentIcons.reply),
-                  text: const Text('Reply'),
-                  onPressed: () {},
-                ),
-                MenuFlyoutItem(
-                  leading: Icon(FluentIcons.reply_all),
-                  text: const Text('Reply all'),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ]),
-        ),
-        subtitle(content: const Text('SplitButton')),
-        description(
-          content: const Text(
-            'Represents a button with two parts that can be invoked separately. '
-            'One part behaves like a standard button and the other part invokes '
-            'a flyout.',
+        child: Row(children: [
+          DropDownButton(
+            title: Text('Email'),
+            items: [
+              MenuFlyoutItem(text: const Text('Send'), onPressed: () {}),
+              MenuFlyoutSeparator(),
+              MenuFlyoutItem(text: const Text('Reply'), onPressed: null),
+              MenuFlyoutItem(text: const Text('Reply all'), onPressed: () {}),
+            ],
           ),
+          SizedBox(width: 10.0),
+          DropDownButton(
+            title: Icon(FluentIcons.mail),
+            items: [
+              MenuFlyoutItem(
+                leading: Icon(FluentIcons.send),
+                text: const Text('Send'),
+                onPressed: () {},
+              ),
+              MenuFlyoutItem(
+                leading: Icon(FluentIcons.reply),
+                text: const Text('Reply'),
+                onPressed: () {},
+              ),
+              MenuFlyoutItem(
+                leading: Icon(FluentIcons.reply_all),
+                text: const Text('Reply all'),
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ]),
+      ),
+      subtitle(content: const Text('SplitButton')),
+      description(
+        content: const Text(
+          'Represents a button with two parts that can be invoked separately. '
+          'One part behaves like a standard button and the other part invokes '
+          'a flyout.',
         ),
-        CardHighlight(
-          codeSnippet: '''final splitButtonKey = GlobalKey<SplitButtonState>();
+      ),
+      CardHighlight(
+        codeSnippet: '''final splitButtonKey = GlobalKey<SplitButtonState>();
 
 // To create a toggle button, use the [SplitButton.toggle] constructor
 SplitButton(
@@ -365,75 +488,75 @@ SplitButton(
 // Show the flyout programmatically
 splitButtonKey.currentState?.showFlyout();
 ''',
-          child: Row(children: [
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 4.0),
-                child: Text(
-                  'SplitButton with custom content',
-                  style: theme.typography.caption,
-                ),
+        child: Row(children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4.0),
+              child: Text(
+                'SplitButton with custom content',
+                style: theme.typography.caption,
               ),
-              SplitButton(
-                enabled: !splitButtonDisabled,
-                flyout: splitButtonFlyout,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: splitButtonDisabled
-                        ? splitButtonColor.secondaryBrushFor(theme.brightness)
-                        : splitButtonColor,
-                    borderRadius: const BorderRadiusDirectional.horizontal(
-                      start: Radius.circular(4.0),
-                    ),
+            ),
+            SplitButton(
+              enabled: !splitButtonDisabled,
+              flyout: splitButtonFlyout,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: splitButtonDisabled
+                      ? splitButtonColor.secondaryBrushFor(theme.brightness)
+                      : splitButtonColor,
+                  borderRadius: const BorderRadiusDirectional.horizontal(
+                    start: Radius.circular(4.0),
                   ),
-                  height: _kSplitButtonHeight,
-                  width: _kSplitButtonWidth,
                 ),
+                height: _kSplitButtonHeight,
+                width: _kSplitButtonWidth,
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 4.0, top: 8.0),
-                child: Text(
-                  'A toggleable SplitButton with text content',
-                  style: theme.typography.caption,
-                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4.0, top: 8.0),
+              child: Text(
+                'A toggleable SplitButton with text content',
+                style: theme.typography.caption,
               ),
-              SplitButton.toggle(
-                enabled: !splitButtonDisabled,
-                checked: splitButtonState,
-                onInvoked: () {
-                  debugPrint('Invoked split button primary action');
-                  setState(() => splitButtonState = !splitButtonState);
-                },
-                flyout: splitButtonFlyout,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Choose color'),
-                ),
-              ),
-            ]),
-            const Spacer(),
-            ToggleSwitch(
-              checked: splitButtonDisabled,
-              onChanged: (v) {
-                setState(() {
-                  splitButtonDisabled = v;
-                });
+            ),
+            SplitButton.toggle(
+              enabled: !splitButtonDisabled,
+              checked: splitButtonState,
+              onInvoked: () {
+                debugPrint('Invoked split button primary action');
+                setState(() => splitButtonState = !splitButtonState);
               },
-              content: const Text('Disabled'),
+              flyout: splitButtonFlyout,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Choose color'),
+              ),
             ),
           ]),
-        ),
-        subtitle(content: const Text('RadioButton')),
-        description(
-          content: const Text(
-            'Radio buttons, also called option buttons, let users select one option '
-            'from a collection of two or more mutually exclusive, but related, '
-            'options. Radio buttons are always used in groups, and each option is '
-            'represented by one radio button in the group.',
+          const Spacer(),
+          ToggleSwitch(
+            checked: splitButtonDisabled,
+            onChanged: (v) {
+              setState(() {
+                splitButtonDisabled = v;
+              });
+            },
+            content: const Text('Disabled'),
           ),
+        ]),
+      ),
+      subtitle(content: const Text('RadioButton')),
+      description(
+        content: const Text(
+          'Radio buttons, also called option buttons, let users select one option '
+          'from a collection of two or more mutually exclusive, but related, '
+          'options. Radio buttons are always used in groups, and each option is '
+          'represented by one radio button in the group.',
         ),
-        CardHighlight(
-          codeSnippet: '''int? selected;
+      ),
+      CardHighlight(
+        codeSnippet: '''int? selected;
 
 Column(
   children: List.generate(3, (index) {
@@ -447,45 +570,55 @@ Column(
     );
   }),
 )''',
-          child: Row(children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: List.generate(
-                3,
-                (index) {
-                  return Padding(
-                    padding: EdgeInsetsDirectional.only(
-                        bottom: index == 2 ? 0.0 : 14.0),
-                    child: RadioButton(
-                      checked: radioButtonSelected == index,
-                      onChanged: radioButtonDisabled
-                          ? null
-                          : (v) {
-                              if (v) {
-                                setState(() {
-                                  radioButtonSelected = index;
-                                });
-                              }
-                            },
-                      content: Text('RadioButton ${index + 1}'),
-                    ),
-                  );
-                },
-              ),
-            ),
-            const Spacer(),
-            ToggleSwitch(
-              checked: radioButtonDisabled,
-              onChanged: (v) {
-                setState(() {
-                  radioButtonDisabled = v;
-                });
+        child: Row(children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(
+              3,
+              (index) {
+                return Padding(
+                  padding: EdgeInsetsDirectional.only(
+                      bottom: index == 2 ? 0.0 : 14.0),
+                  child: RadioButton(
+                    checked: radioButtonSelected == index,
+                    onChanged: radioButtonDisabled
+                        ? null
+                        : (v) {
+                            if (v) {
+                              setState(() {
+                                radioButtonSelected = index;
+                              });
+                            }
+                          },
+                    content: Text('RadioButton ${index + 1}'),
+                  ),
+                );
               },
-              content: const Text('Disabled'),
-            )
-          ]),
+            ),
+          ),
+          const Spacer(),
+          ToggleSwitch(
+            checked: radioButtonDisabled,
+            onChanged: (v) {
+              setState(() {
+                radioButtonDisabled = v;
+              });
+            },
+            content: const Text('Disabled'),
+          )
+        ]),
+      ),
+    ];
+    //var pageWidgetsList = <Widget>[button];
+    var pageContent = SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: button,
         ),
-      ],
+      ),
     );
+    return pageContent;
   }
 }

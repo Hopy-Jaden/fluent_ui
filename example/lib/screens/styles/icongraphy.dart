@@ -46,20 +46,40 @@ class _IcongraphyPageState extends State<IcongraphyPage> {
   Widget build(BuildContext context) {
     assert(debugCheckHasFluentTheme(context));
 
+    var pageDescription = Text(
+      'Icons represent concepts, objects, or actions, and have semantic purpose within a layout. They should always be recognizable, functional, and easily understood. Use Fluent icons inside a UI for items like command bars, navigation, or status indicators.',
+      style: FluentTheme.of(context).typography.body,
+    );
+
     return ScaffoldPage(
       header: PageHeader(
-        title: const Text('Icongraphy'),
-        commandBar: Link(
-          // from the url_launcher package
-          uri: Uri.parse('https://fluent2.microsoft.design/iconography'),
-          builder: (Context, open) {
-            return Button(
-              child: Text('Documentation'),
-              onPressed: open,
-            );
-          },
-        ),
-      ),
+          title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Icongraphy',
+              ),
+              Link(
+                // from the url_launcher package
+                uri: Uri.parse('https://fluent2.microsoft.design/iconography'),
+                builder: (Context, open) {
+                  return Button(
+                    child: Text('Documentation'),
+                    onPressed: open,
+                  );
+                },
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          pageDescription,
+        ],
+      )),
       content: NavigationView(
         pane: NavigationPane(
             selected: topIndex,

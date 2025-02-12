@@ -1,3 +1,4 @@
+import 'package:example/screens/fluentThemeBuilder.dart';
 import 'package:example/screens/home.dart';
 import 'package:example/screens/settings.dart';
 import 'package:fluent_ui/fluent_ui.dart' hide Page;
@@ -315,6 +316,13 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       body: const SizedBox.shrink(),
       infoBadge: const InfoBadge(source: Text('NEW  ')),
       items: [
+        PaneItem(
+          key: const ValueKey(
+              '/fluentapp/getting_started'), //need new key value?
+          icon: const Icon(FluentIcons.code),
+          title: const Text('Getting Started'),
+          body: const SizedBox.shrink(),
+        ),
         //New Page is needed for design guideline
         PaneItem(
           key: const ValueKey('/fluentapp/splash_screen'), //need new key value?
@@ -352,7 +360,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           title: const Text('Carousel'),
           body: const SizedBox.shrink(),
           infoBadge: const InfoBadge(
-            source: Text('NOT ADDED YET  '),
+            source: Text('NOT SUPPORTED  '),
             color: Color(0xFF979593),
             foregroundColor: Color(0xFFFFFFFF),
           ),
@@ -373,7 +381,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           title: const Text('Sheets'),
           body: const SizedBox.shrink(),
           infoBadge: const InfoBadge(
-            source: Text('NOT ADDED YET  '),
+            source: Text('NOT SUPPORTED  '),
             color: Color(0xFF979593),
             foregroundColor: Color(0xFFFFFFFF),
           ),
@@ -414,7 +422,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             title: const Text('Rating'),
             body: const SizedBox.shrink(),
             infoBadge: const InfoBadge(
-              source: Text('NOT ADDED YET  '),
+              source: Text('NOT SUPPORTED  '),
               color: Color(0xFF979593),
               foregroundColor: Color(0xFFFFFFFF),
             ),
@@ -427,7 +435,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             title: const Text('Chips'),
             body: const SizedBox.shrink(),
             infoBadge: const InfoBadge(
-              source: Text('NOT ADDED YET  '),
+              source: Text('NOT SUPPORTED  '),
               color: Color(0xFF979593),
               foregroundColor: Color(0xFFFFFFFF),
             ),
@@ -580,7 +588,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           title: const Text('Grid'),
           body: const SizedBox.shrink(),
           infoBadge: const InfoBadge(
-            source: Text('NOT ADDED YET  '),
+            source: Text('NOT SUPPORTED  '),
             color: Color(0xFF979593),
             foregroundColor: Color(0xFFFFFFFF),
           ),
@@ -593,7 +601,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           title: const Text('Flip View'),
           body: const SizedBox.shrink(),
           infoBadge: const InfoBadge(
-            source: Text('NOT ADDED YET  '),
+            source: Text('NOT SUPPORTED  '),
             color: Color(0xFF979593),
             foregroundColor: Color(0xFFFFFFFF),
           ),
@@ -634,7 +642,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           title: const Text('Calendar View'),
           body: const SizedBox.shrink(),
           infoBadge: const InfoBadge(
-            source: Text('NOT ADDED YET  '),
+            source: Text('NOT SUPPORTED  '),
             color: Color(0xFF979593),
             foregroundColor: Color(0xFFFFFFFF),
           ),
@@ -708,7 +716,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           title: const Text('Avatar'),
           body: const SizedBox.shrink(),
           infoBadge: const InfoBadge(
-            source: Text('NOT ADDED YET  '),
+            source: Text('NOT SUPPORTED  '),
             color: Color(0xFF979593),
             foregroundColor: Color(0xFFFFFFFF),
           ),
@@ -721,7 +729,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           title: const Text('Media Player'),
           body: const SizedBox.shrink(),
           infoBadge: const InfoBadge(
-            source: Text('NOT ADDED YET  '),
+            source: Text('NOT SUPPORTED  '),
             color: Color(0xFF979593),
             foregroundColor: Color(0xFFFFFFFF),
           ),
@@ -762,7 +770,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           title: const Text('Ink Toolbar'),
           body: const SizedBox.shrink(),
           infoBadge: const InfoBadge(
-            source: Text('NOT ADDED YET  '),
+            source: Text('NOT SUPPORTED  '),
             color: Color(0xFF979593),
             foregroundColor: Color(0xFFFFFFFF),
           ),
@@ -855,7 +863,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           title: const Text('Annotated Scroll'),
           body: const SizedBox.shrink(),
           infoBadge: const InfoBadge(
-            source: Text('NOT ADDED YET  '),
+            source: Text('NOT SUPPORTED  '),
             color: Color(0xFF979593),
             foregroundColor: Color(0xFFFFFFFF),
           ),
@@ -868,7 +876,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           title: const Text('Pigs Page'),
           body: const SizedBox.shrink(),
           infoBadge: const InfoBadge(
-            source: Text('NOT ADDED YET  '),
+            source: Text('NOT SUPPORTED  '),
             color: Color(0xFF979593),
             foregroundColor: Color(0xFFFFFFFF),
           ),
@@ -902,7 +910,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           title: const Text('Shimmer'),
           body: const SizedBox.shrink(),
           infoBadge: const InfoBadge(
-            source: Text('NOT ADDED YET  '),
+            source: Text('NOT SUPPORTED  '),
             color: Color(0xFF979593),
             foregroundColor: Color(0xFFFFFFFF),
           ),
@@ -1071,6 +1079,18 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
   }).toList();
   late final List<NavigationPaneItem> footerItems = [
     PaneItemSeparator(),
+    PaneItem(
+      key: const ValueKey('/fluent_theme_builder'),
+      icon: const Icon(FluentIcons.brush),
+      title: const Text('Fluent Theme Builder'),
+      body: const SizedBox.shrink(),
+      onTap: () {
+        if (GoRouterState.of(context).uri.toString() !=
+            '/fluent_theme_builder') {
+          context.go('/fluent_theme_builder');
+        }
+      },
+    ),
     PaneItem(
       key: const ValueKey('/settings'),
       icon: const Icon(FluentIcons.settings),
@@ -1439,6 +1459,11 @@ final router = GoRouter(navigatorKey: rootNavigatorKey, routes: [
       GoRoute(path: '/', builder: (context, state) => const HomePage()),
 
       /// Settings
+      GoRoute(
+          path: '/fluent_theme_builder',
+          builder: (context, state) => const FluentThemeBuilderPage()),
+
+      /// Settings
       GoRoute(path: '/settings', builder: (context, state) => const Settings()),
 
       /// /// Styles Expander
@@ -1571,6 +1596,15 @@ final router = GoRouter(navigatorKey: rootNavigatorKey, routes: [
       ),
 
       /// /// Fluent App Expander
+      /// Getting Started
+      GoRoute(
+        path: '/fluentapp/getting_started',
+        builder: (context, state) => DeferredWidget(
+          fluentapp.loadLibrary,
+          () => fluentapp.GettingStartedPage(),
+        ),
+      ),
+
       /// Splash Screen
       GoRoute(
         path: '/fluentapp/splash_screen',
