@@ -83,7 +83,7 @@ class _GeometryPageState extends State<GeometryPage> with PageMixin {
                             ),
                             const SizedBox(height: 12.0),
                             Button(
-                              onPressed: Flyout.of(context).close,
+                              onPressed: Navigator.of(context).pop,
                               child: const Text('Done'),
                             ),
                           ],

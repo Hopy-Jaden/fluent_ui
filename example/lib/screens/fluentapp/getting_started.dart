@@ -1,12 +1,8 @@
-import 'package:example/theme.dart';
+import 'package:example/routes/styles.dart';
 import 'package:example/widgets/card_highlight.dart';
 import 'package:example/widgets/page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/link.dart';
-
-const _kSplitButtonHeight = 32.0;
-const _kSplitButtonWidth = 36.0;
 
 class GettingStartedPage extends StatefulWidget {
   const GettingStartedPage({super.key});
@@ -92,7 +88,6 @@ class _GettingStartedOverviewPageState extends State<GettingStartedOverviewPage>
     with PageMixin {
   @override
   Widget build(BuildContext context) {
-    final appTheme = context.watch<AppTheme>();
     const smallerSpacer = SizedBox(
       height: 10.0,
     );
@@ -302,9 +297,24 @@ class _GettingStartedSpecsPageState extends State<GettingStartedSpecsPage> {
   @override
   Widget build(BuildContext context) {
     final pageDescription = const Text(
-      'You can restyle the buttons below to give it a new look. After customizating components, you can copy the source code of the theme data in fluent theme builder page to easily manage your theme.',
+      'You can restyle the surfaces below to give it a new look. After customizating components, you can copy the source code of the theme data in fluent theme builder page to easily manage your theme.',
     );
-    final pageWidgetsList = <Widget>[pageDescription];
+    final pageWidgetsList = <Widget>[
+      pageDescription,
+      SizedBox(height: 10),
+      ColorContrastChecker(),
+      SizedBox(height: 40),
+      CardHighlight(
+        child: Text('Lorem'),
+      ),
+      Expander(
+        header: Text('customization'),
+        content: Slider(
+          value: 50,
+          onChanged: (double) {},
+        ),
+      ),
+    ];
     final pageContent = SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(24.0),
@@ -343,34 +353,6 @@ class _GettingStartedSampleCodePageState
   AccentColor splitButtonColor = Colors.red;
   @override
   Widget build(BuildContext context) {
-    final theme = FluentTheme.of(context);
-
-    final splitButtonFlyout = FlyoutContent(
-      constraints: BoxConstraints(maxWidth: 200.0),
-      child: Wrap(
-        runSpacing: 10.0,
-        spacing: 8.0,
-        children: Colors.accentColors.map((color) {
-          return IconButton(
-            autofocus: splitButtonColor == color,
-            style: ButtonStyle(
-              padding: WidgetStatePropertyAll(
-                EdgeInsets.all(4.0),
-              ),
-            ),
-            onPressed: () {
-              setState(() => splitButtonColor = color);
-              Navigator.of(context).pop(color);
-            },
-            icon: Container(
-              height: _kSplitButtonHeight,
-              width: _kSplitButtonHeight,
-              color: color,
-            ),
-          );
-        }).toList(),
-      ),
-    );
     var button = [
       Text(
         'Template of a simple Fluent App',

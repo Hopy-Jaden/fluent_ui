@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:example/screens/styles/colors.dart';
 import 'package:example/widgets/page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:url_launcher/link.dart';
@@ -122,7 +123,22 @@ class _ButtonSpecsPageState extends State<ButtonSpecsPage> {
     final pageDescription = const Text(
       'You can restyle the buttons below to give it a new look. After customization, you can copy the source code of the theme data in fluent theme builder page to easily manage your theme',
     );
-    final pageWidgetsList = <Widget>[pageDescription];
+    final pageWidgetsList = <Widget>[
+      pageDescription,
+      SizedBox(height: 10),
+      ColorContrastChecker(),
+      SizedBox(height: 40),
+      CardHighlight(
+        child: Text('Lorem'),
+      ),
+      Expander(
+        header: Text('customization'),
+        content: Slider(
+          value: 50,
+          onChanged: (double) {},
+        ),
+      ),
+    ];
     final pageContent = SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(24.0),

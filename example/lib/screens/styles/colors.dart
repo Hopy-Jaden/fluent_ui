@@ -1,7 +1,9 @@
 import 'package:clipboard/clipboard.dart';
-import 'package:example/widgets/card_highlight.dart';
+import 'package:example/widgets/page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:url_launcher/link.dart';
+import 'dart:math';
+import 'dart:ui';
 
 import 'icongraphy.dart';
 
@@ -73,7 +75,7 @@ class _ColorsPageState extends State<ColorsPage> {
                 PaneItem(
                     icon: Icon(FluentIcons.contrast),
                     title: Text('Color Contrast'),
-                    body: SingleChildScrollView(child: Container()))
+                    body: ColorContrastPage())
               ]),
         ));
   }
@@ -294,5 +296,281 @@ class ColorBlock extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+class ColorContrastPage extends StatefulWidget {
+  const ColorContrastPage({super.key});
+
+  @override
+  State<ColorContrastPage> createState() => _ColorContrastPageState();
+}
+
+class _ColorContrastPageState extends State<ColorContrastPage> {
+  @override
+  Widget build(BuildContext context) {
+    return const SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(children: [
+          Text(
+              '''To ensure optimal accessibility and usability, apps should strive to use high-contrast and easy-to-read color combination for text and its background. Not only will this benefit users with lower visual acuity, but this will also ensure visibility and legibility under a wide range of lighting conditions, screens, and device settings.'''),
+          SizedBox(height: 24),
+          ColorContrastChecker()
+        ]),
+      ),
+    );
+  }
+}
+
+class ColorContrastChecker extends StatefulWidget {
+  const ColorContrastChecker({super.key});
+
+  @override
+  State<ColorContrastChecker> createState() => _ColorContrastCheckerState();
+}
+
+class _ColorContrastCheckerState extends State<ColorContrastChecker>
+    with PageMixin {
+  Color textColor = const Color(0xFF000000);
+  Color backgroundColor = const Color(0xFFFFFFFF);
+  ColorSpectrumShape spectrumShape = ColorSpectrumShape.box;
+
+  @override
+  Widget build(BuildContext context) {
+    var lum1 = textColor.computeLuminance();
+    var lum2 = backgroundColor.computeLuminance();
+    var brightest = max(lum1, lum2);
+    var darkest = min(lum1, lum2);
+    var smallTextContrastRequirement = 4.5;
+    var ContrastRequirement = 3;
+    double contrast = (brightest + 0.05) / (darkest + 0.05);
+
+    final colorPickerFlyout = SplitButton(
+      child: Container(
+        decoration: BoxDecoration(
+          color: textColor,
+          borderRadius: const BorderRadiusDirectional.horizontal(
+            start: Radius.circular(4.0),
+          ),
+        ),
+        height: 32.0,
+        width: 36.0,
+      ),
+      flyout: FlyoutContent(
+          //constraints: BoxConstraints(maxWidth: 200.0),
+          child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ColorPicker(
+            color: textColor,
+            onChanged: (color) => setState(() => textColor = color),
+            colorSpectrumShape: spectrumShape,
+            isMoreButtonVisible: false,
+            isColorSliderVisible: true,
+            isColorChannelTextInputVisible: true,
+            isHexInputVisible: true,
+            isAlphaEnabled: false,
+          ),
+        ],
+      )),
+    );
+    final colorPickerFlyout2 = SplitButton(
+      child: Container(
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: const BorderRadiusDirectional.horizontal(
+            start: Radius.circular(4.0),
+          ),
+        ),
+        height: 32.0,
+        width: 36.0,
+      ),
+      flyout: FlyoutContent(
+          //constraints: BoxConstraints(maxWidth: 200.0),
+          child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ColorPicker(
+            color: textColor,
+            onChanged: (color) => setState(() => backgroundColor = color),
+            colorSpectrumShape: spectrumShape,
+            isMoreButtonVisible: false,
+            isColorSliderVisible: true,
+            isColorChannelTextInputVisible: true,
+            isHexInputVisible: true,
+            isAlphaEnabled: false,
+          ),
+        ],
+      )),
+    );
+    final colorContrastRequirement = [
+      Row(
+        children: [
+          contrast > smallTextContrastRequirement
+              ? Row(
+                  children: [
+                    Icon(
+                      FluentIcons.skype_circle_check,
+                      size: 32,
+                      color: Colors.successPrimaryColor,
+                    ),
+                    SizedBox(width: 10),
+                    Text('Pass')
+                  ],
+                )
+              : Row(
+                  children: [
+                    Icon(
+                      FluentIcons.status_error_full,
+                      size: 32,
+                      color: Colors.errorPrimaryColor,
+                    ),
+                    SizedBox(width: 10),
+                    Text('Fail')
+                  ],
+                ),
+          SizedBox(width: 40),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [Text('Regular Text'), Text('Require at least 4.5 : 1')],
+          )
+        ],
+      ),
+      Row(
+        children: [
+          contrast > ContrastRequirement
+              ? Row(
+                  children: [
+                    Icon(
+                      FluentIcons.skype_circle_check,
+                      size: 32,
+                      color: Colors.successPrimaryColor,
+                    ),
+                    SizedBox(width: 10),
+                    Text('Pass')
+                  ],
+                )
+              : Row(
+                  children: [
+                    Icon(
+                      FluentIcons.status_error_full,
+                      size: 32,
+                      color: Colors.errorPrimaryColor,
+                    ),
+                    SizedBox(width: 10),
+                    Text('Fail')
+                  ],
+                ),
+          SizedBox(width: 40),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [Text('Large Text'), Text('Require at least 3 : 1')],
+          )
+        ],
+      ),
+    ];
+    final colorContrastShowcase = SizedBox(
+      width: double.infinity,
+      height: 200,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(
+                //color: backgroundColor,
+                padding: EdgeInsets.all(24.0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: colorContrastRequirement)),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+                color: backgroundColor,
+                padding: EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('This is a small text!',
+                        style: TextStyle(color: textColor)),
+                    subtitle(
+                      content: Text(
+                        'This is a Large Text',
+                        style: TextStyle(color: textColor),
+                      ),
+                    ),
+                  ],
+                )),
+          ),
+        ],
+      ),
+    );
+    final colorPickersRow = Row(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Text Color:   ',
+              style: FluentTheme.of(context).typography.bodyStrong,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            colorPickerFlyout
+          ],
+        ),
+        SizedBox(
+          width: 20,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Background Color:   ',
+              style: FluentTheme.of(context).typography.bodyStrong,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            colorPickerFlyout2
+          ],
+        ),
+        SizedBox(
+          width: 20,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Contrast Ratio:',
+              style: FluentTheme.of(context).typography.bodyStrong,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              contrast.toStringAsFixed(2) + ' : 1',
+              style: FluentTheme.of(context).typography.subtitle,
+            ),
+          ],
+        ),
+      ],
+    );
+    final colorContrastContent = Column(children: [
+      colorPickersRow,
+      SizedBox(height: 24),
+      colorContrastShowcase
+    ]);
+    final checkerCard = Expander(
+      header: Text('Color Contrast Checker'),
+      content: colorContrastContent,
+    );
+    return checkerCard;
   }
 }
