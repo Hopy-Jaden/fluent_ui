@@ -316,7 +316,9 @@ class _ColorContrastPageState extends State<ColorContrastPage> {
           Text(
               '''To ensure optimal accessibility and usability, apps should strive to use high-contrast and easy-to-read color combination for text and its background. Not only will this benefit users with lower visual acuity, but this will also ensure visibility and legibility under a wide range of lighting conditions, screens, and device settings.'''),
           SizedBox(height: 24),
-          ColorContrastChecker()
+          ColorContrastChecker(
+            initiallyExpanded: true,
+          )
         ]),
       ),
     );
@@ -324,7 +326,8 @@ class _ColorContrastPageState extends State<ColorContrastPage> {
 }
 
 class ColorContrastChecker extends StatefulWidget {
-  const ColorContrastChecker({super.key});
+  const ColorContrastChecker({super.key, this.initiallyExpanded});
+  final bool? initiallyExpanded;
 
   @override
   State<ColorContrastChecker> createState() => _ColorContrastCheckerState();
@@ -568,6 +571,7 @@ class _ColorContrastCheckerState extends State<ColorContrastChecker>
       colorContrastShowcase
     ]);
     final checkerCard = Expander(
+      initiallyExpanded: widget.initiallyExpanded ?? false,
       header: Text('Color Contrast Checker'),
       content: colorContrastContent,
     );
