@@ -1126,27 +1126,35 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
 
   int _calculateSelectedIndex(BuildContext context) {
     final location = GoRouterState.of(context).uri.toString();
-    int indexOriginal = originalItems
-        .where((item) => item.key != null)
-        .toList()
-        .indexWhere((item) => item.key == Key(location));
+    int currentIndex = 0;
 
-    if (indexOriginal == -1) {
-      int indexFooter = footerItems
-          .where((element) => element.key != null)
-          .toList()
-          .indexWhere((element) => element.key == Key(location));
-      if (indexFooter == -1) {
-        return 0;
+    for (final item in originalItems) {
+      if (item is PaneItemExpander) {
+        currentIndex++;
+        for (final subItem in item.items) {
+          if (subItem.key != null &&
+              (subItem.key as ValueKey).value == location) {
+            return currentIndex;
+          }
+          currentIndex++;
+        }
+      } else if (item is! PaneItemSeparator) {
+        if (item.key != null && (item.key as ValueKey).value == location) {
+          return currentIndex;
+        }
+        currentIndex++;
       }
-      return originalItems
-              .where((element) => element.key != null)
-              .toList()
-              .length +
-          indexFooter;
-    } else {
-      return indexOriginal;
     }
+
+    for (final item in footerItems) {
+      if (item.key != null && (item.key as ValueKey).value == location) {
+        return currentIndex;
+      } else if (item is! PaneItemSeparator){
+        currentIndex++;
+      }
+    }
+
+    return 0;
   }
 
   @override
