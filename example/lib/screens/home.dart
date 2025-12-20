@@ -251,12 +251,12 @@ class MyApp extends StatelessWidget {
               SizedBox(width: 12,),
             ],
           )),
-        const SizedBox(height: 22),
+        const SizedBox(height: 60),
         Row(
           children: [
-            Text('SPONSORS', style: theme.typography.bodyStrong),
-            const SizedBox(width: 4),
-            const WindowsIcon(WindowsIcons.heart_fill, size: 16),
+            Text('Sponsors', style: theme.typography.title),
+            const SizedBox(width: 10),
+            const WindowsIcon(WindowsIcons.heart_fill, size: 20),
           ],
         ),
         const SizedBox(height: 4),
@@ -267,19 +267,14 @@ class MyApp extends StatelessWidget {
             ...sponsors.map((final sponsor) {
               return sponsor.build();
             }),
-            IconButton(
-              onPressed: () {
+            IconButton(onPressed: () {
                 showDialog(
                   context: context,
                   builder: (final context) => const SponsorDialog(),
                 );
               },
-              icon: Column(
-                children: [
-                  SizedBox(
-                    height: 60,
-                    width: 60,
-                    child: ShaderMask(
+                icon:  Card(child: SizedBox(height: 200, width:150, child: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center, children: [
+                  SizedBox(height: 60, width: 60, child: ShaderMask(
                       shaderCallback: (final rect) {
                         return LinearGradient(
                           colors: [
@@ -295,14 +290,15 @@ class MyApp extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Text('Become a Sponsor!'),
-                ],
+                          SizedBox(height:45),
+                          Text('Become a Sponsor!', style: FluentTheme.of(context).typography.bodyStrong,),
+                  ],),),),
               ),
-            ),
           ],
         ),
-        const SizedBox(height: 22),
-        Text('CONTRIBUTORS', style: theme.typography.bodyStrong),
+        const SizedBox(height: 60),
+        Text('Contributors', style: theme.typography.title),
+        const SizedBox(height: 4),
         Wrap(
           spacing: 10,
           runSpacing: 10,
@@ -310,40 +306,10 @@ class MyApp extends StatelessWidget {
             return contributor.build();
           }).toList(),
         ),
-        subtitle(
-          content: const Text(
-            'Equivalents with the material and cupertino libraries',
-          ),
-        ),
+        const SizedBox(height: 60),
+        Text('Equivalents with the material and cupertino libraries', style: theme.typography.title),
+        const SizedBox(height: 4),
         const UIEquivalents(),
-      ],
-    );
-  }
-}
-
-class SponsorButton extends StatelessWidget {
-  const SponsorButton({
-    required this.imageUrl,
-    required this.username,
-    super.key,
-  });
-
-  final String imageUrl;
-  final String username;
-
-  @override
-  Widget build(final BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 60,
-          width: 60,
-          decoration: BoxDecoration(
-            image: DecorationImage(image: NetworkImage(imageUrl)),
-            shape: BoxShape.circle,
-          ),
-        ),
-        Text(username),
       ],
     );
   }
