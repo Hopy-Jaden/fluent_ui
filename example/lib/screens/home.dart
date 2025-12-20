@@ -226,7 +226,7 @@ class MyApp extends StatelessWidget {
               ),),
               SizedBox(width: 12,),
               //Card opening Win UI design guidelines
-              Link(uri: Uri.parse('https://github.com/bdlukaa/fluent_ui'), builder: (context, followLink) => GestureDetector(onTap: followLink,
+              Link(uri: Uri.parse('https://learn.microsoft.com/en-us/windows/apps/design/'), builder: (context, followLink) => GestureDetector(onTap: followLink,
                 child: Card(child: SizedBox(height: 150, width:230, child: Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.end, children: [
                   Icon(WindowsIcons.design, size: 30,), 
                   SizedBox(height:15),
@@ -237,7 +237,8 @@ class MyApp extends StatelessWidget {
                 ],),),),
               ),),
               SizedBox(width: 12,),
-              Link(uri: Uri.parse('https://github.com/bdlukaa/fluent_ui'), builder: (context, followLink) => GestureDetector(onTap: followLink,
+              //Card opening Fluent UI documentation
+              Link(uri: Uri.parse('https://fluent2.microsoft.design/'), builder: (context, followLink) => GestureDetector(onTap: followLink,
                 child: Card(child: SizedBox(height: 150, width:230, child: Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.end, children: [
                   Icon(WindowsIcons.document, size: 30,), 
                   SizedBox(height:15),
