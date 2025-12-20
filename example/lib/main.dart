@@ -1,3 +1,4 @@
+import 'package:example/screens/create_first_app.dart';
 import 'package:example/screens/home.dart';
 import 'package:example/screens/settings.dart';
 import 'package:fluent_ui/fluent_ui.dart' hide Page;
@@ -260,6 +261,16 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             icon: const WindowsIcon(WindowsIcons.home),
             title: const Text('Home'),
             body: const HomePage(),
+          ),
+          PaneItemExpander(
+            icon: const WindowsIcon(WindowsIcons.library),
+            title: const Text('Getting Started'),
+            items: [
+              PaneItem(
+                title: const Text('Create your first app'),
+                body: const CreateFirstAppPage(),
+              ),
+            ],
           ),
           PaneItemHeader(header: const Text('Controls')),
           PaneItemExpander(

@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CardHighlight extends StatefulWidget {
   const CardHighlight({
-    required this.child,
+    this.child,
     required this.codeSnippet,
     super.key,
     this.backgroundColor,
@@ -14,7 +14,7 @@ class CardHighlight extends StatefulWidget {
   });
 
   final Widget? header;
-  final Widget child;
+  final Widget? child;
   final String codeSnippet;
 
   final Color? backgroundColor;
@@ -47,16 +47,16 @@ class _CardHighlightState extends State<CardHighlight>
         borderRadius: BorderRadius.circular(8),
         child: Column(
           children: [
-            Mica(
+            widget.child !=null ? Mica(
               backgroundColor: widget.backgroundColor,
               child: Padding(
                 padding: const EdgeInsetsDirectional.all(12),
                 child: Align(
                   alignment: AlignmentDirectional.topStart,
-                  child: SizedBox(width: double.infinity, child: widget.child),
+                  child: SizedBox(width: double.infinity, child: widget.child ?? const SizedBox.shrink()),
                 ),
               ),
-            ),
+            ) : const SizedBox.shrink(),
             Expander(
               initiallyExpanded: widget.initiallyOpen,
               key: expanderKey,
