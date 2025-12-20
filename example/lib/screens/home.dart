@@ -25,17 +25,8 @@ class _HomePageState extends State<HomePage> with PageMixin {
     final theme = FluentTheme.of(context);
 
     return ScaffoldPage.scrollable(
-      header: PageHeader(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 22,),
-            Text('Showcase App', style: theme.typography.subtitle),
-            Text('Windows UI for Flutter', style: theme.typography.titleLarge),
-            SizedBox(height:80),
-          ],
-        ),
-        commandBar: Row(
+        //moved to the Rows of Cards below
+        /*commandBar: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Link(
@@ -52,9 +43,14 @@ class _HomePageState extends State<HomePage> with PageMixin {
               ),
             ),
           ],
-        ),
-      ),
+        ),*/      
       children: [
+        //Page Header Moved Here
+        SizedBox(height: 22,),
+        Text('Showcase App', style: theme.typography.subtitle),
+        Text('Windows UI for Flutter', style: theme.typography.titleLarge),
+        //will move to new page
+        /*
         CardHighlight(
           initiallyOpen: true,
           codeSnippet: '''
@@ -187,32 +183,73 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 22),
-        IconButton(
-          onPressed: () {
-            showDialog(
-              context: context,
-              barrierDismissible: true,
-              builder: (final context) => const Changelog(),
-            );
-          },
-          icon: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        */
+        const SizedBox(height: 70),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
             children: [
-              Text(
-                "What's new on 4.0.0",
-                style: theme.typography.body?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+              // Card opening github repository
+              Link(uri: Uri.parse('https://github.com/bdlukaa/fluent_ui'), builder: (context, followLink) => GestureDetector(onTap: followLink,
+                child: Card(child: SizedBox(height: 150, width:230, child: Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.end, children: [
+                  Icon(WindowsIcons.code, size: 30,), 
+                  SizedBox(height:15),
+                  Text('Fluent UI on Github', style: theme.typography.bodyStrong,),
+                  Text('Explore the source code of the Fluent UI library and repository.'),
+                  SizedBox(height:10),
+                  Icon(WindowsIcons.open_in_new_window),
+                ],),),),
+              ),),
+              SizedBox(width: 12,),
+              //Card opening changelog dialog
+              GestureDetector(onTap: () => showDialog(context: context, barrierDismissible: true, builder: (final context) => const Changelog(),),
+                child: Card(child: SizedBox(height: 150, width:230, child: Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.end, children: [
+                  Icon(WindowsIcons.megaphone, size: 30,), 
+                  SizedBox(height:15),
+                  Text('What\'s new on 4.0.0', style: theme.typography.bodyStrong,),
+                  Text('A native look-and-feel out of the box. - June 21, 2022'),
+                  SizedBox(height:10),
+                  Icon(WindowsIcons.open_in_new_window),
+                ],),),),
               ),
-              Text('June 21, 2022', style: theme.typography.caption),
-              Text(
-                'A native look-and-feel out of the box',
-                style: theme.typography.bodyLarge,
-              ),
+              SizedBox(width: 12,),
+              //Card opening WinUI documentation
+              Link(uri: Uri.parse('https://learn.microsoft.com/en-us/windows/apps/introduction'), builder: (context, followLink) => GestureDetector(onTap: followLink,
+                child: Card(child: SizedBox(height: 150, width:230, child: Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.end, children: [
+                  Icon(WindowsIcons.library, size: 30,), 
+                  SizedBox(height:15),
+                  Text('Win UI Documentation', style: theme.typography.bodyStrong,),
+                  Text('Get started with WinUI and explore detailed documentation'),
+                  SizedBox(height:10),
+                  Icon(WindowsIcons.open_in_new_window),
+                ],),),),
+              ),),
+              SizedBox(width: 12,),
+              //Card opening Win UI design guidelines
+              Link(uri: Uri.parse('https://github.com/bdlukaa/fluent_ui'), builder: (context, followLink) => GestureDetector(onTap: followLink,
+                child: Card(child: SizedBox(height: 150, width:230, child: Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.end, children: [
+                  Icon(WindowsIcons.design, size: 30,), 
+                  SizedBox(height:15),
+                  Text('Design Win UI', style: theme.typography.bodyStrong,),
+                  Text('Guidelines and toolkits for creating stunning WinUI experiences.'),
+                  SizedBox(height:10),
+                  Icon(WindowsIcons.open_in_new_window),
+                ],),),),
+              ),),
+              SizedBox(width: 12,),
+              Link(uri: Uri.parse('https://github.com/bdlukaa/fluent_ui'), builder: (context, followLink) => GestureDetector(onTap: followLink,
+                child: Card(child: SizedBox(height: 150, width:230, child: Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.end, children: [
+                  Icon(WindowsIcons.document, size: 30,), 
+                  SizedBox(height:15),
+                  Text('Fluent UI 2 Documentation', style: theme.typography.bodyStrong,),
+                  Text('Explore the official Fluent UI 2 documentation by Microsoft.'),
+                  SizedBox(height:10),
+                  Icon(WindowsIcons.open_in_new_window),
+                ],),),),
+              ),),
+              SizedBox(width: 12,),
             ],
-          ),
-        ),
+          )),
         const SizedBox(height: 22),
         Row(
           children: [
