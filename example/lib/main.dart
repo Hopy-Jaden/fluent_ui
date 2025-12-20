@@ -196,6 +196,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                   onSelected: (item) {
                     NavigationView.dataOf(context).pane?.changeTo(item.value!);
                   },
+                  placeholder: 'Search Controls and Samples...',
                   trailingIcon: IconButton(icon: const Icon(WindowsIcons.search), onPressed: (){},),
                   items: [
                     for (final item in allItems)
