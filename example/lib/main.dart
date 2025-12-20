@@ -196,6 +196,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                   onSelected: (item) {
                     NavigationView.dataOf(context).pane?.changeTo(item.value!);
                   },
+                  trailingIcon: IconButton(icon: const Icon(WindowsIcons.search), onPressed: (){},),
                   items: [
                     for (final item in allItems)
                       AutoSuggestBoxItem<PaneItem>(
@@ -217,7 +218,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
               appTheme.mode = ThemeMode.light;
             }
           },
-          child: const Icon(WindowsIcons.lightbulb),
+          child: const Icon(WindowsIcons.light),
         ),
         captionControls: const WindowButtons(),
         onDragStarted: !kIsWeb ? windowManager.startDragging : null,
