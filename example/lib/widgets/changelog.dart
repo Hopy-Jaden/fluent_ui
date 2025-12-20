@@ -47,14 +47,19 @@ class _ChangelogState extends State<Changelog> {
     return DeferredWidget(
       flutter_markdown.loadLibrary,
       () => ContentDialog(
-        style: const ContentDialogThemeData(
-          padding: EdgeInsetsDirectional.zero,
-        ),
-        constraints: const BoxConstraints(maxWidth: 600),
+        constraints: const BoxConstraints(maxWidth: 600,),// maxHeight: 600),
+        title: Text('What\'s New in Fluent UI for Flutter'),
+        actions: [
+          FilledButton(
+            child: const Text('Close'),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
         content: () {
           if (changelog == null) return const ProgressRing();
           return SingleChildScrollView(
             child: flutter_markdown.Markdown(
+              physics: ScrollPhysics(),
               shrinkWrap: true,
               data: changelog!
                   .map<String>((final line) {
@@ -71,7 +76,7 @@ class _ChangelogState extends State<Changelog> {
                           .last
                           .replaceAll('[', '')
                           .replaceAll(']', '');
-
+            
                       if (!date.startsWith('##')) {
                         final splitDate = date.split('/');
                         final dateTime = DateTime(
