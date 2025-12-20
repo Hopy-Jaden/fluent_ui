@@ -26,7 +26,15 @@ class _HomePageState extends State<HomePage> with PageMixin {
 
     return ScaffoldPage.scrollable(
       header: PageHeader(
-        title: const Text('Windows UI for Flutter Showcase App'),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 22,),
+            Text('Showcase App', style: theme.typography.subtitle),
+            Text('Windows UI for Flutter', style: theme.typography.titleLarge),
+            SizedBox(height:80),
+          ],
+        ),
         commandBar: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
