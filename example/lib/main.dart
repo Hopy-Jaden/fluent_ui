@@ -268,6 +268,27 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             title: const Text('Fundamentals'),
             body: const FundamentalsPage(),
           ),
+          PaneItemExpander(
+            icon: const WindowsIcon(WindowsIcons.design),
+            title: const Text('Design'),
+            items: [
+              PaneItem(
+                icon: const WindowsIcon(WindowsIcons.color),
+                title: const Text('Color'), 
+                body: theming.ColorsPage()
+              ),
+              PaneItem(
+                icon: const WindowsIcon(WindowsIcons.emoji_tab_symbols),
+                title: const Text('Icongraphy'), 
+                body: theming.IconsPage(set: FluentIcons.allIcons),
+              ),
+              PaneItem(
+                icon: const WindowsIcon(WindowsIcons.font),
+                title: const Text('Typography'), 
+                body: theming.TypographyPage()
+              ),
+            ],
+          ),
           PaneItem(
             icon: const WindowsIcon(WindowsIcons.code),
             title: const Text('Create your first app'),
@@ -381,19 +402,6 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                 title: const Text('Mica'),
                 //  body: surfaces.AcrylicPage()
               ),
-              PaneItem(
-                title: const Text('Windows Icons'),
-                body: theming.IconsPage(set: WindowsIcons.allIcons),
-              ),
-              PaneItem(
-                title: const Text('Fluent Icons'),
-                body: theming.IconsPage(set: FluentIcons.allIcons),
-              ),
-              PaneItem(
-                title: const Text('Typography'),
-                body: theming.TypographyPage(),
-              ),
-              PaneItem(title: const Text('Colors'), body: theming.ColorsPage()),
             ],
           ),
 
