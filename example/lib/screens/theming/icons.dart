@@ -36,7 +36,6 @@ Future<void> showCopiedSnackbar(
 }
 
 class IconsPage extends StatefulWidget {
-
   const IconsPage({super.key});
 
   @override
@@ -74,7 +73,9 @@ class _IconsPageState extends State<IconsPage> {
           ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
-            child: Text('Icons represent concepts, objects, or actions, and have semantic purpose within a layout. They should always be recognizable, functional, and easily understood. Segoe Fluent Icons are used on Windows 11 and Segoe MDL2 Assets are used on Windows 10.'),
+            child: Text(
+              'Icons represent concepts, objects, or actions, and have semantic purpose within a layout. They should always be recognizable, functional, and easily understood. Segoe Fluent Icons are used on Windows 11 and Segoe MDL2 Assets are used on Windows 10.',
+            ),
           ),
           const SizedBox(height: 10),
           Row(
@@ -82,21 +83,24 @@ class _IconsPageState extends State<IconsPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: SizedBox(
-                    width: 240,
-                    child: Tooltip(
-                      message: 'Filter by name',
-                      child: TextBox(
-                        suffix: Padding(
-                          padding: const EdgeInsetsDirectional.only(end: 4),
-                          child: IconButton(icon: WindowsIcon(WindowsIcons.search), onPressed: (){},),
+                  width: 240,
+                  child: Tooltip(
+                    message: 'Filter by name',
+                    child: TextBox(
+                      suffix: Padding(
+                        padding: const EdgeInsetsDirectional.only(end: 4),
+                        child: IconButton(
+                          icon: WindowsIcon(WindowsIcons.search),
+                          onPressed: () {},
                         ),
-                        placeholder: 'Type to filter icons by name (e.g "logo")',
-                        onChanged: (final value) => setState(() {
-                          filterText = value;
-                        }),
                       ),
+                      placeholder: 'Type to filter icons by name (e.g "logo")',
+                      onChanged: (final value) => setState(() {
+                        filterText = value;
+                      }),
                     ),
                   ),
+                ),
               ),
               ToggleButton(
                 style: ToggleButtonThemeData(
@@ -155,53 +159,56 @@ class _IconsPageState extends State<IconsPage> {
                     ),
                   ),
                 ),
-            checked: setSelection == 1,
-            onChanged: (final v) => setState(() {
-              if (setSelection != 1){
-                setSelection = 1;
-              }
-            }),
-            child: Text('MDL2 (${FluentIcons.allIcons.length})'),
-          ),
+                checked: setSelection == 1,
+                onChanged: (final v) => setState(() {
+                  if (setSelection != 1) {
+                    setSelection = 1;
+                  }
+                }),
+                child: Text('MDL2 (${FluentIcons.allIcons.length})'),
+              ),
             ],
           ),
-          const SizedBox(height: 10),  
+          const SizedBox(height: 10),
           const SizedBox(
-        width: double.infinity,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.0),
-          child: InfoBar(
-            title: Text('Tip:'),
-            content: Text(
-              'You can click on any icon to copy its name to the clipboard!',
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25.0),
+              child: InfoBar(
+                title: Text('Tip:'),
+                content: Text(
+                  'You can click on any icon to copy its name to the clipboard!',
+                ),
+              ),
             ),
           ),
-        ),
-      ),
           const SizedBox(height: 10),
         ],
       ),
       content: Container(
         child: setSelection == 0
-            ? IconsGrids(set: WindowsIcons.allIcons)
-            : IconsGrids(set: FluentIcons.allIcons),
-      )
+            ? IconsGrids(set: WindowsIcons.allIcons, filterText: filterText)
+            : IconsGrids(set: FluentIcons.allIcons, filterText: filterText),
+      ),
     );
   }
 }
 
-
 class IconsGrids extends StatefulWidget {
   final Map<String, IconData> set;
+  final String filterText;
 
-  const IconsGrids({required this.set, super.key});
+  const IconsGrids({
+    Key? key,
+    required this.set,
+    required this.filterText,
+  }) : super(key: key);
 
   @override
   State<IconsGrids> createState() => _IconsGridsState();
 }
 
 class _IconsGridsState extends State<IconsGrids> {
-  String filterText = _IconsPageState().filterText;
   Color? color;
   double? size;
 
@@ -220,14 +227,14 @@ class _IconsGridsState extends State<IconsGrids> {
 
     final entries = widget.set.entries.where(
       (final icon) =>
-          _IconsPageState().filterText.isEmpty ||
+          widget.filterText.isEmpty ||
           // Remove '_'
           icon.key
               .replaceAll('_', '')
               // toLowerCase
               .toLowerCase()
               .contains(
-                _IconsPageState().filterText.toLowerCase()
+                widget.filterText.toLowerCase()
                 // Remove spaces
                 .replaceAll(' ', ''),
               ),
@@ -243,166 +250,165 @@ class _IconsGridsState extends State<IconsGrids> {
         ?.key;
 
     return Padding(
-        padding: EdgeInsetsDirectional.only(
-          start: PageHeader.horizontalPadding(context),
-          end: PageHeader.horizontalPadding(context),
-        ),
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                child: CardHighlight(
-                  initiallyOpen: true,
-                  codeSnippet:
-                      '''const WindowsIcon(
+      padding: EdgeInsetsDirectional.only(
+        start: PageHeader.horizontalPadding(context),
+        end: PageHeader.horizontalPadding(context),
+      ),
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: CardHighlight(
+                initiallyOpen: true,
+                codeSnippet:
+                    '''const WindowsIcon(
   $prefix.$iconName,
   size: ${size!.toInt()},
   color: Color(0x${color!.toARGB32().toRadixString(16).padLeft(8, '0')}),
 ),''',
-                  child: Row(
-                    spacing: 8,
-                    children: [
-                      WindowsIcon(icon, size: size, color: color),
-                      const Spacer(),
-                      IntrinsicWidth(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            InfoLabel(
-                              label: 'Icon Color',
-                              child: ComboBox<Color>(
-                                placeholder: const Text('Icon Color'),
-                                onChanged: (final c) =>
-                                    setState(() => color = c),
-                                value: color,
-                                isExpanded: true,
-                                items: [
-                                  ComboBoxItem(
-                                    value: Colors.white,
-                                    child: Row(
-                                      children: [
-                                        buildColorBox(Colors.white),
-                                        const SizedBox(width: 10),
-                                        const Text('White'),
-                                      ],
-                                    ),
+                child: Row(
+                  spacing: 8,
+                  children: [
+                    WindowsIcon(icon, size: size, color: color),
+                    const Spacer(),
+                    IntrinsicWidth(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          InfoLabel(
+                            label: 'Icon Color',
+                            child: ComboBox<Color>(
+                              placeholder: const Text('Icon Color'),
+                              onChanged: (final c) => setState(() => color = c),
+                              value: color,
+                              isExpanded: true,
+                              items: [
+                                ComboBoxItem(
+                                  value: Colors.white,
+                                  child: Row(
+                                    children: [
+                                      buildColorBox(Colors.white),
+                                      const SizedBox(width: 10),
+                                      const Text('White'),
+                                    ],
                                   ),
-                                  ComboBoxItem(
-                                    value: const Color(0xE4000000),
-                                    child: Row(
-                                      children: [
-                                        buildColorBox(const Color(0xE4000000)),
-                                        const SizedBox(width: 10),
-                                        const Text('Black'),
-                                      ],
-                                    ),
-                                  ),
-                                  ...List.generate(Colors.accentColors.length, (
-                                    final index,
-                                  ) {
-                                    final color = Colors.accentColors[index];
-                                    return ComboBoxItem(
-                                      value: color,
-                                      child: Row(
-                                        children: [
-                                          buildColorBox(color),
-                                          const SizedBox(width: 10),
-                                          Text(accentColorNames[index + 1]),
-                                        ],
-                                      ),
-                                    );
-                                  }),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            InfoLabel(
-                              label: 'Icon Size',
-                              child: Slider(
-                                value: size!,
-                                onChanged: (final v) => setState(() {
-                                  size = v;
-                                }),
-                                min: 8,
-                                max: 56,
-                                label: '${size!.toInt()}',
-                                style: const SliderThemeData(
-                                  margin: EdgeInsetsDirectional.zero,
                                 ),
+                                ComboBoxItem(
+                                  value: const Color(0xE4000000),
+                                  child: Row(
+                                    children: [
+                                      buildColorBox(const Color(0xE4000000)),
+                                      const SizedBox(width: 10),
+                                      const Text('Black'),
+                                    ],
+                                  ),
+                                ),
+                                ...List.generate(Colors.accentColors.length, (
+                                  final index,
+                                ) {
+                                  final color = Colors.accentColors[index];
+                                  return ComboBoxItem(
+                                    value: color,
+                                    child: Row(
+                                      children: [
+                                        buildColorBox(color),
+                                        const SizedBox(width: 10),
+                                        Text(accentColorNames[index + 1]),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          InfoLabel(
+                            label: 'Icon Size',
+                            child: Slider(
+                              value: size!,
+                              onChanged: (final v) => setState(() {
+                                size = v;
+                              }),
+                              min: 8,
+                              max: 56,
+                              label: '${size!.toInt()}',
+                              style: const SliderThemeData(
+                                margin: EdgeInsetsDirectional.zero,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            SliverGrid.builder(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 150,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-              ),
-              itemCount: entries.length,
-              itemBuilder: (final context, final index) {
-                final e = entries.elementAt(index);
-                return HoverButton(
-                  onPressed: () async {
-                    final copyText = '$prefix.${e.key}';
-                    await FlutterClipboard.copy(copyText);
-                    if (context.mounted) showCopiedSnackbar(context, copyText);
-                  },
-                  cursor: SystemMouseCursors.copy,
-                  builder: (final context, final states) {
-                    return FocusBorder(
-                      focused: states.isFocused,
-                      renderOutside: false,
-                      child: Tooltip(
-                        useMousePosition: false,
-                        message:
-                            '\nWindowsIcons.${e.key}\n(tap to copy to clipboard)\n',
-                        child: RepaintBoundary(
-                          child: AnimatedContainer(
-                            duration: theme.fasterAnimationDuration,
-                            decoration: BoxDecoration(
-                              color: ButtonThemeData.uncheckedInputColor(
-                                theme,
-                                states,
-                                transparentWhenNone: true,
-                              ),
+          ),
+          SliverGrid.builder(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 150,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+            ),
+            itemCount: entries.length,
+            itemBuilder: (final context, final index) {
+              final e = entries.elementAt(index);
+              return HoverButton(
+                onPressed: () async {
+                  final copyText = '$prefix.${e.key}';
+                  await FlutterClipboard.copy(copyText);
+                  if (context.mounted) showCopiedSnackbar(context, copyText);
+                },
+                cursor: SystemMouseCursors.copy,
+                builder: (final context, final states) {
+                  return FocusBorder(
+                    focused: states.isFocused,
+                    renderOutside: false,
+                    child: Tooltip(
+                      useMousePosition: false,
+                      message:
+                          '\nWindowsIcons.${e.key}\n(tap to copy to clipboard)\n',
+                      child: RepaintBoundary(
+                        child: AnimatedContainer(
+                          duration: theme.fasterAnimationDuration,
+                          decoration: BoxDecoration(
+                            color: ButtonThemeData.uncheckedInputColor(
+                              theme,
+                              states,
+                              transparentWhenNone: true,
                             ),
-                            child: Card(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(e.value, size: 40),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.only(
-                                      top: 8,
-                                    ),
-                                    child: Text(
-                                      snakeCasetoSentenceCase(e.key),
-                                      textAlign: TextAlign.center,
-                                      overflow: TextOverflow.fade,
-                                    ),
+                          ),
+                          child: Card(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(e.value, size: 40),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                    top: 8,
                                   ),
-                                ],
-                              ),
+                                  child: Text(
+                                    snakeCasetoSentenceCase(e.key),
+                                    textAlign: TextAlign.center,
+                                    overflow: TextOverflow.fade,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
-                    );
-                  },
-                );
-              },
-            ),
-          ],
-        ),
-      );
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   static String snakeCasetoSentenceCase(final String original) {
