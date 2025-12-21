@@ -87,44 +87,62 @@ class _IconsPageState extends State<IconsPage> {
         ?.key;
 
     return ScaffoldPage(
-      header: PageHeader(
-        title: RichText(
-          text: TextSpan(
-            style: theme.typography.title,
-            children: [
-              const TextSpan(text: 'Windows Icons Gallery showcase '),
-              TextSpan(
-                text: '(${widget.set.length})',
-                style: theme.typography.caption,
+      header: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          PageHeader(
+            title: RichText(
+              text: TextSpan(
+                style: theme.typography.title,
+                children: [
+                  const TextSpan(text: 'Icongraphy'),
+                  TextSpan(
+                    text: '(${widget.set.length})',
+                    style: theme.typography.caption,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-        commandBar: SizedBox(
-          width: 240,
-          child: Tooltip(
-            message: 'Filter by name',
-            child: TextBox(
-              suffix: const Padding(
-                padding: EdgeInsetsDirectional.only(end: 8),
-                child: WindowsIcon(WindowsIcons.search, size: 16),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25),
+            child: Text('Icons represent concepts, objects, or actions, and have semantic purpose within a layout. They should always be recognizable, functional, and easily understood. Segoe Fluent Icons are used on Windows 11 and Segoe MDL2 Assets are used on Windows 10.'),
+          ),
+          SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: SizedBox(
+                width: 240,
+                child: Tooltip(
+                  message: 'Filter by name',
+                  child: TextBox(
+                    suffix: const Padding(
+                      padding: EdgeInsetsDirectional.only(end: 8),
+                      child: WindowsIcon(WindowsIcons.search, size: 16),
+                    ),
+                    placeholder: 'Type to filter icons by name (e.g "logo")',
+                    onChanged: (final value) => setState(() {
+                      filterText = value;
+                    }),
+                  ),
+                ),
               ),
-              placeholder: 'Type to filter icons by name (e.g "logo")',
-              onChanged: (final value) => setState(() {
-                filterText = value;
-              }),
+          ),
+          SizedBox(height: 10),  
+            const SizedBox(
+        width: double.infinity,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25.0),
+          child: InfoBar(
+            title: Text('Tip:'),
+            content: Text(
+              'You can click on any icon to copy its name to the clipboard!',
             ),
           ),
         ),
       ),
-      bottomBar: const SizedBox(
-        width: double.infinity,
-        child: InfoBar(
-          title: Text('Tip:'),
-          content: Text(
-            'You can click on any icon to copy its name to the clipboard!',
-          ),
-        ),
+          SizedBox(height: 10),
+        ],
       ),
       content: Padding(
         padding: EdgeInsetsDirectional.only(
