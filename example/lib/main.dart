@@ -386,6 +386,10 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                 body: navigation.TreeViewPage(),
               ),
               PaneItem(
+                title: const Text('Token View'),
+                body: navigation.TokenViewPage(),
+              ),
+              PaneItem(
                 title: const Text('Command Bar'),
                 body: surfaces.CommandBarsPage(),
               ),
@@ -776,6 +780,15 @@ final router = GoRouter(
           builder: (final context, final state) => DeferredWidget(
             navigation.loadLibrary,
             () => navigation.TreeViewPage(),
+          ),
+        ),
+
+        /// TokenView
+        GoRoute(
+          path: '/navigation/token_view',
+          builder: (final context, final state) => DeferredWidget(
+            navigation.loadLibrary,
+            () => navigation.TokenViewPage(),
           ),
         ),
 
