@@ -294,7 +294,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             title: const Text('Create your first app'),
             body: const CreateFirstAppPage(),
           ),
-          PaneItemSeparator(),
+          //PaneItemSeparator(),
           PaneItemHeader(header: const Text('Controls')),
           PaneItemExpander(
             icon: const WindowsIcon(WindowsIcons.button_a),

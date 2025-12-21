@@ -257,24 +257,24 @@ class _IconsPageState extends State<IconsPage> {
                                 states,
                                 transparentWhenNone: true,
                               ),
-                              borderRadius: BorderRadius.circular(20),
                             ),
-                            padding: const EdgeInsetsDirectional.all(6),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(e.value, size: 40),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.only(
-                                    top: 8,
+                            child: Card(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(e.value, size: 40),
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.only(
+                                      top: 8,
+                                    ),
+                                    child: Text(
+                                      snakeCasetoSentenceCase(e.key),
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.fade,
+                                    ),
                                   ),
-                                  child: Text(
-                                    snakeCasetoSentenceCase(e.key),
-                                    textAlign: TextAlign.center,
-                                    overflow: TextOverflow.fade,
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
