@@ -77,24 +77,93 @@ class _IconsPageState extends State<IconsPage> {
             child: Text('Icons represent concepts, objects, or actions, and have semantic purpose within a layout. They should always be recognizable, functional, and easily understood. Segoe Fluent Icons are used on Windows 11 and Segoe MDL2 Assets are used on Windows 10.'),
           ),
           const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: SizedBox(
-                width: 240,
-                child: Tooltip(
-                  message: 'Filter by name',
-                  child: TextBox(
-                    suffix: Padding(
-                      padding: const EdgeInsetsDirectional.only(end: 4),
-                      child: IconButton(icon: WindowsIcon(WindowsIcons.search), onPressed: (){},),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: SizedBox(
+                    width: 240,
+                    child: Tooltip(
+                      message: 'Filter by name',
+                      child: TextBox(
+                        suffix: Padding(
+                          padding: const EdgeInsetsDirectional.only(end: 4),
+                          child: IconButton(icon: WindowsIcon(WindowsIcons.search), onPressed: (){},),
+                        ),
+                        placeholder: 'Type to filter icons by name (e.g "logo")',
+                        onChanged: (final value) => setState(() {
+                          filterText = value;
+                        }),
+                      ),
                     ),
-                    placeholder: 'Type to filter icons by name (e.g "logo")',
-                    onChanged: (final value) => setState(() {
-                      filterText = value;
-                    }),
+                  ),
+              ),
+              ToggleButton(
+                style: ToggleButtonThemeData(
+                  checkedButtonStyle: ButtonStyle(
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                    backgroundColor: WidgetStateProperty.resolveWith(
+                      (states) =>
+                          ButtonThemeData.checkedInputColor(theme, states),
+                    ),
+                    foregroundColor: WidgetStateProperty.resolveWith(
+                      (states) => FilledButton.foregroundColor(theme, states),
+                    ),
+                  ),
+                  uncheckedButtonStyle: ButtonStyle(
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
                   ),
                 ),
+                checked: setSelection == 0,
+                onChanged: (final v) => setState(() {
+                  if (setSelection != 0) {
+                    setSelection = 0;
+                  }
+                }),
+                child: Text('Fluent (${WindowsIcons.allIcons.length})'),
               ),
+              SizedBox(width: 10),
+              ToggleButton(
+                style: ToggleButtonThemeData(
+                  checkedButtonStyle: ButtonStyle(
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                    backgroundColor: WidgetStateProperty.resolveWith(
+                      (states) =>
+                          ButtonThemeData.checkedInputColor(theme, states),
+                    ),
+                    foregroundColor: WidgetStateProperty.resolveWith(
+                      (states) => FilledButton.foregroundColor(theme, states),
+                    ),
+                  ),
+                  uncheckedButtonStyle: ButtonStyle(
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  ),
+                ),
+            checked: setSelection == 1,
+            onChanged: (final v) => setState(() {
+              if (setSelection != 1){
+                setSelection = 1;
+              }
+            }),
+            child: Text('MDL2 (${FluentIcons.allIcons.length})'),
+          ),
+            ],
           ),
           const SizedBox(height: 10),  
           const SizedBox(
@@ -112,28 +181,11 @@ class _IconsPageState extends State<IconsPage> {
           const SizedBox(height: 10),
         ],
       ),
-      content: NavigationView(
-      
-        pane: NavigationPane(
-          displayMode: PaneDisplayMode.top,
-          selected: setSelection,
-          onItemPressed: (final index) => setState(() {
-            setSelection = index;
-          }),
-          items: [
-            PaneItem(
-              icon: WindowsIcon(WindowsIcons.emoji_tab_symbols),
-              title: Text('Fluent (${WindowsIcons.allIcons.length})'),
-              body: IconsGrids(set: WindowsIcons.allIcons),
-            ),
-            PaneItem(
-              icon: WindowsIcon(FluentIcons.emoji2),
-              title: Text('MDL2 (${FluentIcons.allIcons.length})'),
-              body: IconsGrids(set: FluentIcons.allIcons),
-            ),
-          ],
-        ),
-        )
+      content: Container(
+        child: setSelection == 0
+            ? IconsGrids(set: WindowsIcons.allIcons)
+            : IconsGrids(set: FluentIcons.allIcons),
+      )
     );
   }
 }
