@@ -199,7 +199,10 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                     NavigationView.dataOf(context).pane?.changeTo(item.value!);
                   },
                   placeholder: 'Search Controls and Samples...',
-                  trailingIcon: IconButton(icon: const Icon(WindowsIcons.search), onPressed: (){},),
+                  trailingIcon:  Padding(
+                      padding: EdgeInsetsDirectional.only(end: 4),
+                      child: IconButton(icon: WindowsIcon(WindowsIcons.search), onPressed: (){},),
+                    ),
                   items: [
                     for (final item in allItems)
                       AutoSuggestBoxItem<PaneItem>(

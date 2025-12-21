@@ -76,7 +76,7 @@ class _IconsPageState extends State<IconsPage> {
             padding: EdgeInsets.symmetric(horizontal: 25),
             child: Text('Icons represent concepts, objects, or actions, and have semantic purpose within a layout. They should always be recognizable, functional, and easily understood. Segoe Fluent Icons are used on Windows 11 and Segoe MDL2 Assets are used on Windows 10.'),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: SizedBox(
@@ -84,9 +84,9 @@ class _IconsPageState extends State<IconsPage> {
                 child: Tooltip(
                   message: 'Filter by name',
                   child: TextBox(
-                    suffix: const Padding(
-                      padding: EdgeInsetsDirectional.only(end: 8),
-                      child: WindowsIcon(WindowsIcons.search, size: 16),
+                    suffix: Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 4),
+                      child: IconButton(icon: WindowsIcon(WindowsIcons.search), onPressed: (){},),
                     ),
                     placeholder: 'Type to filter icons by name (e.g "logo")',
                     onChanged: (final value) => setState(() {
@@ -96,8 +96,8 @@ class _IconsPageState extends State<IconsPage> {
                 ),
               ),
           ),
-          SizedBox(height: 10),  
-            const SizedBox(
+          const SizedBox(height: 10),  
+          const SizedBox(
         width: double.infinity,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.0),
@@ -109,7 +109,7 @@ class _IconsPageState extends State<IconsPage> {
           ),
         ),
       ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
         ],
       ),
       content: NavigationView(
@@ -168,14 +168,14 @@ class _IconsGridsState extends State<IconsGrids> {
 
     final entries = widget.set.entries.where(
       (final icon) =>
-          filterText.isEmpty ||
+          _IconsPageState().filterText.isEmpty ||
           // Remove '_'
           icon.key
               .replaceAll('_', '')
               // toLowerCase
               .toLowerCase()
               .contains(
-                filterText.toLowerCase()
+                _IconsPageState().filterText.toLowerCase()
                 // Remove spaces
                 .replaceAll(' ', ''),
               ),
