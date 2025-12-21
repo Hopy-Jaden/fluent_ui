@@ -37,7 +37,7 @@ class FundamentalsPage extends StatelessWidget {
         Text('Flutter', style: FluentTheme.of(context).typography.subtitle,),
         const SizedBox(height: 10,),
         const Text(
-          'Flutter is Google\'s UI toolkit for building natively compiled applications '
+          'Flutter is Google\'s UI Framework for building natively compiled applications '
           'for cross-platforms from a single codebase. It allows developers to create '
           'high-performance apps with consistent UIs. '
           'With Flutter, it becomes possible to bring WinUI widgets to platforms outside Windows. Yet, you should be aware of '
