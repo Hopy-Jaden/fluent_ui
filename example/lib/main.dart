@@ -280,7 +280,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
               PaneItem(
                 icon: const WindowsIcon(WindowsIcons.emoji_tab_symbols),
                 title: const Text('Icongraphy'), 
-                body: theming.IconsPage(set: FluentIcons.allIcons),
+                body: theming.IconsPage(),
               ),
               PaneItem(
                 icon: const WindowsIcon(WindowsIcons.font),
@@ -844,6 +844,13 @@ final router = GoRouter(
           path: '/theming/icons/windows',
           builder: (final context, final state) => DeferredWidget(
             theming.loadLibrary,
+            () => theming.IconsPage(),
+          ),
+        ),
+        /*GoRoute(
+          path: '/theming/icons/windows',
+          builder: (final context, final state) => DeferredWidget(
+            theming.loadLibrary,
             () => theming.IconsPage(set: WindowsIcons.allIcons),
           ),
         ),
@@ -854,7 +861,7 @@ final router = GoRouter(
             theming.loadLibrary,
             () => theming.IconsPage(set: FluentIcons.allIcons),
           ),
-        ),
+        ),*/
 
         /// Reveal Focus
         GoRoute(

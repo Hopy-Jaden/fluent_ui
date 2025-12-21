@@ -36,9 +36,8 @@ Future<void> showCopiedSnackbar(
 }
 
 class IconsPage extends StatefulWidget {
-  final Map<String, IconData> set;
 
-  const IconsPage({required this.set, super.key});
+  const IconsPage({super.key});
 
   @override
   State<IconsPage> createState() => _IconsPageState();
@@ -48,43 +47,12 @@ class _IconsPageState extends State<IconsPage> {
   String filterText = '';
   Color? color;
   double? size;
-
-  late final IconData icon = widget.set.values.elementAt(
-    Random().nextInt(widget.set.length),
-  );
+  int setSelection = 0;
 
   @override
   Widget build(final BuildContext context) {
     assert(debugCheckHasFluentTheme(context));
-
     final theme = FluentTheme.of(context);
-
-    color ??= IconTheme.of(context).color;
-    size ??= IconTheme.of(context).size;
-
-    final entries = widget.set.entries.where(
-      (final icon) =>
-          filterText.isEmpty ||
-          // Remove '_'
-          icon.key
-              .replaceAll('_', '')
-              // toLowerCase
-              .toLowerCase()
-              .contains(
-                filterText.toLowerCase()
-                // Remove spaces
-                .replaceAll(' ', ''),
-              ),
-    );
-
-    final prefix = switch (icon.fontFamily) {
-      'SegoeIcons' => 'WindowsIcons',
-      'FluentIcons' => 'FluentIcons',
-      _ => 'Icons',
-    };
-    final iconName = widget.set.entries
-        .firstWhereOrNull((final e) => e.value == icon)
-        ?.key;
 
     return ScaffoldPage(
       header: Column(
@@ -96,10 +64,10 @@ class _IconsPageState extends State<IconsPage> {
                 style: theme.typography.title,
                 children: [
                   const TextSpan(text: 'Icongraphy'),
-                  TextSpan(
+                  /*TextSpan(
                     text: '(${widget.set.length})',
                     style: theme.typography.caption,
-                  ),
+                  ),*/
                 ],
               ),
             ),
@@ -144,7 +112,85 @@ class _IconsPageState extends State<IconsPage> {
           SizedBox(height: 10),
         ],
       ),
-      content: Padding(
+      content: NavigationView(
+      
+        pane: NavigationPane(
+          displayMode: PaneDisplayMode.top,
+          selected: setSelection,
+          onItemPressed: (final index) => setState(() {
+            setSelection = index;
+          }),
+          items: [
+            PaneItem(
+              icon: WindowsIcon(WindowsIcons.emoji_tab_symbols),
+              title: Text('Fluent (${WindowsIcons.allIcons.length})'),
+              body: IconsGrids(set: WindowsIcons.allIcons),
+            ),
+            PaneItem(
+              icon: WindowsIcon(FluentIcons.emoji2),
+              title: Text('MDL2 (${FluentIcons.allIcons.length})'),
+              body: IconsGrids(set: FluentIcons.allIcons),
+            ),
+          ],
+        ),
+        )
+    );
+  }
+}
+
+
+class IconsGrids extends StatefulWidget {
+  final Map<String, IconData> set;
+
+  const IconsGrids({required this.set, super.key});
+
+  @override
+  State<IconsGrids> createState() => _IconsGridsState();
+}
+
+class _IconsGridsState extends State<IconsGrids> {
+  String filterText = _IconsPageState().filterText;
+  Color? color;
+  double? size;
+
+  late final IconData icon = widget.set.values.elementAt(
+    Random().nextInt(widget.set.length),
+  );
+
+  @override
+  Widget build(final BuildContext context) {
+    assert(debugCheckHasFluentTheme(context));
+
+    final theme = FluentTheme.of(context);
+
+    color ??= IconTheme.of(context).color;
+    size ??= IconTheme.of(context).size;
+
+    final entries = widget.set.entries.where(
+      (final icon) =>
+          filterText.isEmpty ||
+          // Remove '_'
+          icon.key
+              .replaceAll('_', '')
+              // toLowerCase
+              .toLowerCase()
+              .contains(
+                filterText.toLowerCase()
+                // Remove spaces
+                .replaceAll(' ', ''),
+              ),
+    );
+
+    final prefix = switch (icon.fontFamily) {
+      'SegoeIcons' => 'WindowsIcons',
+      'FluentIcons' => 'FluentIcons',
+      _ => 'Icons',
+    };
+    final iconName = widget.set.entries
+        .firstWhereOrNull((final e) => e.value == icon)
+        ?.key;
+
+    return Padding(
         padding: EdgeInsetsDirectional.only(
           start: PageHeader.horizontalPadding(context),
           end: PageHeader.horizontalPadding(context),
@@ -153,7 +199,7 @@ class _IconsPageState extends State<IconsPage> {
           slivers: [
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsetsDirectional.only(bottom: 8),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 child: CardHighlight(
                   initiallyOpen: true,
                   codeSnippet:
@@ -304,8 +350,7 @@ class _IconsPageState extends State<IconsPage> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 
   static String snakeCasetoSentenceCase(final String original) {
