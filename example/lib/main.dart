@@ -298,7 +298,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             ],
           ),
           PaneItemExpander(
-            icon: const WindowsIcon(WindowsIcons.button_a),
+            icon: const WindowsIcon(WindowsIcons.checkbox_composite),
             title: const Text('Basic input'),
             items: [
               PaneItem(title: const Text('Button'), body: inputs.ButtonPage()),
@@ -344,7 +344,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             ],
           ),
           PaneItemExpander(
-            icon: const WindowsIcon(WindowsIcons.chat_bubbles),
+            icon: const WindowsIcon(WindowsIcons.message),
             title: const Text('Dialogs & flyouts'),
             items: [
               PaneItem(
@@ -366,7 +366,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             ],
           ),
           PaneItemExpander(
-            icon: const WindowsIcon(WindowsIcons.text_navigate),
+            icon: const WindowsIcon(WindowsIcons.global_nav_button),
             title: const Text('Navigation'),
             items: [
               PaneItem(
