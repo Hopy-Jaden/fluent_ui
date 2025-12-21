@@ -1,9 +1,5 @@
-import 'package:example/main.dart';
 import 'package:example/widgets/card_highlight.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter/foundation.dart';
-import 'package:go_router/go_router.dart';
-import 'package:window_manager/window_manager.dart';
 
 import '../../widgets/page.dart';
 

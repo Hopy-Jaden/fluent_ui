@@ -1,3 +1,4 @@
+import 'package:example/fundamentals.dart';
 import 'package:example/screens/create_first_app.dart';
 import 'package:example/screens/home.dart';
 import 'package:example/screens/settings.dart';
@@ -262,16 +263,17 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             title: const Text('Home'),
             body: const HomePage(),
           ),
-          PaneItemExpander(
+          PaneItem(
             icon: const WindowsIcon(WindowsIcons.library),
-            title: const Text('Getting Started'),
-            items: [
-              PaneItem(
-                title: const Text('Create your first app'),
-                body: const CreateFirstAppPage(),
-              ),
-            ],
+            title: const Text('Fundamentals'),
+            body: const FundamentalsPage(),
           ),
+          PaneItem(
+            icon: const WindowsIcon(WindowsIcons.code),
+            title: const Text('Create your first app'),
+            body: const CreateFirstAppPage(),
+          ),
+          PaneItemSeparator(),
           PaneItemHeader(header: const Text('Controls')),
           PaneItemExpander(
             icon: const WindowsIcon(WindowsIcons.button_a),
