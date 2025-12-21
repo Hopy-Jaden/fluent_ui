@@ -1,5 +1,3 @@
-import 'package:example/fundamentals.dart';
-import 'package:example/screens/create_first_app.dart';
 import 'package:example/screens/home.dart';
 import 'package:example/screens/settings.dart';
 import 'package:fluent_ui/fluent_ui.dart' hide Page;
@@ -17,6 +15,7 @@ import 'routes/navigation.dart' deferred as navigation;
 import 'routes/popups.dart' deferred as popups;
 import 'routes/surfaces.dart' deferred as surfaces;
 import 'routes/theming.dart' deferred as theming;
+import 'routes/fundamentals.dart' deferred as fundamentals;
 import 'theme.dart';
 import 'widgets/deferred_widget.dart';
 
@@ -71,6 +70,7 @@ void main() async {
     DeferredWidget.preload(navigation.loadLibrary),
     DeferredWidget.preload(surfaces.loadLibrary),
     DeferredWidget.preload(theming.loadLibrary),
+    DeferredWidget.preload(fundamentals.loadLibrary),
   ]);
 
   runApp(const MyApp());
@@ -266,38 +266,37 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             title: const Text('Home'),
             body: const HomePage(),
           ),
-          PaneItem(
-            icon: const WindowsIcon(WindowsIcons.library),
-            title: const Text('Fundamentals'),
-            body: const FundamentalsPage(),
-          ),
           PaneItemExpander(
             icon: const WindowsIcon(WindowsIcons.design),
-            title: const Text('Design'),
+            title: const Text('Fundamentals'),
             items: [
+              PaneItem(
+                icon: const WindowsIcon(WindowsIcons.library),
+                title: const Text('Principles'),
+                body: fundamentals.PrinciplesPage(),
+              ),
               PaneItem(
                 icon: const WindowsIcon(WindowsIcons.color),
                 title: const Text('Color'), 
-                body: theming.ColorsPage()
+                body: fundamentals.ColorsPage()
               ),
               PaneItem(
                 icon: const WindowsIcon(WindowsIcons.emoji_tab_symbols),
                 title: const Text('Icongraphy'), 
-                body: theming.IconsPage(),
+                body: fundamentals.IconographyPage(),
               ),
               PaneItem(
                 icon: const WindowsIcon(WindowsIcons.font),
                 title: const Text('Typography'), 
-                body: theming.TypographyPage()
+                body: fundamentals.TypographyPage()
               ),
-            ],
-          ),
-          PaneItem(
+              PaneItem(
             icon: const WindowsIcon(WindowsIcons.code),
             title: const Text('Create your first app'),
-            body: const CreateFirstAppPage(),
+            body: fundamentals.CreateFirstAppPage(),
           ),
-          //PaneItemSeparator(),
+            ],
+          ),
           PaneItemHeader(header: const Text('Controls')),
           PaneItemExpander(
             icon: const WindowsIcon(WindowsIcons.button_a),
@@ -405,6 +404,14 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                 title: const Text('Mica'),
                 //  body: surfaces.AcrylicPage()
               ),
+              PaneItem(
+                title: const Text('Title Bar'),
+                //  body: surfaces.TitleBarPage()
+              ),
+              PaneItem(
+                title: const Text('Card'),
+                //  body: surfaces.CardPage()
+              ),
             ],
           ),
 
@@ -447,6 +454,29 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                 body: forms.PasswordBoxPage(),
               ),
               PaneItem(title: const Text('TextBox'), body: forms.TextBoxPage()),
+            ],
+          ),
+          PaneItemExpander(
+            icon: const WindowsIcon(WindowsIcons.grid_view),
+            title: const Text('Design Pattern'),
+            items: [
+              PaneItem(
+                title: const Text('DataTable'),
+                body: forms.AutoSuggestBoxPage(),
+              ),
+              PaneItem(
+                title: const Text('Ribbon'),
+                body: forms.NumberBoxPage(),
+              ),
+              PaneItem(
+                title: const Text('Settings Card'),
+                body: forms.PasswordBoxPage(),
+              ),
+              PaneItem(title: const Text('Settings Expander'), body: forms.TextBoxPage()),
+              PaneItem(
+                title: const Text('Tabbed Command Bar'),
+                body: navigation.NavigationViewShellRoute(),
+              ),
             ],
           ),
         ],
@@ -582,6 +612,35 @@ final router = GoRouter(
         GoRoute(
           path: '/settings',
           builder: (final context, final state) => const Settings(),
+        ),
+
+        /// /// Fundamentals
+        /// Design Principles
+        GoRoute(
+          path: '/fundamentals/design_principles',
+          builder: (final context, final state) =>
+              DeferredWidget(fundamentals.loadLibrary, () => fundamentals.PrinciplesPage()),
+        ),
+
+        /// Color
+        GoRoute(
+          path: '/fundamentals/color',
+          builder: (final context, final state) =>
+              DeferredWidget(fundamentals.loadLibrary, () => fundamentals.ColorsPage()),
+        ),
+
+        /// Iconography
+        GoRoute(
+          path: '/fundamentals/iconography',
+          builder: (final context, final state) =>
+              DeferredWidget(fundamentals.loadLibrary, () => fundamentals.IconographyPage()),
+        ),
+
+        /// Typography
+        GoRoute(
+          path: '/fundamentals/typography',
+          builder: (final context, final state) =>
+              DeferredWidget(fundamentals.loadLibrary, () => fundamentals.TypographyPage()),
         ),
 
         /// /// Input
@@ -826,30 +885,6 @@ final router = GoRouter(
         ),
 
         /// /// Theming
-        /// Colors
-        GoRoute(
-          path: '/theming/colors',
-          builder: (final context, final state) =>
-              DeferredWidget(theming.loadLibrary, () => theming.ColorsPage()),
-        ),
-
-        /// Typography
-        GoRoute(
-          path: '/theming/typography',
-          builder: (final context, final state) => DeferredWidget(
-            theming.loadLibrary,
-            () => theming.TypographyPage(),
-          ),
-        ),
-
-        /// Icons
-        GoRoute(
-          path: '/theming/icons/windows',
-          builder: (final context, final state) => DeferredWidget(
-            theming.loadLibrary,
-            () => theming.IconsPage(),
-          ),
-        ),
         /*GoRoute(
           path: '/theming/icons/windows',
           builder: (final context, final state) => DeferredWidget(

@@ -1,7 +1,7 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
-import 'icons.dart';
+import 'iconography.dart';
 
 const _primaryNames = [
   'Yellow',

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:clipboard/clipboard.dart';
 import 'package:collection/collection.dart';
 import 'package:example/screens/settings.dart';
-import 'package:example/screens/theming/typography.dart';
+import 'package:example/screens/fundamentals/typography.dart';
 import 'package:example/widgets/card_highlight.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
@@ -35,14 +35,14 @@ Future<void> showCopiedSnackbar(
   );
 }
 
-class IconsPage extends StatefulWidget {
-  const IconsPage({super.key});
+class IconographyPage extends StatefulWidget {
+  const IconographyPage({super.key});
 
   @override
-  State<IconsPage> createState() => _IconsPageState();
+  State<IconographyPage> createState() => _IconographyPageState();
 }
 
-class _IconsPageState extends State<IconsPage> {
+class _IconographyPageState extends State<IconographyPage> {
   String filterText = '';
   Color? color;
   double? size;

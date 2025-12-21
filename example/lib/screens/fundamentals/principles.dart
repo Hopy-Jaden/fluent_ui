@@ -1,8 +1,8 @@
 import 'package:example/widgets/card_highlight.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
-class FundamentalsPage extends StatelessWidget {
-  const FundamentalsPage({super.key});
+class PrinciplesPage extends StatelessWidget {
+  const PrinciplesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
