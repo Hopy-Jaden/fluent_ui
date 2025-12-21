@@ -297,7 +297,6 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           ),
             ],
           ),
-          PaneItemHeader(header: const Text('Controls')),
           PaneItemExpander(
             icon: const WindowsIcon(WindowsIcons.button_a),
             title: const Text('Basic input'),
