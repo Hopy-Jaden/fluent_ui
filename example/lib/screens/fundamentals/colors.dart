@@ -1,4 +1,5 @@
 import 'package:clipboard/clipboard.dart';
+import 'package:example/widgets/card_highlight.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 import 'iconography.dart';
@@ -188,17 +189,145 @@ class ColorShowcasePage extends StatelessWidget {
   }
 }
 
-class ColorsPage extends StatelessWidget {
-  const ColorsPage({super.key});
+class ResourceDictionaryPage extends StatelessWidget {
+  const ResourceDictionaryPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaffoldPage.scrollable(
+      children: [
+        Text('Resource Dictionary.light', style: FluentTheme.of(context).typography.subtitle),
+        SizedBox(height: 10),
+        const Text(
+          'Resource dictionary is a dictionary of colors used by all the components. Use '
+          '`ResourceDictionary.light` to get colors adapted to light mode.'
+        ),
+        SizedBox(height: 20),
+        CardHighlight(
+          child: SizedBox(
+            height: 400,
+            child: ResourceDictionaryEditor(),
+          ),
+          initiallyOpen: false,
+          codeSnippet: '''
+dependencies:
+  fluent_ui: ^4.13.0''',
+        ),
+        SizedBox(height: 20),
+        Text('Resource Dictionary.dark', style: FluentTheme.of(context).typography.subtitle),
+        SizedBox(height: 10),
+        const Text(
+          'In addition, Use `ResourceDictionary.dark` to get colors adapted to dark mode.'
+        ),
+        SizedBox(height: 20),
+        CardHighlight(
+          child: SizedBox(
+            height: 400,
+            child: ResourceDictionaryEditor(),
+          ),
+          initiallyOpen: false,
+          codeSnippet: '''
+dependencies:
+  fluent_ui: ^4.13.0''',
+        ),
+        SizedBox(height: 20),
+      ],
+    );
+  }
+}
+
+class ResourceDictionaryEditor extends StatelessWidget {
+  const ResourceDictionaryEditor({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FluentApp(
+      title: 'Resource Dictionary Example',
+      theme: FluentThemeData(
+        brightness: Brightness.light,
+        accentColor: Colors.blue,
+      ),
+      home: NavigationView(
+        pane: NavigationPane(
+          displayMode: PaneDisplayMode.compact,
+          selected: 0,
+          items: [
+            PaneItem(
+              icon: Icon(WindowsIcons.font),
+              title: Text('Text'),
+              body: Placeholder(),
+            ),
+            PaneItem(
+              icon: Icon(FluentIcons.format_painter),
+              title: Text('Fill'),
+              body: Placeholder(),
+            ),
+            PaneItem(
+              icon: Icon(WindowsIcons.stroke_erase2),
+              title: Text('Stroke'),
+              body: Placeholder(),
+            ),
+            PaneItem(
+              icon: Icon(WindowsIcons.background_toggle),
+              title: Text('Background'),
+              body: Placeholder(),
+            ),
+            PaneItem(
+              icon: Icon(FluentIcons.info),
+              title: Text('Signal'),
+              body: Placeholder(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ContrastCheckerPage extends StatelessWidget {
+  const ContrastCheckerPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaffoldPage.scrollable(
+      children: [
+        Text(
+          'Contrast Checker',
+          style: FluentTheme.of(context).typography.subtitle,
+        ),
+        SizedBox(height: 10),
+        const Text(
+          'To ensure optimal accessibility and usability, apps should strive to use high-contrast and easy-to-read color combinations for text and its background. '
+          'Not only will this benefit users with lower visual acuity, but this will also ensure visibility and legibility under a wide range of lighting conditions, screens, and device settings. '
+          'Use this contrast checker to calculate the contrast ratio of two colors and measure them against the Web Content Accessibility Guidelines. '
+        ),
+        SizedBox(height: 20),
+      ],
+    );
+  }
+}
+
+class ColorsPage extends StatefulWidget {
+  const ColorsPage({super.key, this.selectedIndex = 0});
+  final int selectedIndex;
+
+  @override
+  State<ColorsPage> createState() => _ColorsPageState();
+}
+
+class _ColorsPageState extends State<ColorsPage> {
+  late int selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedIndex = widget.selectedIndex;
+  }
 
   @override
   Widget build(final BuildContext context) {
-    const divider = Divider(
-      style: DividerThemeData(
-        verticalMargin: EdgeInsetsDirectional.all(10),
-        horizontalMargin: EdgeInsetsDirectional.all(10),
-      ),
-    );
     return ScaffoldPage(
       header: const Column(
         children: [
@@ -209,18 +338,30 @@ class ColorsPage extends StatelessWidget {
               'Color is a tool used to express style, evoke emotion, and communicate meaning. A standardized color palette and its intentional application ensure a familiar, comfortable, and consistent experience.',
             ),
           ),
+          SizedBox(height: 20),
         ],
       ),
       content: NavigationView(
         pane: NavigationPane(
           displayMode: PaneDisplayMode.top,
-          selected: 0,
+          selected: selectedIndex,
+          onItemPressed: (value) => setState(() { selectedIndex = value; }),
           items: [
             PaneItem(
               icon: Icon(FluentIcons.color),
               title: Text('Palettes'),
               body: ColorShowcasePage(),
             ),
+            PaneItem(
+              icon: Icon(WindowsIcons.dictionary),
+              title: Text('Resource Dictionary'),
+              body: ResourceDictionaryPage(),
+            ),
+            PaneItem(
+              icon: Icon(WindowsIcons.ease_of_access),
+              title: Text('Contrast Checker'),
+              body: ContrastCheckerPage(),
+            )
           ],
         ),
       ),
