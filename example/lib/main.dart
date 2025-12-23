@@ -319,6 +319,10 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                 title: const Text('ComboBox'),
                 body: forms.ComboBoxPage(),
               ),
+              PaneItem(
+                title: const Text('Color Picker'),
+                body: forms.ColorPickerPage(),
+              ),
             ],
           ),
           PaneItemExpander(

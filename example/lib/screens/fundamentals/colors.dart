@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:clipboard/clipboard.dart';
 import 'package:example/widgets/card_highlight.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -22,17 +24,14 @@ class ColorShowcasePage extends StatelessWidget {
   Widget build(final BuildContext context) {
     return ScaffoldPage.scrollable(
       children: [
-        Text(
-          'Palettes',
-          style: FluentTheme.of(context).typography.title,
-        ),
+        Text('Palettes', style: FluentTheme.of(context).typography.title),
         SizedBox(height: 10),
         const Text(
           'Fluent defines three color palettes: neutral, shared, and brand. '
-          'Each palette performs specific functions. Read each section to learn about the specific roles of each one and how to apply them across products.'
+          'Each palette performs specific functions. Read each section to learn about the specific roles of each one and how to apply them across products.',
         ),
         const SizedBox(height: 20),
-                const SizedBox(
+        const SizedBox(
           width: double.infinity,
           child: InfoBar(
             title: Text('Tip:'),
@@ -196,35 +195,35 @@ class ResourceDictionaryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScaffoldPage.scrollable(
       children: [
-        Text('Resource Dictionary.light', style: FluentTheme.of(context).typography.subtitle),
+        Text(
+          'Resource Dictionary.light',
+          style: FluentTheme.of(context).typography.subtitle,
+        ),
         SizedBox(height: 10),
         const Text(
           'Resource dictionary is a dictionary of colors used by all the components. Use '
-          '`ResourceDictionary.light` to get colors adapted to light mode.'
+          '`ResourceDictionary.light` to get colors adapted to light mode.',
         ),
         SizedBox(height: 20),
         CardHighlight(
-          child: SizedBox(
-            height: 400,
-            child: ResourceDictionaryEditor(),
-          ),
+          child: SizedBox(height: 400, child: ResourceDictionaryEditor()),
           initiallyOpen: false,
           codeSnippet: '''
 dependencies:
   fluent_ui: ^4.13.0''',
         ),
         SizedBox(height: 20),
-        Text('Resource Dictionary.dark', style: FluentTheme.of(context).typography.subtitle),
+        Text(
+          'Resource Dictionary.dark',
+          style: FluentTheme.of(context).typography.subtitle,
+        ),
         SizedBox(height: 10),
         const Text(
-          'In addition, Use `ResourceDictionary.dark` to get colors adapted to dark mode.'
+          'In addition, Use `ResourceDictionary.dark` to get colors adapted to dark mode.',
         ),
         SizedBox(height: 20),
         CardHighlight(
-          child: SizedBox(
-            height: 400,
-            child: ResourceDictionaryEditor(),
-          ),
+          child: SizedBox(height: 400, child: ResourceDictionaryEditor()),
           initiallyOpen: false,
           codeSnippet: '''
 dependencies:
@@ -237,9 +236,7 @@ dependencies:
 }
 
 class ResourceDictionaryEditor extends StatelessWidget {
-  const ResourceDictionaryEditor({
-    super.key,
-  });
+  const ResourceDictionaryEditor({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -286,8 +283,27 @@ class ResourceDictionaryEditor extends StatelessWidget {
   }
 }
 
-class ContrastCheckerPage extends StatelessWidget {
+class ContrastCheckerPage extends StatefulWidget {
   const ContrastCheckerPage({super.key});
+
+  @override
+  State<ContrastCheckerPage> createState() => _ContrastCheckerPageState();
+}
+
+class _ContrastCheckerPageState extends State<ContrastCheckerPage> {
+  Color color1 = Colors.black;
+  Color color2 = Colors.white;
+  double ratio = 21.00;
+  final splitButtonKey = GlobalKey<SplitButtonState>();
+  final splitButtonKey2 = GlobalKey<SplitButtonState>();
+
+  double calculateContrastRatio(Color color1, Color color2) {
+    final luminance1 = color1.computeLuminance();
+    final luminance2 = color2.computeLuminance();
+    final lighter = math.max(luminance1, luminance2);
+    final darker = math.min(luminance1, luminance2);
+    return (lighter + 0.05) / (darker + 0.05);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -301,9 +317,212 @@ class ContrastCheckerPage extends StatelessWidget {
         const Text(
           'To ensure optimal accessibility and usability, apps should strive to use high-contrast and easy-to-read color combinations for text and its background. '
           'Not only will this benefit users with lower visual acuity, but this will also ensure visibility and legibility under a wide range of lighting conditions, screens, and device settings. '
-          'Use this contrast checker to calculate the contrast ratio of two colors and measure them against the Web Content Accessibility Guidelines. '
+          'Use this contrast checker to calculate the contrast ratio of two colors and measure them against the Web Content Accessibility Guidelines. ',
         ),
         SizedBox(height: 20),
+        Row(
+          children: [
+            Flex(
+              direction: Axis.vertical,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Text(
+                    'Color 1',
+                    style: FluentTheme.of(context).typography.bodyStrong,
+                  ),
+                ),
+                SplitButton(
+                  key: splitButtonKey,
+                  flyout: FlyoutContent(
+                    //constraints: BoxConstraints(maxWidth: 200.0),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: ColorPicker(
+                          color: color1,
+                          onChanged: (final color) {
+                            setState(() {
+                              color1 = color;
+                              ratio = calculateContrastRatio(color1, color2);
+                            });
+                          },
+                          isMoreButtonVisible: false,
+                        ),
+                      ),
+                    ),
+                  ),
+                  child: SizedBox(
+                    width: 36.0,
+                    height: 32.0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: color1,
+                        borderRadius: const BorderRadiusDirectional.horizontal(
+                          start: Radius.circular(4.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(width: 20),
+            Flex(
+              direction: Axis.vertical,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Text(
+                    'Color 2',
+                    style: FluentTheme.of(context).typography.bodyStrong,
+                  ),
+                ),
+                SplitButton(
+                  key: splitButtonKey2,
+                  flyout: FlyoutContent(
+                    //constraints: BoxConstraints(maxWidth: 200.0),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: ColorPicker(
+                          color: color2,
+                          onChanged: (final color) {
+                            setState(() {
+                              color2 = color;
+                              ratio = calculateContrastRatio(color1, color2);
+                            });
+                          },
+                          isMoreButtonVisible: false,
+                        ),
+                      ),
+                    ),
+                  ),
+                  child: SizedBox(
+                    width: 36.0,
+                    height: 32.0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: color2,
+                        borderRadius: const BorderRadiusDirectional.horizontal(
+                          start: Radius.circular(4.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(width: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Contrast Ratio',
+                  style: FluentTheme.of(context).typography.bodyStrong,
+                ),
+                SizedBox(height: 4),
+                Text(
+                  ratio.toStringAsFixed(2) + " : 1",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+          ],
+        ),
+        SizedBox(height: 20),
+        Card(
+          child: ListBody(
+            children: [
+              ListTile(
+                title: Text('Regular Text', style: FluentTheme.of(context).typography.bodyStrong),
+                subtitle: Text('required at least 4.5 : 1', style: FluentTheme.of(context).typography.body),
+                leading: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(right: 4),
+                      width: 28,
+                      height: 28,
+                      decoration: BoxDecoration(
+                        color: ratio >= 4.5
+                            ? Colors.successPrimaryColor
+                            : Colors.errorPrimaryColor,
+                        shape: BoxShape.circle,
+                      ),
+                      alignment: Alignment.center,
+                      child: Icon(
+                        ratio >= 4.5 ? FluentIcons.check_mark : FluentIcons.cancel,
+                        color: Colors.white,
+                        size: 16,
+                      ),
+                    ),
+                    ratio >= 4.5
+                  ? Text('Passed', style: FluentTheme.of(context).typography.bodyStrong)
+                  : Text('Failed', style: FluentTheme.of(context).typography.bodyStrong),
+                  ],
+                ),
+              ),
+              ListTile(
+                title: Text('Large Text (14pt. bold or 18pt. regular)', style: FluentTheme.of(context).typography.bodyStrong),
+                subtitle: Text('required at least 3 : 1', style: FluentTheme.of(context).typography.body),
+                leading: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(right: 4),
+                      width: 28,
+                      height: 28,
+                      decoration: BoxDecoration(
+                        color: ratio >= 3
+                            ? Colors.successPrimaryColor
+                            : Colors.errorPrimaryColor,
+                        shape: BoxShape.circle,
+                      ),
+                      alignment: Alignment.center,
+                      child: Icon(
+                        ratio >= 3 ? FluentIcons.check_mark : FluentIcons.cancel,
+                        color: Colors.white,
+                        size: 16,
+                      ),
+                    ),
+                    ratio >= 3
+                  ? Text('Passed', style: FluentTheme.of(context).typography.bodyStrong)
+                  : Text('Failed', style: FluentTheme.of(context).typography.bodyStrong),
+                  ],
+                ),
+              ),
+              ListTile(
+                title: Text('Graphical objects and UI components', style: FluentTheme.of(context).typography.bodyStrong),
+                subtitle: Text('required at least 3 : 1', style: FluentTheme.of(context).typography.body),
+                leading: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(right: 4),
+                      width: 28,
+                      height: 28,
+                      decoration: BoxDecoration(
+                        color: ratio >= 3
+                            ? Colors.successPrimaryColor
+                            : Colors.errorPrimaryColor,
+                        shape: BoxShape.circle,
+                      ),
+                      alignment: Alignment.center,
+                      child: Icon(
+                        ratio >= 3 ? FluentIcons.check_mark : FluentIcons.cancel,
+                        color: Colors.white,
+                        size: 16,
+                      ),
+                    ),
+                    ratio >= 3
+                  ? Text('Passed', style: FluentTheme.of(context).typography.bodyStrong)
+                  : Text('Failed', style: FluentTheme.of(context).typography.bodyStrong),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -330,6 +549,7 @@ class _ColorsPageState extends State<ColorsPage> {
   Widget build(final BuildContext context) {
     return ScaffoldPage(
       header: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           PageHeader(title: Text('Colors')),
           Padding(
@@ -345,7 +565,9 @@ class _ColorsPageState extends State<ColorsPage> {
         pane: NavigationPane(
           displayMode: PaneDisplayMode.top,
           selected: selectedIndex,
-          onItemPressed: (value) => setState(() { selectedIndex = value; }),
+          onItemPressed: (value) => setState(() {
+            selectedIndex = value;
+          }),
           items: [
             PaneItem(
               icon: Icon(FluentIcons.color),
@@ -361,7 +583,7 @@ class _ColorsPageState extends State<ColorsPage> {
               icon: Icon(WindowsIcons.ease_of_access),
               title: Text('Contrast Checker'),
               body: ContrastCheckerPage(),
-            )
+            ),
           ],
         ),
       ),
