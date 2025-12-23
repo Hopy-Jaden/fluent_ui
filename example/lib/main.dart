@@ -16,6 +16,7 @@ import 'routes/popups.dart' deferred as popups;
 import 'routes/surfaces.dart' deferred as surfaces;
 import 'routes/theming.dart' deferred as theming;
 import 'routes/fundamentals.dart' deferred as fundamentals;
+import 'routes/designpattern.dart' deferred as designpattern;
 import 'theme.dart';
 import 'widgets/deferred_widget.dart';
 
@@ -71,6 +72,7 @@ void main() async {
     DeferredWidget.preload(surfaces.loadLibrary),
     DeferredWidget.preload(theming.loadLibrary),
     DeferredWidget.preload(fundamentals.loadLibrary),
+    DeferredWidget.preload(designpattern.loadLibrary)
   ]);
 
   runApp(const MyApp());
@@ -469,20 +471,20 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             items: [
               PaneItem(
                 title: const Text('DataTable'),
-                body: forms.AutoSuggestBoxPage(),
+                body: designpattern.DataTablePage(),
               ),
               PaneItem(
                 title: const Text('Ribbon'),
-                body: forms.NumberBoxPage(),
+                body: designpattern.RibbonPage(),
               ),
               PaneItem(
                 title: const Text('Settings Card'),
-                body: forms.PasswordBoxPage(),
+                body: designpattern.SettingsCardPage(),
               ),
               PaneItem(title: const Text('Settings Expander'), body: forms.TextBoxPage()),
               PaneItem(
                 title: const Text('Tabbed Command Bar'),
-                body: navigation.NavigationViewShellRoute(),
+                body: designpattern.TabbedCommandBarPage(),
               ),
             ],
           ),
@@ -925,6 +927,53 @@ final router = GoRouter(
             () => theming.RevealFocusPage(),
           ),
         ),
+
+        /// Design Pattern
+        /// Data Table
+        GoRoute(
+          path: '/design_pattern/data_table',
+          builder: (final context, final state) => DeferredWidget(
+            designpattern.loadLibrary,
+            () => designpattern.DataTablePage(),
+          ),
+        ),
+
+        /// Ribbon
+        GoRoute(
+          path: '/design_pattern/ribbon',
+          builder: (final context, final state) => DeferredWidget(
+            designpattern.loadLibrary,
+            () => designpattern.RibbonPage(),
+          ),
+        ),
+
+        /// Settings Card
+        GoRoute(
+          path: '/design_pattern/settings_card',
+          builder: (final context, final state) => DeferredWidget(
+            designpattern.loadLibrary,
+            () => designpattern.SettingsCardPage(),
+          ),
+        ),
+
+        /// Settings Expander
+        GoRoute(
+          path: '/design_pattern/settings_expander',
+          builder: (final context, final state) => DeferredWidget(
+            designpattern.loadLibrary,
+            () => designpattern.SettingsExpanderPage(),
+          ),
+        ),
+
+        /// Tabbed Command Bar
+        GoRoute(
+          path: '/design_pattern/tabbed_command_bar',
+          builder: (final context, final state) => DeferredWidget(
+            designpattern.loadLibrary,
+            () => designpattern.TabbedCommandBarPage(),
+          ),
+        ),
+
       ],
     ),
   ],

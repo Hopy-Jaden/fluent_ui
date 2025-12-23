@@ -185,6 +185,7 @@ class MyApp extends StatelessWidget {
         ),
         */
         const SizedBox(height: 70),
+        Text('issue: incorrect searchbox width, incorrect card hover effect, no image transition, incorrect principle table view, incorrect iconography code, incorrect typography table view,'),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
