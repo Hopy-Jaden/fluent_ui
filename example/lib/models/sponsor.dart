@@ -87,9 +87,28 @@ class Person {
   Widget build() {
     return Builder(
       builder: (final context) {
-        return 
-        Link(uri: Uri.parse('https://github.com/$username'), builder: (context, followLink) => IconButton(onPressed: followLink,
-                icon:  Card(child: SizedBox(height: 200, width:150, child: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center, children: [
+        return Link(
+                uri: Uri.parse(
+                  'https://github.com/$username',
+                ),
+                builder: (context, followLink) => HoverButton(
+                  onPressed: followLink,
+                  builder: (final context, final states) {
+                    return FocusBorder(
+                      focused: states.isFocused,
+                      renderOutside: false,
+                      child: AnimatedContainer(
+                        duration: FluentTheme.of(
+                          context,
+                        ).fasterAnimationDuration,
+                        decoration: BoxDecoration(
+                          color: ButtonThemeData.uncheckedInputColor(
+                            FluentTheme.of(context),
+                            states,
+                            transparentWhenNone: true,
+                          ),
+                        ),
+                        child: Card(child: SizedBox(height: 200, width:150, child: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(height: 100, width: 100, decoration: BoxDecoration(
                     image: DecorationImage(image: NetworkImage(imageUrl)),
                     shape: BoxShape.circle,),
@@ -97,7 +116,12 @@ class Person {
                           SizedBox(height:15),
                           Text(username ?? name, style: FluentTheme.of(context).typography.bodyStrong,),
                   ],),),),
-              ),);
+                      ),
+                    );
+                  },
+                ),
+              );
+        ;
       },
     );
   }
