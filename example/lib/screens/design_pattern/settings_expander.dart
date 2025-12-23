@@ -14,6 +14,12 @@ class _SettingsExpanderPageState extends State<SettingsExpanderPage>
     with PageMixin {
   static const double itemHeight = 500;
     bool selected = true;
+    bool crostOpen = false;
+    List<String> crosts = ['Classic', 'Whole wheat', 'Gluten free'];
+  String crost = 'Whole wheat';
+  List<String> sizes = ['Regular', 'Thin', 'Pan', 'Stuffed'];
+  String size = 'Pan';
+
       String? comboboxValue;
 
   int topIndex = 0;
@@ -23,7 +29,8 @@ class _SettingsExpanderPageState extends State<SettingsExpanderPage>
 
   String indicator = 'Sticky';
   bool hasTopBar = true;
-
+  bool checked = false;
+  
   List<NavigationPaneItem> items = [];
 
   @override
@@ -80,6 +87,14 @@ class MyApp extends StatelessWidget {
   }
 }
 ''', 
+child: Expander(
+  leading: RadioButton(
+    checked: checked,
+    onChanged: (v) => setState(() => checked = v),
+  ),
+  header: Text('This text is in header'),
+  content: Text('This text is in content'),
+),
         ),
         const SizedBox(height: 30,),
         Text('Step 2: Set ScaffoldPage() widget as the home of FluentApp()', style: FluentTheme.of(context).typography.subtitle,),
@@ -125,6 +140,57 @@ class HomePage extends StatelessWidget {
           'pages to learn more about the available widgets and how to use them in your app.',
         ),
         const SizedBox(height: 20),
+        Expander(header: Text('header'),content: Text('content'),),
+        Expander(
+            header: const Text('Choose your crost'),
+            onStateChanged: (final open) => setState(() => crostOpen = open),
+            trailing: crostOpen
+                ? null
+                : Text(
+                    '$crost, $size',
+                    style: FluentTheme.of(context).typography.caption,
+                  ),
+            content: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: crosts
+                      .map(
+                        (final e) => Padding(
+                          padding: const EdgeInsetsDirectional.only(bottom: 8),
+                          child: RadioButton(
+                            checked: crost == e,
+                            onChanged: (final selected) {
+                              if (selected) setState(() => crost = e);
+                            },
+                            content: Text(e),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+                const SizedBox(width: 12),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: sizes
+                      .map(
+                        (final e) => Padding(
+                          padding: const EdgeInsetsDirectional.only(bottom: 8),
+                          child: RadioButton(
+                            checked: size == e,
+                            onChanged: (final selected) {
+                              if (selected) setState(() => size = e);
+                            },
+                            content: Text(e),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ],
+            ),
+          ),
       ],
     );
   }

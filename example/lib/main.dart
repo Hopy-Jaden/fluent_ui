@@ -481,7 +481,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                 title: const Text('Settings Card'),
                 body: designpattern.SettingsCardPage(),
               ),
-              PaneItem(title: const Text('Settings Expander'), body: forms.TextBoxPage()),
+              PaneItem(title: const Text('Settings Expander'), body: designpattern.SettingsExpanderPage()),
               PaneItem(
                 title: const Text('Tabbed Command Bar'),
                 body: designpattern.TabbedCommandBarPage(),
