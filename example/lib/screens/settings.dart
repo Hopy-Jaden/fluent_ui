@@ -85,6 +85,7 @@ class _SettingsState extends State<Settings> with PageMixin {
   Widget build(final BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
     final appTheme = context.watch<AppTheme>();
+    final expanderKey = GlobalKey<ExpanderState>(debugLabel: 'Expander key');
     const spacer = SizedBox(height: 10);
     const biggerSpacer = SizedBox(height: 40);
 
@@ -94,173 +95,224 @@ class _SettingsState extends State<Settings> with PageMixin {
     return ScaffoldPage.scrollable(
       header: const PageHeader(title: Text('Settings')),
       children: [
-        Text('Theme mode', style: FluentTheme.of(context).typography.subtitle),
-        spacer,
-        ...List.generate(ThemeMode.values.length, (final index) {
-          final mode = ThemeMode.values[index];
-          return Padding(
-            padding: const EdgeInsetsDirectional.only(bottom: 8),
-            child: RadioButton(
-              checked: appTheme.mode == mode,
-              onChanged: (final value) {
-                if (value) {
-                  appTheme.mode = mode;
-
-                  if (kIsWindowEffectsSupported) {
-                    // some window effects require on [dark] to look good.
-                    // appTheme.setEffect(WindowEffect.disabled, context);
-                    appTheme.setEffect(appTheme.windowEffect, context);
-                  }
+        Card(
+          padding: EdgeInsetsGeometry.symmetric(vertical: 8.0),
+          child: ListTile(
+            title: Text(
+              'Theme',
+            ), //Header of the settings //Description of the settings
+            leading: Icon(WindowsIcons.blue_light), //Icon typically included in the card
+            trailing: ComboBox<ThemeMode>(
+              value: appTheme.mode,
+              items: List.generate(ThemeMode.values.length, (final index) {
+                final mode = ThemeMode.values[index];
+                return ComboBoxItem(
+                  value: mode,
+                  child: Text('$mode'.replaceAll('ThemeMode.', '')),
+                );
+              }),
+              onChanged: (final ThemeMode? value) => setState(() {
+                if (value == null) return;
+                debugPrint('ThemeMode.$value');
+                appTheme.mode = value;
+                if (kIsWindowEffectsSupported) {
+                  appTheme.setEffect(appTheme.windowEffect, context);
                 }
-              },
-              content: Text('$mode'.replaceAll('ThemeMode.', '')),
-            ),
-          );
-        }),
-        biggerSpacer,
-        Text(
-          'Navigation Pane Display Mode',
-          style: FluentTheme.of(context).typography.subtitle,
-        ),
-        spacer,
-        ...List.generate(PaneDisplayMode.values.length, (final index) {
-          final mode = PaneDisplayMode.values[index];
-          return Padding(
-            padding: const EdgeInsetsDirectional.only(bottom: 8),
-            child: RadioButton(
-              checked: appTheme.displayMode == mode,
-              onChanged: (final value) {
-                if (value) appTheme.displayMode = mode;
-              },
-              content: Text(mode.toString().replaceAll('PaneDisplayMode.', '')),
-            ),
-          );
-        }),
-        biggerSpacer,
-        Text(
-          'Navigation Indicator',
-          style: FluentTheme.of(context).typography.subtitle,
-        ),
-        spacer,
-        ...List.generate(NavigationIndicators.values.length, (final index) {
-          final mode = NavigationIndicators.values[index];
-          return Padding(
-            padding: const EdgeInsetsDirectional.only(bottom: 8),
-            child: RadioButton(
-              checked: appTheme.indicator == mode,
-              onChanged: (final value) {
-                if (value) appTheme.indicator = mode;
-              },
-              content: Text(
-                mode.toString().replaceAll('NavigationIndicators.', ''),
-              ),
-            ),
-          );
-        }),
-        biggerSpacer,
-        Text(
-          'Accent Color',
-          style: FluentTheme.of(context).typography.subtitle,
-        ),
-        spacer,
-        Wrap(
-          children: [
-            Tooltip(
-              message: accentColorNames[0],
-              child: _buildColorBlock(appTheme, systemAccentColor),
-            ),
-            ...List.generate(Colors.accentColors.length, (final index) {
-              final color = Colors.accentColors[index];
-              return Tooltip(
-                message: accentColorNames[index + 1],
-                child: _buildColorBlock(appTheme, color),
-              );
-            }),
-          ],
-        ),
-        if (kIsWindowEffectsSupported) ...[
-          biggerSpacer,
-          Text(
-            'Window Transparency',
-            style: FluentTheme.of(context).typography.subtitle,
-          ),
-          description(
-            content: Text(
-              'Running on ${defaultTargetPlatform.toString().replaceAll('TargetPlatform.', '')}',
+              }),
             ),
           ),
-          spacer,
-          ...List.generate(currentWindowEffects.length, (final index) {
-            final mode = currentWindowEffects[index];
-            return Padding(
-              padding: const EdgeInsetsDirectional.only(bottom: 8),
-              child: RadioButton(
-                checked: appTheme.windowEffect == mode,
-                onChanged: (final value) {
-                  if (value) {
-                    appTheme.windowEffect = mode;
-                    appTheme.setEffect(mode, context);
-                  }
-                },
-                content: Text(mode.toString().replaceAll('WindowEffect.', '')),
+        ),
+        spacer,
+        Card(
+          padding: EdgeInsetsGeometry.symmetric(vertical: 8.0),
+          child: ListTile(
+            title: Text(
+              'Pane Mode',
+            ), //Header of the settings //Description of the settings
+            leading: Icon(WindowsIcons.open_pane_mirrored), //Icon typically included in the card
+            trailing: ComboBox<PaneDisplayMode>(
+              value: appTheme.displayMode,
+              items: List.generate(PaneDisplayMode.values.length, (final index) {
+                final mode = PaneDisplayMode.values[index];
+                return ComboBoxItem(
+                  value: mode,
+                  child: Text('$mode'.replaceAll('PaneDisplayMode.', '')),
+                );
+              }),
+              onChanged: (final PaneDisplayMode? value) => setState(() {
+                if (value == null) return;
+                appTheme.displayMode = value;
+              }),
+            ),
+          ),
+        ),
+        spacer,
+        Card(
+          padding: EdgeInsetsGeometry.symmetric(vertical: 8.0),
+          child: ListTile(
+            title: Text(
+              'Navigation Indicator',
+            ), //Header of the settings //Description of the settings
+            leading: Icon(WindowsIcons.text_navigate), //Icon typically included in the card
+            trailing: ComboBox<NavigationIndicators>(
+              value: appTheme.indicator,
+              items: List.generate(NavigationIndicators.values.length, (final index) {
+                final mode = NavigationIndicators.values[index];
+                return ComboBoxItem(
+                  value: mode,
+                  child: Text('$mode'.replaceAll('NavigationIndicators.', '')),
+                );
+              }),
+              onChanged: (final NavigationIndicators? value) => setState(() {
+                if (value == null) return;
+                appTheme.indicator = value;
+              }),
+            ),
+          ),
+        ),
+        spacer,
+        HoverButton(
+          onPressed: () {
+            //function when the settings card is clicked
+          },
+          builder: (final context, final states) {
+            return FocusBorder(
+              focused: states.isFocused,
+              renderOutside: false,
+              child: AnimatedContainer(
+                duration: FluentTheme.of(context).fasterAnimationDuration,
+                decoration: BoxDecoration(
+                  color: ButtonThemeData.uncheckedInputColor(
+                    FluentTheme.of(context),
+                    states,
+                    transparentWhenNone: true,
+                  ),
+                ),
+                child: Expander(
+                  key: expanderKey,
+                  header: Padding(
+                    padding: EdgeInsetsGeometry.symmetric(vertical: 8.0),
+                    child: ListTile(
+                      tileColor: WidgetStateColor.resolveWith(
+                        (states) => Colors.transparent,
+                      ), //to prevent hover color from showing when clicking on list tile region
+                      onPressed: () {
+                        final open =
+                            expanderKey.currentState?.isExpanded ?? false;
+                        expanderKey.currentState?.isExpanded = !open;
+                      }, //to allow expander to expand when clicking on list tile region
+                      title: Text('Accent Color'),
+                      leading: Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Icon(WindowsIcons.color),
+                      ),
+                    ),
+                  ),
+                  content: Wrap(
+                    children: [
+                      Tooltip(
+                        message: accentColorNames[0],
+                        child: _buildColorBlock(appTheme, systemAccentColor),
+                      ),
+                      ...List.generate(Colors.accentColors.length, (
+                        final index,
+                      ) {
+                        final color = Colors.accentColors[index];
+                        return Tooltip(
+                          message: accentColorNames[index + 1],
+                          child: _buildColorBlock(appTheme, color),
+                        );
+                      }),
+                    ],
+                  ),
+                ),
               ),
             );
-          }),
-        ],
-        biggerSpacer,
-        Text(
-          'Text Direction',
-          style: FluentTheme.of(context).typography.subtitle,
+          },
         ),
+        if (kIsWindowEffectsSupported) ...[
+          spacer,
+          Card(
+          padding: EdgeInsetsGeometry.symmetric(vertical: 8.0),
+          child: ListTile(
+            title: Text(
+              'Transparency Effect',
+            ), //Header of the settings //Description of the settings
+            subtitle: Text(
+              'Only in windows effect supported platforms.',
+            ),
+            leading: Icon(WindowsIcons.effects), //Icon typically included in the card
+            trailing: ComboBox<WindowEffect>(
+              value: appTheme.windowEffect,
+              items: List.generate(currentWindowEffects.length, (final index) {
+                final mode = currentWindowEffects[index];
+                return ComboBoxItem<WindowEffect>(
+                  value: mode,
+                  child: Text('$mode'.replaceAll('WindowEffect.', '')),
+                );
+              }),
+              onChanged: (final WindowEffect? value) => setState(() {
+                if (value == null) return;
+                appTheme.windowEffect = value;
+                appTheme.setEffect(value, context);
+              }),
+            ),
+          ),
+        ),
+        ],
         spacer,
-        ...List.generate(TextDirection.values.length, (final index) {
-          final direction = TextDirection.values[index];
-          return Padding(
-            padding: const EdgeInsetsDirectional.only(bottom: 8),
-            child: RadioButton(
-              checked: appTheme.textDirection == direction,
-              onChanged: (final value) {
-                if (value) {
-                  appTheme.textDirection = direction;
-                }
-              },
-              content: Text(
-                '$direction'
+        Card(
+          padding: EdgeInsetsGeometry.symmetric(vertical: 8.0),
+          child: ListTile(
+            title: Text(
+              'Text Direction',
+            ), //Header of the settings //Description of the settings
+            leading: Icon(WindowsIcons.map_directions), //Icon typically included in the card
+            trailing: ComboBox<TextDirection>(
+              value: appTheme.textDirection,
+              items: List.generate(TextDirection.values.length, (final index) {
+                final mode = TextDirection.values[index];
+                return ComboBoxItem(
+                  value: mode,
+                  child: Text(                '$mode'
                     .replaceAll('TextDirection.', '')
                     .replaceAll('rtl', 'Right to left')
                     .replaceAll('ltr', 'Left to right'),
               ),
+                );
+              }).reversed.toList(),
+              onChanged: (final TextDirection? value) => setState(() {
+                if (value == null) return;
+                appTheme.textDirection = value;
+              }),
             ),
-          );
-        }).reversed,
-        biggerSpacer,
-        Text('Locale', style: FluentTheme.of(context).typography.subtitle),
-        description(
-          content: const Text(
-            'The locale used by the Windows UI widgets, such as TimePicker and '
-            'DatePicker. This does not reflect the language of this showcase app.',
           ),
         ),
         spacer,
-        Wrap(
-          spacing: 15,
-          runSpacing: 10,
-          children: List.generate(supportedLocales.length, (final index) {
-            final locale = supportedLocales[index];
-
-            return Padding(
-              padding: const EdgeInsetsDirectional.only(bottom: 8),
-              child: RadioButton(
-                checked: currentLocale == locale,
-                onChanged: (final value) {
-                  if (value) {
-                    appTheme.locale = locale;
-                  }
-                },
-                content: Text('$locale'),
-              ),
-            );
-          }),
+        Card(
+          padding: EdgeInsetsGeometry.symmetric(vertical: 8.0),
+          child: ListTile(
+            title: Text(
+              'Locale',
+            ), //Header of the settings //Description of the settings
+            subtitle: Text('The locale used by the Windows UI widgets, such as TimePicker and '
+            'DatePicker. This does not reflect the language of this showcase app.',),
+            leading: Icon(WindowsIcons.globe), //Icon typically included in the card
+            trailing: ComboBox<Locale>(
+              value: appTheme.locale,
+              items: List.generate(supportedLocales.length, (final index) {
+                final locale = supportedLocales[index];
+                return ComboBoxItem(
+                  value: locale,
+                  child: Text('$locale'),
+                );
+              }),
+              onChanged: (final Locale? value) => setState(() {
+                if (value == null) return;
+                appTheme.locale = value;
+              }),
+            ),
+          ),
         ),
       ],
     );
