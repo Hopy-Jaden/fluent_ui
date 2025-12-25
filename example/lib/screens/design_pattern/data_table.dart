@@ -37,7 +37,7 @@ class _DataTablePageState extends State<DataTablePage>
           'Yet, there is no existing widget provided from this library can achieve this feature. '
           'Follow these steps to create Data Table in Fluent UI design language as a workaround:'
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 20),
         Text('About DataTable', style: FluentTheme.of(context).typography.subtitle,),
         const Text(
           'DataTable is useful in scenarios where:'
@@ -51,7 +51,7 @@ class _DataTablePageState extends State<DataTablePage>
         const Text(
           '(3) Editing every piece of data in the table isn\'t required'
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 30),
         
         Text('Step 1: Import both Fluent ui and Material ui package', style: FluentTheme.of(context).typography.subtitle,),
         const SizedBox(height: 20),
