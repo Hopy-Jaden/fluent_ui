@@ -470,8 +470,8 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             title: const Text('Design Pattern'),
             items: [
               PaneItem(
-                title: const Text('Data Grid'),
-                body: designpattern.DataGridPage(),
+                title: const Text('Data Table'),
+                body: designpattern.DataTablePage(),
               ),
               PaneItem(
                 title: const Text('Ribbon'),
@@ -933,7 +933,7 @@ final router = GoRouter(
           path: '/design_pattern/data_grid',
           builder: (final context, final state) => DeferredWidget(
             designpattern.loadLibrary,
-            () => designpattern.DataGridPage(),
+            () => designpattern.DataTablePage(),
           ),
         ),
 

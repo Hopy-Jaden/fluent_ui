@@ -1,16 +1,17 @@
 import 'package:example/widgets/card_highlight.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/material.dart' as material;
 
 import '../../../widgets/page.dart';
 
-class DataGridPage extends StatefulWidget {
-  const DataGridPage({super.key});
+class DataTablePage extends StatefulWidget {
+  const DataTablePage({super.key});
 
   @override
-  State<DataGridPage> createState() => _DataGridPageState();
+  State<DataTablePage> createState() => _DataTablePageState();
 }
 
-class _DataGridPageState extends State<DataGridPage>
+class _DataTablePageState extends State<DataTablePage>
     with PageMixin {
   static const double itemHeight = 500;
     bool selected = true;
@@ -29,102 +30,355 @@ class _DataGridPageState extends State<DataGridPage>
   @override
   Widget build(final BuildContext context) {
     return ScaffoldPage.scrollable(
-      header: const PageHeader(title: Text('Create your first app')),
+      header: const PageHeader(title: Text('Data Table')),
       children: [
-        
         const Text(
-          'Follow these steps to create your first Fluent UI app using the FluentApp() and ScaffoldPage() widgets:',
+          'DataTable provides a set of components which is an intermediary between a list and a full-blown DataGrid experience, introduced in the windows community toolkit gallery. '
+          'Yet, there is no existing widget provided from this library can achieve this feature. '
+          'Follow these steps to create Data Table in Fluent UI design language as a workaround:'
         ),
         const SizedBox(height: 30),
-        Text('Installation', style: FluentTheme.of(context).typography.subtitle,),
+        Text('About DataTable', style: FluentTheme.of(context).typography.subtitle,),
+        const Text(
+          'DataTable is useful in scenarios where:'
+        ),
+        const Text(
+          '(1) A simplified/modern style is required as more of a table of data'
+        ),
+        const Text(
+          '(2) Cell-level selection isn\'t required'
+        ),
+        const Text(
+          '(3) Editing every piece of data in the table isn\'t required'
+        ),
+        const SizedBox(height: 10),
+        
+        Text('Step 1: Import both Fluent ui and Material ui package', style: FluentTheme.of(context).typography.subtitle,),
+        const SizedBox(height: 20),
+        CardHighlight(
+          initiallyOpen: false,
+          codeSnippet: '''
+import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/material.dart' as material;'''
+        ),
+        const SizedBox(height: 30),
+        Text('Step 2: Import a material UI DataTable() widget', style: FluentTheme.of(context).typography.subtitle,),
         const SizedBox(height: 10,),
-        Text( 
-          'Before you begin, ensure you have Flutter installed on your machine. Then, add the '
-          'fluent_ui package to your project by including it in your pubspec.yaml file:',
+        Text(
+          'Import DataTable by adding \'material.\' .',
         ),
         const SizedBox(height: 20),
         CardHighlight(
           initiallyOpen: false,
           codeSnippet: '''
-dependencies:
-  fluent_ui: ^4.13.0''',
+material.DataTable(
+  columns: <material.DataColumn>[
+    material.DataColumn(label: Text('Platform'),
+    material.DataColumn(label: Text('Specific UI library'),
+  ],
+  rows: <material.DataRow>[
+    material.DataRow(
+      cells: [
+        const material.DataCell(Text('Web')),
+        const material.DataCell(Text('Fluent Web UI widgets')),
+      ],
+    ),
+    material.DataRow(
+      cells: [
+        const material.DataCell(Text('iOS')),
+        const material.DataCell(Text('Fluent iOS UI widgets')),
+      ],
+    ),
+    material.DataRow(
+      cells: [
+        const material.DataCell(Text('Android')),
+        const material.DataCell(Text('Fluent Android UI widgets')),
+      ],
+    ),
+    material.DataRow(
+      cells: [
+        const material.DataCell(Text('Windows')),
+        const material.DataCell(Text('WinUI 3 widgets')),
+      ],
+    ),
+  ],
+),
+''', 
+child: material.DataTable(
+          columns: <material.DataColumn>[
+            const material.DataColumn(label: Text('Platform')),
+            const material.DataColumn(label: Text('Specific UI library')),
+          ],
+          rows: <material.DataRow>[
+            material.DataRow(
+              cells: [
+                const material.DataCell(Text('Web')),
+                const material.DataCell(Text('Fluent Web UI widgets')),
+              ],
+            ),
+            material.DataRow(
+              cells: [
+                const material.DataCell(Text('iOS')),
+                const material.DataCell(Text('Fluent iOS UI widgets')),
+              ],
+            ),
+            material.DataRow(
+              cells: [
+                const material.DataCell(Text('Android')),
+                const material.DataCell(Text('Fluent Android UI widgets')),
+              ],
+            ),
+            material.DataRow(
+              cells: [
+                const material.DataCell(Text('Windows')),
+                const material.DataCell(Text('WinUI 3 widgets')),
+              ],
+            ),
+          ],
+        ),
         ),
         const SizedBox(height: 30),
-        Text('Step 1: Create a FluentApp() widget', style: FluentTheme.of(context).typography.subtitle,),
+        Text('Step 3: Remove Divider', style: FluentTheme.of(context).typography.subtitle,),
         const SizedBox(height: 10,),
         Text(
-          'The FluentApp widget is the root of your application. It provides '
-          'theming and navigation capabilities for Fluent UI apps.',
+          'Set divider thickness as 0.01 to remove the white divider line between rows.',
+        ),
+        const SizedBox(height: 20),
+        CardHighlight(
+          initiallyOpen: false,
+          codeSnippet: '''
+material.DataTable(
+  dividerThickness: 0.01,
+  columns: <material.DataColumn>[
+    material.DataColumn(label: Text('Platform'),
+    material.DataColumn(label: Text('Specific UI library'),
+  ],
+  rows: <material.DataRow>[
+    material.DataRow(
+      cells: [
+        const material.DataCell(Text('Web')),
+        const material.DataCell(Text('Fluent Web UI widgets')),
+      ],
+    ),
+    material.DataRow(
+      cells: [
+        const material.DataCell(Text('iOS')),
+        const material.DataCell(Text('Fluent iOS UI widgets')),
+      ],
+    ),
+    material.DataRow(
+      cells: [
+        const material.DataCell(Text('Android')),
+        const material.DataCell(Text('Fluent Android UI widgets')),
+      ],
+    ),
+    material.DataRow(
+      cells: [
+        const material.DataCell(Text('Windows')),
+        const material.DataCell(Text('WinUI 3 widgets')),
+      ],
+    ),
+  ],
+),
+''', 
+child: material.DataTable(
+          dividerThickness: 0.01,
+          columns: <material.DataColumn>[
+            const material.DataColumn(label: Text('Platform')),
+            const material.DataColumn(label: Text('Specific UI library')),
+          ],
+          rows: <material.DataRow>[
+            material.DataRow(
+              cells: [
+                const material.DataCell(Text('Web')),
+                const material.DataCell(Text('Fluent Web UI widgets')),
+              ],
+            ),
+            material.DataRow(
+              cells: [
+                const material.DataCell(Text('iOS')),
+                const material.DataCell(Text('Fluent iOS UI widgets')),
+              ],
+            ),
+            material.DataRow(
+              cells: [
+                const material.DataCell(Text('Android')),
+                const material.DataCell(Text('Fluent Android UI widgets')),
+              ],
+            ),
+            material.DataRow(
+              cells: [
+                const material.DataCell(Text('Windows')),
+                const material.DataCell(Text('WinUI 3 widgets')),
+              ],
+            ),
+          ],
+        ),
+        ),
+        const SizedBox(height: 30),
+        Text('Step 4: Alternate Colors of Data Row', style: FluentTheme.of(context).typography.subtitle,),
+        const SizedBox(height: 10,),
+        Text(
+          'Alternate the rows with the card theme color.',
+        ),
+        const SizedBox(height: 20),
+        CardHighlight(
+          initiallyOpen: false,
+          codeSnippet: '''
+material.DataTable(
+  dividerThickness: 0.01,
+  columns: <material.DataColumn>[
+    material.DataColumn(label: Text('Platform'),
+    material.DataColumn(label: Text('Specific UI library'),
+  ],
+  rows: <material.DataRow>[
+    material.DataRow(
+      color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),
+      cells: [
+        const material.DataCell(Text('Web')),
+        const material.DataCell(Text('Fluent Web UI widgets')),
+      ],
+    ),
+    material.DataRow(
+      cells: [
+        const material.DataCell(Text('iOS')),
+        const material.DataCell(Text('Fluent iOS UI widgets')),
+      ],
+    ),
+    material.DataRow(
+      color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),
+      cells: [
+        const material.DataCell(Text('Android')),
+        const material.DataCell(Text('Fluent Android UI widgets')),
+      ],
+    ),
+    material.DataRow(
+      cells: [
+        const material.DataCell(Text('Windows')),
+        const material.DataCell(Text('WinUI 3 widgets')),
+      ],
+    ),
+  ],
+),
+''', 
+child: material.DataTable(
+          dividerThickness: 0.01,
+          columns: <material.DataColumn>[
+            const material.DataColumn(label: Text('Platform')),
+            const material.DataColumn(label: Text('Specific UI library')),
+          ],
+          rows: <material.DataRow>[
+            material.DataRow(
+              color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),
+              cells: [
+                const material.DataCell(Text('Web')),
+                const material.DataCell(Text('Fluent Web UI widgets')),
+              ],
+            ),
+            material.DataRow(
+              cells: [
+                const material.DataCell(Text('iOS')),
+                const material.DataCell(Text('Fluent iOS UI widgets')),
+              ],
+            ),
+            material.DataRow(
+              color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),
+              cells: [
+                const material.DataCell(Text('Android')),
+                const material.DataCell(Text('Fluent Android UI widgets')),
+              ],
+            ),
+            material.DataRow(
+              cells: [
+                const material.DataCell(Text('Windows')),
+                const material.DataCell(Text('WinUI 3 widgets')),
+              ],
+            ),
+          ],
+        ),
+        ),
+        const SizedBox(height: 30),
+        Text('Step 5: Color the Table Header', style: FluentTheme.of(context).typography.subtitle,),
+        const SizedBox(height: 10,),
+        Text(
+          'Color the table header with NavigationPaneTheme header text style.',
         ),
         const SizedBox(height: 20),
         CardHighlight(
           initiallyOpen: true,
           codeSnippet: '''
-import 'package:fluent_ui/fluent_ui.dart';
-
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return FluentApp(
-      title: 'Windows UI for Flutter',
-      theme: FluentThemeData(
-        brightness: Brightness.light,
-        accentColor: Colors.blue,
-      ),
-      home: const HomePage(), //which is usually a ScaffoldPage() or NavigationView()
-    );
-  }
-}
+material.DataTable(
+  dividerThickness: 0.01,
+  columns: <material.DataColumn>[
+    material.DataColumn(label: Text('Platform', style: NavigationPaneTheme.of(context).itemHeaderTextStyle,)),
+    material.DataColumn(label: Text('Specific UI library', style: NavigationPaneTheme.of(context).itemHeaderTextStyle,)),
+  ],
+  rows: <material.DataRow>[
+    material.DataRow(
+      color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),
+      cells: [
+        const material.DataCell(Text('Web')),
+        const material.DataCell(Text('Fluent Web UI widgets')),
+      ],
+    ),
+    material.DataRow(
+      cells: [
+        const material.DataCell(Text('iOS')),
+        const material.DataCell(Text('Fluent iOS UI widgets')),
+      ],
+    ),
+    material.DataRow(
+      color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),
+      cells: [
+        const material.DataCell(Text('Android')),
+        const material.DataCell(Text('Fluent Android UI widgets')),
+      ],
+    ),
+    material.DataRow(
+      cells: [
+        const material.DataCell(Text('Windows')),
+        const material.DataCell(Text('WinUI 3 widgets')),
+      ],
+    ),
+  ],
+),
 ''', 
+child: material.DataTable(
+          dividerThickness: 0.01,
+          columns: <material.DataColumn>[
+            material.DataColumn(label: Text('Platform', style: NavigationPaneTheme.of(context).itemHeaderTextStyle,)),
+            material.DataColumn(label: Text('Specific UI library', style: NavigationPaneTheme.of(context).itemHeaderTextStyle,)),
+          ],
+          rows: <material.DataRow>[
+            material.DataRow(
+              color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),
+              cells: [
+                const material.DataCell(Text('Web')),
+                const material.DataCell(Text('Fluent Web UI widgets')),
+              ],
+            ),
+            material.DataRow(
+              cells: [
+                const material.DataCell(Text('iOS')),
+                const material.DataCell(Text('Fluent iOS UI widgets')),
+              ],
+            ),
+            material.DataRow(
+              color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),
+              cells: [
+                const material.DataCell(Text('Android')),
+                const material.DataCell(Text('Fluent Android UI widgets')),
+              ],
+            ),
+            material.DataRow(
+              cells: [
+                const material.DataCell(Text('Windows')),
+                const material.DataCell(Text('WinUI 3 widgets')),
+              ],
+            ),
+          ],
         ),
-        const SizedBox(height: 30,),
-        Text('Step 2: Set ScaffoldPage() widget as the home of FluentApp()', style: FluentTheme.of(context).typography.subtitle,),
-        const SizedBox(height: 10,),
-        const Text(
-          'The ScaffoldPage widget provides a basic structure for your app\'s '
-          'UI, including a header and content area.',
         ),
-        const SizedBox(height: 20),
-        CardHighlight(
-          initiallyOpen: false,
-          codeSnippet: '''
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const ScaffoldPage(
-      header: PageHeader(title: Text('My First Fluent App'),),
-      content: Center(child: Text('Welcome to your first Fluent UI app!')), //or any widget you like
-    );
-  }
-}
-''',
-          child: SizedBox(height: itemHeight, child: FluentApp(
-      title: 'Windows UI for Flutter',
-      theme: FluentThemeData(
-        brightness: Brightness.light,
-        accentColor: Colors.blue,
-      ),
-      home:  const ScaffoldPage(
-        header: PageHeader(title: Text('My First Fluent App'),),
-        content: Center(child: Text('Welcome to my first Fluent UI app!')), //or any widget you like
-      ),
-    ))
-        ),
-        const SizedBox(height: 30,),
-        Text('Step 3: Continue your app development!', style: FluentTheme.of(context).typography.subtitle,),
-        const SizedBox(height: 10,),
-        Text(
-          'Now that you have set up the basic structure of your Fluent UI app, '
-          'you can start adding more features and functionality to it. Explore other '
-          'pages to learn more about the available widgets and how to use them in your app.',
-        ),
-        const SizedBox(height: 20),
       ],
     );
   }
