@@ -186,7 +186,10 @@ class MyApp extends StatelessWidget {
         */
         const SizedBox(height: 70),
         Text(
-          'issue: incorrect searchbox width, no image transition, incorrect principle table view, incorrect iconography code, incorrect typography table view,',
+          'issue: incorrect searchbox width, no image transition, incorrect iconography code,',
+        ),
+        Text(
+          'todo: resource dictionary editor',
         ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,

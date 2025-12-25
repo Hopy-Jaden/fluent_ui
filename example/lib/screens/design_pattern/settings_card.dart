@@ -3,14 +3,14 @@ import 'package:fluent_ui/fluent_ui.dart';
 
 import '../../../widgets/page.dart';
 
-class SettingsCardPage extends StatefulWidget {
-  const SettingsCardPage({super.key});
+class SettingsControlPage extends StatefulWidget {
+  const SettingsControlPage({super.key});
 
   @override
-  State<SettingsCardPage> createState() => _SettingsCardPageState();
+  State<SettingsControlPage> createState() => _SettingsControlPageState();
 }
 
-class _SettingsCardPageState extends State<SettingsCardPage> with PageMixin {
+class _SettingsControlPageState extends State<SettingsControlPage> with PageMixin {
   static const double itemHeight = 500;
   bool selected = true;
   String? comboboxValue;

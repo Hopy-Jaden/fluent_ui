@@ -47,14 +47,19 @@ class _ChangelogState extends State<Changelog> {
     return DeferredWidget(
       flutter_markdown.loadLibrary,
       () => ContentDialog(
-        constraints: const BoxConstraints(maxWidth: 600,),// maxHeight: 600),
-        title: Text('What\'s New in Fluent UI for Flutter'),
-        actions: [
-          FilledButton(
-            child: const Text('Close'),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ],
+        constraints: const BoxConstraints(maxWidth: 600), // maxHeight: 600),
+        title: Row(
+          children: [
+            Expanded(child: Text('What\'s New in Fluent UI for Flutter')),
+            Tooltip(
+              message: FluentLocalizations.of(context).closeButtonLabel,
+              child: IconButton(
+                icon: const WindowsIcon(WindowsIcons.chrome_close),
+                onPressed: Navigator.of(context).pop,
+              ),
+            ),
+          ],
+        ),
         content: () {
           if (changelog == null) return const ProgressRing();
           return SingleChildScrollView(
@@ -76,7 +81,7 @@ class _ChangelogState extends State<Changelog> {
                           .last
                           .replaceAll('[', '')
                           .replaceAll(']', '');
-            
+
                       if (!date.startsWith('##')) {
                         final splitDate = date.split('/');
                         final dateTime = DateTime(

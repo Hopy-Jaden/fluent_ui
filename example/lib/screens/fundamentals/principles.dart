@@ -36,17 +36,14 @@ class PrinciplesPage extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         material.DataTable(
-          border: material.TableBorder.all(
-            color: Colors.transparent,
-            width: 0,
-          ),
+          dividerThickness: 0.01,
           columns: <material.DataColumn>[
             const material.DataColumn(label: Text('Platform')),
             const material.DataColumn(label: Text('Specific UI library')),
           ],
           rows: <material.DataRow>[
             material.DataRow(
-              color: WidgetStateProperty.all(Colors.white),
+              color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),
               cells: [
                 const material.DataCell(Text('Web')),
                 const material.DataCell(Text('Fluent Web UI widgets')),
@@ -59,7 +56,7 @@ class PrinciplesPage extends StatelessWidget {
               ],
             ),
             material.DataRow(
-              color: WidgetStateProperty.all(Colors.white),
+              color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),
               cells: [
                 const material.DataCell(Text('Android')),
                 const material.DataCell(Text('Fluent Android UI widgets')),

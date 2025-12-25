@@ -100,7 +100,7 @@ class _TypographyPageState extends State<TypographyPage> {
             ],
             rows: <material.DataRow>[
               material.DataRow(
-                color: WidgetStateProperty.all(Colors.white),
+                color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),,
                 cells: [
                   material.DataCell(
                     Text(
@@ -129,7 +129,7 @@ class _TypographyPageState extends State<TypographyPage> {
                 ],
               ),
               material.DataRow(
-                color: WidgetStateProperty.all(Colors.white),
+                color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),,
                 cells: [
                   material.DataCell(
                     Text(
@@ -160,7 +160,7 @@ class _TypographyPageState extends State<TypographyPage> {
                 ],
               ),
               material.DataRow(
-                color: WidgetStateProperty.all(Colors.white),
+                color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),,
                 cells: [
                   material.DataCell(
                     Text(
@@ -187,7 +187,7 @@ class _TypographyPageState extends State<TypographyPage> {
                 ],
               ),
               material.DataRow(
-                color: WidgetStateProperty.all(Colors.white),
+                color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),,
                 cells: [
                   material.DataCell(
                     Text(
@@ -229,8 +229,7 @@ class _TypographyPageState extends State<TypographyPage> {
               child: SingleChildScrollView(
                 child: material.DataTable(
                   dataRowMaxHeight: 92 * (scale + 0.1),
-                
-                  ///decoration: const BoxDecoration(border: BoxBorder.fromBorderSide(BorderSide.none)),
+                  dividerThickness: 0.01,
                   columns: const <material.DataColumn>[
                     material.DataColumn(label: Text('Name')),
                     material.DataColumn(label: Text('Weight')),
@@ -238,7 +237,7 @@ class _TypographyPageState extends State<TypographyPage> {
                   ],
                   rows: <material.DataRow>[
                     material.DataRow(
-                      color: WidgetStateProperty.all(Colors.white),
+                      color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),
                       cells: [
                         material.DataCell(
                           Text(
@@ -265,7 +264,7 @@ class _TypographyPageState extends State<TypographyPage> {
                       ],
                     ),
                     material.DataRow(
-                      color: WidgetStateProperty.all(Colors.white),
+                      color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),
                       cells: [
                         material.DataCell(
                           Text(
@@ -292,7 +291,7 @@ class _TypographyPageState extends State<TypographyPage> {
                       ],
                     ),
                     material.DataRow(
-                      color: WidgetStateProperty.all(Colors.white),
+                      color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),
                       cells: [
                         material.DataCell(
                           Text(
@@ -319,7 +318,7 @@ class _TypographyPageState extends State<TypographyPage> {
                       ],
                     ),
                     material.DataRow(
-                      color: WidgetStateProperty.all(Colors.white),
+                      color: WidgetStateProperty.all(FluentTheme.of(context).cardColor),
                       cells: [
                         material.DataCell(
                           Text(

@@ -9,14 +9,14 @@ import 'package:system_theme/system_theme.dart';
 import 'package:url_launcher/link.dart';
 import 'package:window_manager/window_manager.dart';
 
+import 'routes/designpattern.dart' deferred as designpattern;
 import 'routes/forms.dart' deferred as forms;
+import 'routes/fundamentals.dart' deferred as fundamentals;
 import 'routes/inputs.dart' deferred as inputs;
 import 'routes/navigation.dart' deferred as navigation;
 import 'routes/popups.dart' deferred as popups;
 import 'routes/surfaces.dart' deferred as surfaces;
 import 'routes/theming.dart' deferred as theming;
-import 'routes/fundamentals.dart' deferred as fundamentals;
-import 'routes/designpattern.dart' deferred as designpattern;
 import 'theme.dart';
 import 'widgets/deferred_widget.dart';
 
@@ -470,18 +470,17 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             title: const Text('Design Pattern'),
             items: [
               PaneItem(
-                title: const Text('DataTable'),
-                body: designpattern.DataTablePage(),
+                title: const Text('Data Grid'),
+                body: designpattern.DataGridPage(),
               ),
               PaneItem(
                 title: const Text('Ribbon'),
                 body: designpattern.RibbonPage(),
               ),
               PaneItem(
-                title: const Text('Settings Card'),
-                body: designpattern.SettingsCardPage(),
+                title: const Text('Settings Control'),
+                body: designpattern.SettingsControlPage(),
               ),
-              PaneItem(title: const Text('Settings Expander'), body: designpattern.SettingsExpanderPage()),
               PaneItem(
                 title: const Text('Tabbed Command Bar'),
                 body: designpattern.TabbedCommandBarPage(),
@@ -931,10 +930,10 @@ final router = GoRouter(
         /// Design Pattern
         /// Data Table
         GoRoute(
-          path: '/design_pattern/data_table',
+          path: '/design_pattern/data_grid',
           builder: (final context, final state) => DeferredWidget(
             designpattern.loadLibrary,
-            () => designpattern.DataTablePage(),
+            () => designpattern.DataGridPage(),
           ),
         ),
 
@@ -952,16 +951,7 @@ final router = GoRouter(
           path: '/design_pattern/settings_card',
           builder: (final context, final state) => DeferredWidget(
             designpattern.loadLibrary,
-            () => designpattern.SettingsCardPage(),
-          ),
-        ),
-
-        /// Settings Expander
-        GoRoute(
-          path: '/design_pattern/settings_expander',
-          builder: (final context, final state) => DeferredWidget(
-            designpattern.loadLibrary,
-            () => designpattern.SettingsExpanderPage(),
+            () => designpattern.SettingsControlPage(),
           ),
         ),
 

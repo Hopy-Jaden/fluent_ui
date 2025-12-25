@@ -3,14 +3,14 @@ import 'package:fluent_ui/fluent_ui.dart';
 
 import '../../../widgets/page.dart';
 
-class DataTablePage extends StatefulWidget {
-  const DataTablePage({super.key});
+class DataGridPage extends StatefulWidget {
+  const DataGridPage({super.key});
 
   @override
-  State<DataTablePage> createState() => _DataTablePageState();
+  State<DataGridPage> createState() => _DataGridPageState();
 }
 
-class _DataTablePageState extends State<DataTablePage>
+class _DataGridPageState extends State<DataGridPage>
     with PageMixin {
   static const double itemHeight = 500;
     bool selected = true;
