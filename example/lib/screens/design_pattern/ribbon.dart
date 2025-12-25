@@ -31,7 +31,6 @@ class _RibbonPageState extends State<RibbonPage>
     return ScaffoldPage.scrollable(
       header: const PageHeader(title: Text('Create your first app')),
       children: [
-        
         const Text(
           'Follow these steps to create your first Fluent UI app using the FluentApp() and ScaffoldPage() widgets:',
         ),
