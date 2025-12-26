@@ -191,6 +191,11 @@ class MyApp extends StatelessWidget {
         Text(
           'todo: resource dictionary editor',
         ),
+        Text(
+          'added widget: token, avatar, avatar group, status ring'
+        ),
+        Text('Updated widget: button'),
+        Text('reveal focus, list tile, '),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(

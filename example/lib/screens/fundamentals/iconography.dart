@@ -102,7 +102,28 @@ class _IconographyPageState extends State<IconographyPage> {
                   ),
                 ),
               ),
-              ToggleButton(
+              Token(
+                isTogglable: true,
+                selected: setSelection == 0,
+                child: Text('Fluent (${WindowsIcons.allIcons.length})'),
+                onSelected: (final v) => setState(() {
+                  if (setSelection != 0) {
+                    setSelection = 0;
+                  }
+                }),
+              ),
+              SizedBox(width: 10),
+              Token(
+                isTogglable: true,
+                selected: setSelection == 1,
+                child: Text('MDL2 (${FluentIcons.allIcons.length})'),
+                onSelected: (final v) => setState(() {
+                  if (setSelection != 1) {
+                    setSelection = 1;
+                  }
+                }),
+              ),
+              /*ToggleButton(
                 style: ToggleButtonThemeData(
                   checkedButtonStyle: ButtonStyle(
                         borderRadius: WidgetStatePropertyAll(BorderRadius.circular(50)),
@@ -150,7 +171,7 @@ class _IconographyPageState extends State<IconographyPage> {
                   }
                 }),
                 child: Text('MDL2 (${FluentIcons.allIcons.length})'),
-              ),
+              ),*/
             ],
           ),
           const SizedBox(height: 10),

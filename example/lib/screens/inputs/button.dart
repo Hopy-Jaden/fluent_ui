@@ -81,9 +81,6 @@ Button(
               Button(
                 onPressed: simpleDisabled ? null : () {},
                 child: const Text('Standard Button'),
-                style: ButtonStyle(
-                  borderRadius: WidgetStateProperty.all(BorderRadius.circular(30)),
-                ),
               ),
               const Spacer(),
               ToggleSwitch(
