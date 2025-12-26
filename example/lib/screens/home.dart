@@ -186,7 +186,7 @@ class MyApp extends StatelessWidget {
         */
         const SizedBox(height: 70),
         Text(
-          'issue: incorrect searchbox width, no image transition, incorrect iconography code,',
+          'issue: incorrect searchbox width, no image transition, incorrect iconography code, token view page input token section incomplete',
         ),
         Text(
           'todo: resource dictionary editor',

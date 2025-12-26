@@ -205,12 +205,9 @@ class ResourceDictionaryPage extends StatelessWidget {
           '`ResourceDictionary.light` to get colors adapted to light mode.',
         ),
         SizedBox(height: 20),
-        CardHighlight(
-          child: SizedBox(height: 400, child: ResourceDictionaryEditor()),
-          initiallyOpen: false,
-          codeSnippet: '''
-dependencies:
-  fluent_ui: ^4.13.0''',
+        ResourceDictionaryEditor(
+          brightness: Brightness.light,
+          accentColor: FluentTheme.of(context).accentColor,
         ),
         SizedBox(height: 20),
         Text(
@@ -222,12 +219,9 @@ dependencies:
           'In addition, Use `ResourceDictionary.dark` to get colors adapted to dark mode.',
         ),
         SizedBox(height: 20),
-        CardHighlight(
-          child: SizedBox(height: 400, child: ResourceDictionaryEditor()),
-          initiallyOpen: false,
-          codeSnippet: '''
-dependencies:
-  fluent_ui: ^4.13.0''',
+        ResourceDictionaryEditor(
+          brightness: Brightness.dark,
+          accentColor: FluentTheme.of(context).accentColor,
         ),
         SizedBox(height: 20),
       ],
@@ -235,50 +229,110 @@ dependencies:
   }
 }
 
-class ResourceDictionaryEditor extends StatelessWidget {
-  const ResourceDictionaryEditor({super.key});
+class ResourceDictionaryEditor extends StatefulWidget {
+  ResourceDictionaryEditor({
+    super.key,
+    this.brightness = Brightness.light,
+    required this.accentColor,
+  });
+
+  final Brightness brightness;
+  final AccentColor accentColor;
 
   @override
+  State<ResourceDictionaryEditor> createState() =>
+      _ResourceDictionaryEditorState();
+}
+
+class _ResourceDictionaryEditorState extends State<ResourceDictionaryEditor> {
+  @override
   Widget build(BuildContext context) {
-    return FluentApp(
+    if (widget.brightness == Brightness.light) {
+      final resourceDictionary = ResourceDictionary.light();
+    } else {
+      final resourceDictionary = ResourceDictionary.dark();
+    }
+
+    final splitButtonKey = GlobalKey<SplitButtonState>();
+    List<GlobalKey<SplitButtonState>> splitButtonKeys = List.generate(
+      83,
+      (index) => GlobalKey<SplitButtonState>(),
+    );
+
+    int selectedPageIndex = 0;
+
+    var textColorStyleEditingPage = ScaffoldPage();
+    var fillColorStyleEditingPage = ScaffoldPage();
+    var strokeColorStyleEditingPage = ScaffoldPage();
+    var backgroundColorStyleEditingPage = ScaffoldPage();
+    var signalColorStyleEditingPage = ScaffoldPage();
+
+    var editor = FluentApp(
       title: 'Resource Dictionary Example',
       theme: FluentThemeData(
-        brightness: Brightness.light,
-        accentColor: Colors.blue,
+        brightness: widget.brightness,
+        accentColor: widget.accentColor,
       ),
       home: NavigationView(
         pane: NavigationPane(
           displayMode: PaneDisplayMode.compact,
-          selected: 0,
+          selected: selectedPageIndex,
+          onItemPressed: (value) {
+            setState(() => selectedPageIndex = value);
+          },
           items: [
             PaneItem(
               icon: Icon(WindowsIcons.font),
               title: Text('Text'),
-              body: Placeholder(),
+              body: textColorStyleEditingPage,
             ),
             PaneItem(
               icon: Icon(FluentIcons.format_painter),
               title: Text('Fill'),
-              body: Placeholder(),
+              body: fillColorStyleEditingPage,
             ),
             PaneItem(
               icon: Icon(WindowsIcons.stroke_erase2),
               title: Text('Stroke'),
-              body: Placeholder(),
+              body: strokeColorStyleEditingPage,
             ),
             PaneItem(
               icon: Icon(WindowsIcons.background_toggle),
               title: Text('Background'),
-              body: Placeholder(),
+              body: backgroundColorStyleEditingPage,
             ),
             PaneItem(
               icon: Icon(FluentIcons.info),
               title: Text('Signal'),
-              body: Placeholder(),
+              body: signalColorStyleEditingPage,
             ),
           ],
         ),
       ),
+    );
+
+    var lightThemeCodeSnippet = '''
+FluentThemeData(
+  resources: ResourceDictionary.light(
+  
+  ),
+)
+''';
+
+    var darkThemeCodeSnippet = '''
+FluentThemeData(
+  resources: ResourceDictionary.dark(
+  
+  ),
+)
+''';
+
+    return CardHighlight(
+      child: SizedBox(height: 400, child: editor),
+      initiallyOpen: false,
+      codeSnippet: widget.brightness == Brightness.light
+          ? lightThemeCodeSnippet
+          : darkThemeCodeSnippet,
     );
   }
 }
@@ -437,8 +491,14 @@ class _ContrastCheckerPageState extends State<ContrastCheckerPage> {
           child: ListBody(
             children: [
               ListTile(
-                title: Text('Regular Text', style: FluentTheme.of(context).typography.bodyStrong),
-                subtitle: Text('required at least 4.5 : 1', style: FluentTheme.of(context).typography.body),
+                title: Text(
+                  'Regular Text',
+                  style: FluentTheme.of(context).typography.bodyStrong,
+                ),
+                subtitle: Text(
+                  'required at least 4.5 : 1',
+                  style: FluentTheme.of(context).typography.body,
+                ),
                 leading: Row(
                   children: [
                     Container(
@@ -453,20 +513,38 @@ class _ContrastCheckerPageState extends State<ContrastCheckerPage> {
                       ),
                       alignment: Alignment.center,
                       child: Icon(
-                        ratio >= 4.5 ? FluentIcons.check_mark : FluentIcons.cancel,
+                        ratio >= 4.5
+                            ? FluentIcons.check_mark
+                            : FluentIcons.cancel,
                         color: Colors.white,
                         size: 16,
                       ),
                     ),
                     ratio >= 4.5
-                  ? Text('Passed', style: FluentTheme.of(context).typography.bodyStrong)
-                  : Text('Failed', style: FluentTheme.of(context).typography.bodyStrong),
+                        ? Text(
+                            'Passed',
+                            style: FluentTheme.of(
+                              context,
+                            ).typography.bodyStrong,
+                          )
+                        : Text(
+                            'Failed',
+                            style: FluentTheme.of(
+                              context,
+                            ).typography.bodyStrong,
+                          ),
                   ],
                 ),
               ),
               ListTile(
-                title: Text('Large Text (14pt. bold or 18pt. regular)', style: FluentTheme.of(context).typography.bodyStrong),
-                subtitle: Text('required at least 3 : 1', style: FluentTheme.of(context).typography.body),
+                title: Text(
+                  'Large Text (14pt. bold or 18pt. regular)',
+                  style: FluentTheme.of(context).typography.bodyStrong,
+                ),
+                subtitle: Text(
+                  'required at least 3 : 1',
+                  style: FluentTheme.of(context).typography.body,
+                ),
                 leading: Row(
                   children: [
                     Container(
@@ -481,20 +559,38 @@ class _ContrastCheckerPageState extends State<ContrastCheckerPage> {
                       ),
                       alignment: Alignment.center,
                       child: Icon(
-                        ratio >= 3 ? FluentIcons.check_mark : FluentIcons.cancel,
+                        ratio >= 3
+                            ? FluentIcons.check_mark
+                            : FluentIcons.cancel,
                         color: Colors.white,
                         size: 16,
                       ),
                     ),
                     ratio >= 3
-                  ? Text('Passed', style: FluentTheme.of(context).typography.bodyStrong)
-                  : Text('Failed', style: FluentTheme.of(context).typography.bodyStrong),
+                        ? Text(
+                            'Passed',
+                            style: FluentTheme.of(
+                              context,
+                            ).typography.bodyStrong,
+                          )
+                        : Text(
+                            'Failed',
+                            style: FluentTheme.of(
+                              context,
+                            ).typography.bodyStrong,
+                          ),
                   ],
                 ),
               ),
               ListTile(
-                title: Text('Graphical objects and UI components', style: FluentTheme.of(context).typography.bodyStrong),
-                subtitle: Text('required at least 3 : 1', style: FluentTheme.of(context).typography.body),
+                title: Text(
+                  'Graphical objects and UI components',
+                  style: FluentTheme.of(context).typography.bodyStrong,
+                ),
+                subtitle: Text(
+                  'required at least 3 : 1',
+                  style: FluentTheme.of(context).typography.body,
+                ),
                 leading: Row(
                   children: [
                     Container(
@@ -509,14 +605,26 @@ class _ContrastCheckerPageState extends State<ContrastCheckerPage> {
                       ),
                       alignment: Alignment.center,
                       child: Icon(
-                        ratio >= 3 ? FluentIcons.check_mark : FluentIcons.cancel,
+                        ratio >= 3
+                            ? FluentIcons.check_mark
+                            : FluentIcons.cancel,
                         color: Colors.white,
                         size: 16,
                       ),
                     ),
                     ratio >= 3
-                  ? Text('Passed', style: FluentTheme.of(context).typography.bodyStrong)
-                  : Text('Failed', style: FluentTheme.of(context).typography.bodyStrong),
+                        ? Text(
+                            'Passed',
+                            style: FluentTheme.of(
+                              context,
+                            ).typography.bodyStrong,
+                          )
+                        : Text(
+                            'Failed',
+                            style: FluentTheme.of(
+                              context,
+                            ).typography.bodyStrong,
+                          ),
                   ],
                 ),
               ),
