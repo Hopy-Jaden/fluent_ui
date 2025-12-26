@@ -1,3 +1,4 @@
+import 'package:example/screens/design_pattern/tokenizing_text_box.dart';
 import 'package:example/screens/home.dart';
 import 'package:example/screens/settings.dart';
 import 'package:fluent_ui/fluent_ui.dart' hide Page;
@@ -72,7 +73,7 @@ void main() async {
     DeferredWidget.preload(surfaces.loadLibrary),
     DeferredWidget.preload(theming.loadLibrary),
     DeferredWidget.preload(fundamentals.loadLibrary),
-    DeferredWidget.preload(designpattern.loadLibrary)
+    DeferredWidget.preload(designpattern.loadLibrary),
   ]);
 
   runApp(const MyApp());
@@ -201,10 +202,13 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                     NavigationView.dataOf(context).pane?.changeTo(item.value!);
                   },
                   placeholder: 'Search Controls and Samples...',
-                  trailingIcon:  Padding(
-                      padding: EdgeInsetsDirectional.only(end: 4),
-                      child: IconButton(icon: WindowsIcon(WindowsIcons.search), onPressed: (){},),
+                  trailingIcon: Padding(
+                    padding: EdgeInsetsDirectional.only(end: 4),
+                    child: IconButton(
+                      icon: WindowsIcon(WindowsIcons.search),
+                      onPressed: () {},
                     ),
+                  ),
                   items: [
                     for (final item in allItems)
                       AutoSuggestBoxItem<PaneItem>(
@@ -279,24 +283,24 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
               ),
               PaneItem(
                 icon: const WindowsIcon(WindowsIcons.color),
-                title: const Text('Color'), 
-                body: fundamentals.ColorsPage()
+                title: const Text('Color'),
+                body: fundamentals.ColorsPage(),
               ),
               PaneItem(
                 icon: const WindowsIcon(WindowsIcons.emoji_tab_symbols),
-                title: const Text('Icongraphy'), 
+                title: const Text('Icongraphy'),
                 body: fundamentals.IconographyPage(),
               ),
               PaneItem(
                 icon: const WindowsIcon(WindowsIcons.font),
-                title: const Text('Typography'), 
-                body: fundamentals.TypographyPage()
+                title: const Text('Typography'),
+                body: fundamentals.TypographyPage(),
               ),
               PaneItem(
-            icon: const WindowsIcon(WindowsIcons.code),
-            title: const Text('Create your first app'),
-            body: fundamentals.CreateFirstAppPage(),
-          ),
+                icon: const WindowsIcon(WindowsIcons.code),
+                title: const Text('Create your first app'),
+                body: fundamentals.CreateFirstAppPage(),
+              ),
             ],
           ),
           PaneItemExpander(
@@ -470,6 +474,10 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             title: const Text('Design Pattern'),
             items: [
               PaneItem(
+                title: const Text('Tokenizing Text Box'),
+                body: TokenizingTextBoxPage(), //designpattern.TokenizingTextBoxPage(),
+              ),
+              PaneItem(
                 title: const Text('Data Table'),
                 body: designpattern.DataTablePage(),
               ),
@@ -626,29 +634,37 @@ final router = GoRouter(
         /// Design Principles
         GoRoute(
           path: '/fundamentals/design_principles',
-          builder: (final context, final state) =>
-              DeferredWidget(fundamentals.loadLibrary, () => fundamentals.PrinciplesPage()),
+          builder: (final context, final state) => DeferredWidget(
+            fundamentals.loadLibrary,
+            () => fundamentals.PrinciplesPage(),
+          ),
         ),
 
         /// Color
         GoRoute(
           path: '/fundamentals/color',
-          builder: (final context, final state) =>
-              DeferredWidget(fundamentals.loadLibrary, () => fundamentals.ColorsPage()),
+          builder: (final context, final state) => DeferredWidget(
+            fundamentals.loadLibrary,
+            () => fundamentals.ColorsPage(),
+          ),
         ),
 
         /// Iconography
         GoRoute(
           path: '/fundamentals/iconography',
-          builder: (final context, final state) =>
-              DeferredWidget(fundamentals.loadLibrary, () => fundamentals.IconographyPage()),
+          builder: (final context, final state) => DeferredWidget(
+            fundamentals.loadLibrary,
+            () => fundamentals.IconographyPage(),
+          ),
         ),
 
         /// Typography
         GoRoute(
           path: '/fundamentals/typography',
-          builder: (final context, final state) =>
-              DeferredWidget(fundamentals.loadLibrary, () => fundamentals.TypographyPage()),
+          builder: (final context, final state) => DeferredWidget(
+            fundamentals.loadLibrary,
+            () => fundamentals.TypographyPage(),
+          ),
         ),
 
         /// /// Input
@@ -963,7 +979,6 @@ final router = GoRouter(
             () => designpattern.TabbedCommandBarPage(),
           ),
         ),
-
       ],
     ),
   ],
