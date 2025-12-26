@@ -105,11 +105,7 @@ class _IconographyPageState extends State<IconographyPage> {
               ToggleButton(
                 style: ToggleButtonThemeData(
                   checkedButtonStyle: ButtonStyle(
-                    shape: WidgetStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
+                        borderRadius: WidgetStatePropertyAll(BorderRadius.circular(50)),
                     backgroundColor: WidgetStateProperty.resolveWith(
                       (states) =>
                           ButtonThemeData.checkedInputColor(theme, states),
@@ -119,11 +115,7 @@ class _IconographyPageState extends State<IconographyPage> {
                     ),
                   ),
                   uncheckedButtonStyle: ButtonStyle(
-                    shape: WidgetStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
+                    borderRadius: WidgetStatePropertyAll(BorderRadius.circular(50)),
                   ),
                 ),
                 checked: setSelection == 0,
@@ -138,11 +130,7 @@ class _IconographyPageState extends State<IconographyPage> {
               ToggleButton(
                 style: ToggleButtonThemeData(
                   checkedButtonStyle: ButtonStyle(
-                    shape: WidgetStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
+                    borderRadius: WidgetStatePropertyAll(BorderRadius.circular(50)),
                     backgroundColor: WidgetStateProperty.resolveWith(
                       (states) =>
                           ButtonThemeData.checkedInputColor(theme, states),
@@ -152,11 +140,7 @@ class _IconographyPageState extends State<IconographyPage> {
                     ),
                   ),
                   uncheckedButtonStyle: ButtonStyle(
-                    shape: WidgetStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
+                    borderRadius: WidgetStatePropertyAll(BorderRadius.circular(50)),
                   ),
                 ),
                 checked: setSelection == 1,

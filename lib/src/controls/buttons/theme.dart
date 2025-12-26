@@ -7,6 +7,10 @@ import 'package:flutter/foundation.dart';
 ///
 /// Used to style buttons like [Button], [FilledButton], [HyperlinkButton],
 /// and [IconButton].
+/// Defines the visual properties for a button widget.
+///
+/// Used to style buttons like [Button], [FilledButton], [HyperlinkButton],
+/// and [IconButton].
 class ButtonStyle with Diagnosticable {
   /// Creates a button style.
   const ButtonStyle({
@@ -18,6 +22,7 @@ class ButtonStyle with Diagnosticable {
     this.padding,
     this.shape,
     this.iconSize,
+    this.borderRadius,
   });
 
   /// The text style for the button's child text widgets.
@@ -44,6 +49,10 @@ class ButtonStyle with Diagnosticable {
   /// The size of icons within the button.
   final WidgetStateProperty<double?>? iconSize;
 
+  /// The border radius for the button. If provided, it takes precedence over
+  /// [shape] when creating a rounded rectangle shape.
+  final WidgetStateProperty<BorderRadius?>? borderRadius;
+
   /// Merges this [ButtonStyle] with another, with the other taking precedence.
   ButtonStyle? merge(ButtonStyle? other) {
     if (other == null) return this;
@@ -56,6 +65,7 @@ class ButtonStyle with Diagnosticable {
       padding: other.padding ?? padding,
       shape: other.shape ?? shape,
       iconSize: other.iconSize ?? iconSize,
+      borderRadius: other.borderRadius ?? borderRadius,
     );
   }
 
@@ -110,6 +120,12 @@ class ButtonStyle with Diagnosticable {
         t,
         lerpDouble,
       ),
+      borderRadius: lerpWidgetStateProperty<BorderRadius?>(
+        a?.borderRadius,
+        b?.borderRadius,
+        t,
+        BorderRadius.lerp,
+      ),
     );
   }
 
@@ -123,6 +139,7 @@ class ButtonStyle with Diagnosticable {
     WidgetStateProperty<EdgeInsetsGeometry?>? padding,
     WidgetStateProperty<ShapeBorder?>? shape,
     WidgetStateProperty<double?>? iconSize,
+    WidgetStateProperty<BorderRadius?>? borderRadius,
   }) {
     return ButtonStyle(
       textStyle: textStyle ?? this.textStyle,
@@ -133,6 +150,7 @@ class ButtonStyle with Diagnosticable {
       padding: padding ?? this.padding,
       shape: shape ?? this.shape,
       iconSize: iconSize ?? this.iconSize,
+      borderRadius: borderRadius ?? this.borderRadius,
     );
   }
 }
@@ -180,8 +198,8 @@ class ButtonTheme extends InheritedTheme {
   static ButtonThemeData of(BuildContext context) {
     assert(debugCheckHasFluentTheme(context));
     final theme = FluentTheme.of(context);
-    final inheritedTheme = context
-        .dependOnInheritedWidgetOfExactType<ButtonTheme>();
+    final inheritedTheme = context.dependOnInheritedWidgetOfExactType<ButtonTheme>();
+    // Merge the global theme with any local ButtonTheme if present.
     return theme.buttonTheme.merge(inheritedTheme?.data);
   }
 
@@ -328,14 +346,62 @@ class ButtonThemeData with Diagnosticable {
     Set<WidgetState> states,
   ) {
     final theme = FluentTheme.of(context);
+    final buttonTheme = ButtonTheme.of(context);
+    final btnStyle = buttonTheme.defaultButtonStyle ?? const ButtonStyle();
+    debugPrint('Resolved ButtonStyle: $btnStyle');
+
+    // Try to resolve a radius and a shape from the style. resolvedRadiusRaw
+    // will be null when no borderRadius was provided by the style.
+    final resolvedRadiusRaw = btnStyle.borderRadius?.resolve(states);
+    debugPrint('Resolved BorderRadius (raw): $resolvedRadiusRaw');
+
+    final resolvedShape = btnStyle.shape?.resolve(states);
+    debugPrint('Resolved ShapeBorder: $resolvedShape');
+
+    // Provide a non-null radius fallback to ensure we always return a valid
+    // ShapeBorder; however, borderRadius provided in the style takes precedence
+    // over a custom shape (per the original intent).
+    final resolvedRadius = resolvedRadiusRaw ?? BorderRadius.circular(4);
+
+    // If a borderRadius was explicitly provided in the ButtonStyle (i.e. the
+    // resolved raw value is not null), it takes precedence and we create a
+    // rounded rectangle using that radius.
+    if (resolvedRadiusRaw != null) {
+      if (states.isPressed || states.isDisabled) {
+        debugPrint('Using RoundedRectangleBorder succcess with radius $resolvedRadius');
+        return RoundedRectangleBorder(
+          side: BorderSide(color: theme.resources.controlStrokeColorDefault),
+          borderRadius: resolvedRadius,
+        );
+      } else {
+        debugPrint('Using RoundedRectangleGradientBorder success with radius $resolvedRadius');
+        return RoundedRectangleGradientBorder(
+          borderRadius: resolvedRadius,
+          gradient: LinearGradient(
+            begin: Alignment.center,
+            end: const Alignment(0, 3),
+            colors: [
+              theme.resources.controlStrokeColorSecondary,
+              theme.resources.controlStrokeColorDefault,
+            ],
+            stops: const [0.3, 1.0],
+          ),
+        );
+      }
+    }
+
+    // If no borderRadius was provided but a custom shape is provided, use it.
+    if (resolvedShape != null) return resolvedShape;
+
+    // Otherwise fallback to the original default radius of 4.
     if (states.isPressed || states.isDisabled) {
       return RoundedRectangleBorder(
         side: BorderSide(color: theme.resources.controlStrokeColorDefault),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: resolvedRadius,
       );
     } else {
       return RoundedRectangleGradientBorder(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: resolvedRadius,
         gradient: LinearGradient(
           begin: Alignment.center,
           end: const Alignment(0, 3),

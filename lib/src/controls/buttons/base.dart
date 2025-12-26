@@ -184,15 +184,37 @@ class _BaseButtonState extends State<BaseButton> {
         final resolvedForegroundColor = resolve<Color?>(
           (style) => style?.foregroundColor,
         );
-        final resolvedShadowColor = resolve<Color?>(
-          (style) => style?.shadowColor,
-        );
+        final resolvedShadowColor = resolve<Color?>((style) => style?.shadowColor);
         final resolvedPadding =
             resolve<EdgeInsetsGeometry?>((style) => style?.padding) ??
             EdgeInsetsDirectional.zero;
         final resolvedShape =
-            resolve<ShapeBorder?>((style) => style?.shape) ??
-            const RoundedRectangleBorder();
+            resolve<ShapeBorder?>((style) => style?.shape) ?? const RoundedRectangleBorder();
+        final resolvedBorderRadius =
+            resolve<BorderRadius?>((style) => style?.borderRadius);
+
+        // If a border radius is provided directly by the style, prefer it over
+        // any provided shape; create a gradient border when appropriate to match
+        // the default theme border behavior.
+        final resolvedShapeEffective = resolvedBorderRadius != null
+            ? (states.isPressed || states.isDisabled
+                ? RoundedRectangleBorder(
+                    side: BorderSide(color: theme.resources.controlStrokeColorDefault),
+                    borderRadius: resolvedBorderRadius,
+                  )
+                : RoundedRectangleGradientBorder(
+                    borderRadius: resolvedBorderRadius,
+                    gradient: LinearGradient(
+                      begin: Alignment.center,
+                      end: const Alignment(0, 3),
+                      colors: [
+                        theme.resources.controlStrokeColorSecondary,
+                        theme.resources.controlStrokeColorDefault,
+                      ],
+                      stops: const [0.3, 1.0],
+                    ),
+                  ))
+            : resolvedShape;
 
         final padding = resolvedPadding
             .add(
@@ -207,16 +229,16 @@ class _BaseButtonState extends State<BaseButton> {
           color: Colors.transparent,
           shadowColor: resolvedShadowColor ?? Colors.black,
           elevation: resolvedElevation ?? 0.0,
-          borderRadius: resolvedShape is RoundedRectangleBorder
-              ? resolvedShape.borderRadius is BorderRadius
-                    ? resolvedShape.borderRadius as BorderRadius
+          borderRadius: resolvedShapeEffective is RoundedRectangleBorder
+              ? resolvedShapeEffective.borderRadius is BorderRadius
+                    ? resolvedShapeEffective.borderRadius as BorderRadius
                     : BorderRadius.zero
               : BorderRadius.zero,
           child: AnimatedContainer(
             duration: theme.fasterAnimationDuration,
             curve: theme.animationCurve,
             decoration: ShapeDecoration(
-              shape: resolvedShape,
+              shape: resolvedShapeEffective,
               color: resolvedBackgroundColor,
             ),
             padding: padding,
