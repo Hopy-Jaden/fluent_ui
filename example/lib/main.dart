@@ -1,6 +1,7 @@
 import 'package:example/screens/design_pattern/tokenizing_text_box.dart';
 import 'package:example/screens/home.dart';
 import 'package:example/screens/settings.dart';
+import 'package:example/screens/surface/avatar.dart';
 import 'package:fluent_ui/fluent_ui.dart' hide Page;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart' as flutter_acrylic;
@@ -439,6 +440,10 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
               PaneItem(
                 title: const Text('InfoBadge'),
                 // body: surfaces.InfoBadgePage(),
+              ),
+              PaneItem(
+                title: const Text('Avatar'),
+                body: AvatarPage(),
               ),
               PaneItem(
                 title: const Text('ProgressRing'),
