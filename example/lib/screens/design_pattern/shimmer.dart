@@ -29,11 +29,11 @@ class _ShimmerPageState extends State<ShimmerPage>
   @override
   Widget build(final BuildContext context) {
     return ScaffoldPage.scrollable(
-      header: const PageHeader(title: Text('Create your first app')),
+      header: const PageHeader(title: Text('Shimmer')),
       children: [
-        
         const Text(
-          'Follow these steps to create your first Fluent UI app using the FluentApp() and ScaffoldPage() widgets:',
+          'A Shimmer control can be used to indicate something is loading, introduced in the windows community toolkit gallery. '
+          'Follow these steps to create Shimmer using existing widget provided from this library.',
         ),
         const SizedBox(height: 30),
         Text('Installation', style: FluentTheme.of(context).typography.subtitle,),

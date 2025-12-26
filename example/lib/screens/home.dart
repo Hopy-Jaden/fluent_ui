@@ -189,13 +189,13 @@ class MyApp extends StatelessWidget {
           'issue: incorrect searchbox width, no image transition, incorrect iconography code,',
         ),
         Text(
-          'todo: resource dictionary editor',
-        ),
-        Text(
           'added widget: token, avatar, avatar group, status ring'
         ),
         Text('Updated widget: button'),
         Text('reveal focus, list tile, '),
+        Text(
+          'todo: resource dictionary editor, shimmer, grjd tile widget, grid view, title bar page, card page, rounded textbox [pipspager widget, flip view widget, flip view page]',
+        ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(

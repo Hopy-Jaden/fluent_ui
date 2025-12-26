@@ -99,7 +99,7 @@ class FocusBorder extends StatelessWidget {
         fit: StackFit.passthrough,
         clipBehavior: clipBehavior,
         children: [
-          child,
+          //child,
           PositionedDirectional(
             start: renderOutside ? -borderWidth : 0,
             end: renderOutside ? -borderWidth : 0,
@@ -107,6 +107,7 @@ class FocusBorder extends StatelessWidget {
             bottom: renderOutside ? -borderWidth : 0,
             child: _buildBorder(style, focused),
           ),
+          child,
         ],
       );
     } else {

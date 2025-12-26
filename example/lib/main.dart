@@ -439,6 +439,10 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                 //  body: surfaces.AcrylicPage()
               ),
               PaneItem(
+                title: const Text('Reveal Focus'),
+                body: theming.RevealFocusPage(),
+              ),
+              PaneItem(
                 title: const Text('Title Bar'),
                 //  body: surfaces.TitleBarPage()
               ),

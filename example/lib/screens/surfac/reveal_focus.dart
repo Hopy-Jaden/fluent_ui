@@ -37,25 +37,42 @@ class RevealFocusPage extends StatelessWidget with PageMixin {
             codeSnippet: '''
 FocusTheme(
   data: FocusThemeData(
-    borderRadius: BorderRaidus.zero,
-    glowFactor: 4.0,
-  ),
+    borderRadius: BorderRadius.circular(8.0),
+    glowColor: theme.accentColor.withValues(alpha: 0.2),
+    glowFactor: 3,
+    primaryBorder: BorderSide(
+      width: 3,
+      color: theme.brightness == Brightness.light
+        ? Colors.white
+        : Colors.black.withOpacity(0.4),
+      ),
+      secondaryBorder: BorderSide(
+        width: 1,
+        color: theme.accentColor,
+      ),
+    ),
   child: ...,
 )''',
             child: Center(
               child: FocusTheme(
                 data: FocusThemeData(
-                  borderRadius: BorderRadius.zero,
-                  // glowColor: theme.accentColor.withValues(alpha: 0.2),
-                  glowFactor: 4,
+                  borderRadius: BorderRadius.circular(8.0),
+                  glowColor: theme.accentColor.withValues(alpha: 0.2),
+                  glowFactor: 3,
                   primaryBorder: BorderSide(
-                    width: 2,
-                    color: theme.inactiveColor,
+                    width: 3,
+                    color: theme.brightness == Brightness.light
+                        ? Colors.white
+                        : Colors.black.withOpacity(0.4),
+                  ),
+                  secondaryBorder: BorderSide(
+                    width: 1,
+                    color: theme.accentColor,
                   ),
                 ),
                 child: Wrap(
                   runSpacing: 10,
-                  spacing: 10,
+                  spacing: 20,
                   alignment: WrapAlignment.center,
                   children: [
                     buildCard(focus),
@@ -81,9 +98,10 @@ FocusTheme(
       builder: (final context, final states) {
         return FocusBorder(
           focused: states.isFocused,
-          useStackApproach: false,
           child: Card(
-            backgroundColor: color,
+            backgroundColor: FluentTheme.of(context).brightness == Brightness.light
+                ? Color(0xfffbfbfb)
+                : Color(0xff2b2b2b),
             child: const SizedBox(width: 50, height: 50),
           ),
         );
