@@ -1,7 +1,9 @@
 import 'package:example/screens/design_pattern/tokenizing_text_box.dart';
 import 'package:example/screens/home.dart';
+import 'package:example/screens/inputs/rating.dart';
 import 'package:example/screens/settings.dart';
 import 'package:example/screens/surface/avatar.dart';
+import 'package:example/screens/surface/list_view.dart';
 import 'package:fluent_ui/fluent_ui.dart' hide Page;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart' as flutter_acrylic;
@@ -319,16 +321,42 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                 body: inputs.ToggleSwitchPage(),
               ),
               PaneItem(
-                title: const Text('Expander'),
-                body: surfaces.ExpanderPage(),
-              ),
-              PaneItem(
                 title: const Text('ComboBox'),
                 body: forms.ComboBoxPage(),
               ),
               PaneItem(
                 title: const Text('Color Picker'),
                 body: forms.ColorPickerPage(),
+              ),
+              PaneItem(
+                title: const Text('Ratings'),
+                body: RatingPage(),
+              ),
+            ],
+          ),
+          PaneItemExpander(
+            icon: const WindowsIcon(WindowsIcons.grid_view_small), 
+            title: const Text('Collection'),
+            items: [
+              PaneItem(
+                title: const Text('List View'),
+                body: ListViewPage(),
+              ),
+              PaneItem(
+                title: const Text('Grid View'),
+                //body: forms.GridViewPage(),
+              ),
+              PaneItem(
+                title: const Text('Tree View'),
+                body: navigation.TreeViewPage(),
+              ),
+              PaneItem(
+                title: const Text('Token View'),
+                body: navigation.TokenViewPage(),
+              ),
+              PaneItem(
+                title: const Text('Expander'),
+                body: surfaces.ExpanderPage(),
               ),
             ],
           ),
@@ -391,14 +419,6 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
               PaneItem(
                 title: const Text('Tab View'),
                 body: navigation.TabViewPage(),
-              ),
-              PaneItem(
-                title: const Text('Tree View'),
-                body: navigation.TreeViewPage(),
-              ),
-              PaneItem(
-                title: const Text('Token View'),
-                body: navigation.TokenViewPage(),
               ),
               PaneItem(
                 title: const Text('Command Bar'),
@@ -495,8 +515,8 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                 body: designpattern.SettingsControlPage(),
               ),
               PaneItem(
-                title: const Text('Tabbed Command Bar'),
-                body: designpattern.TabbedCommandBarPage(),
+                title: const Text('Shimmer'),
+                body: designpattern.ShimmerPage(),
               ),
             ],
           ),
@@ -877,7 +897,7 @@ final router = GoRouter(
         GoRoute(
           path: '/surfaces/tiles',
           builder: (final context, final state) =>
-              DeferredWidget(surfaces.loadLibrary, () => surfaces.TilesPage()),
+              DeferredWidget(surfaces.loadLibrary, () => surfaces.ListViewPage()),
         ),
 
         /// Popups
@@ -981,7 +1001,7 @@ final router = GoRouter(
           path: '/design_pattern/tabbed_command_bar',
           builder: (final context, final state) => DeferredWidget(
             designpattern.loadLibrary,
-            () => designpattern.TabbedCommandBarPage(),
+            () => designpattern.ShimmerPage(),
           ),
         ),
       ],

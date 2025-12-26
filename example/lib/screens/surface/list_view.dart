@@ -2,14 +2,14 @@ import 'package:example/widgets/card_highlight.dart';
 import 'package:example/widgets/page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
-class TilesPage extends StatefulWidget {
-  const TilesPage({super.key});
+class ListViewPage extends StatefulWidget {
+  const ListViewPage({super.key});
 
   @override
-  State<TilesPage> createState() => _TilesPageState();
+  State<ListViewPage> createState() => _ListViewPageState();
 }
 
-class _TilesPageState extends State<TilesPage> with PageMixin {
+class _ListViewPageState extends State<ListViewPage> with PageMixin {
   final shuffledIcons = FluentIcons.allIcons.values.toList()..shuffle();
 
   // first
@@ -28,11 +28,11 @@ class _TilesPageState extends State<TilesPage> with PageMixin {
   Widget build(final BuildContext context) {
     final theme = FluentTheme.of(context);
     return ScaffoldPage.scrollable(
-      header: const PageHeader(title: Text('Tiles')),
+      header: const PageHeader(title: Text('List View')),
       children: [
         description(
           content: const Text(
-            'A windows-styled list tile. Usually used inside a ListView',
+            'List View lets you show a collection of item in a list that scrolls vertically, usually List Tiles.',
           ),
         ),
         subtitle(content: const Text('Basic ListView with selectable tiles')),

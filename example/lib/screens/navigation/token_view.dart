@@ -198,7 +198,7 @@ List<Widget>.generate(filterTokens.length, (int index) {
           style: FluentTheme.of(context).typography.subtitle,
         ),
         const Text(
-          'Token represent a complex piece of information, such as an entity (person, place, or thing) or conversational text, in a compact form.',
+          'Token represent a complex piece of information, such as an entity (person, place, or thing) or conversational text, in a compact form. It is multi-selectable, togglable, removable.',
         ),
         const SizedBox(height: 10),
         CardHighlight(

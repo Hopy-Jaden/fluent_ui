@@ -3,14 +3,14 @@ import 'package:fluent_ui/fluent_ui.dart';
 
 import '../../../widgets/page.dart';
 
-class TabbedCommandBarPage extends StatefulWidget {
-  const TabbedCommandBarPage({super.key});
+class ShimmerPage extends StatefulWidget {
+  const ShimmerPage({super.key});
 
   @override
-  State<TabbedCommandBarPage> createState() => _TabbedCommandBarPageState();
+  State<ShimmerPage> createState() => _ShimmerPageState();
 }
 
-class _TabbedCommandBarPageState extends State<TabbedCommandBarPage>
+class _ShimmerPageState extends State<ShimmerPage>
     with PageMixin {
   static const double itemHeight = 500;
     bool selected = true;
