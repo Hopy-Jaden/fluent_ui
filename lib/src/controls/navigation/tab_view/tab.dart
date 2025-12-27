@@ -45,7 +45,8 @@ class TabData extends InheritedWidget {
     required this.animationCurve,
     required this.visibilityMode,
     required this.tabWidthBehavior,
-    required this.isRoundedCorners, // Added parameter
+    required this.isRoundedCorners,
+    required this.position, // Added parameter
     super.key,
   });
 
@@ -90,6 +91,9 @@ class TabData extends InheritedWidget {
   /// If true, the tab in tab view become rounded card look instead of the default look
   /// If false the tab in tab view remained its default look
   final bool isRoundedCorners;
+
+  /// The position of the tab view.
+  final TabViewPosition position;
 
   /// Gets the closest [TabData] ancestor, if any.
   ///
@@ -371,9 +375,12 @@ class TabState extends State<Tab>
           }
         }).resolve(states);
 
-        final borderRadius = tab.isRoundedCorners
+        final borderRadius = (tab.position == TabViewPosition.left ||
+                tab.position == TabViewPosition.right)
             ? const BorderRadius.all(Radius.circular(6))
-            : const BorderRadius.vertical(top: Radius.circular(6));
+            : tab.isRoundedCorners
+                ? const BorderRadius.all(Radius.circular(6))
+                : const BorderRadius.vertical(top: Radius.circular(6));
 
         Widget child = FocusBorder(
           focused: states.isFocused,
@@ -381,10 +388,13 @@ class TabState extends State<Tab>
           style: FocusThemeData(borderRadius: borderRadius),
           child: Container(
             key: widget._tabKey,
-            height: _kTileHeight,
-            constraints: tab.tabWidthBehavior == TabWidthBehavior.sizeToContent
-                ? const BoxConstraints(minHeight: 28)
-                : const BoxConstraints(maxWidth: _kMaxTileWidth, minHeight: 28),
+            constraints: tab.position == TabViewPosition.left ||
+                    tab.position == TabViewPosition.right
+                ? const BoxConstraints(minWidth: 28)
+                : tab.tabWidthBehavior == TabWidthBehavior.sizeToContent
+                    ? const BoxConstraints(minHeight: 28)
+                    : const BoxConstraints(
+                        maxWidth: _kMaxTileWidth, minHeight: 28),
             padding: tab.selected
                 ? const EdgeInsetsDirectional.only(
                     start: 9,
@@ -431,7 +441,11 @@ class TabState extends State<Tab>
                           foregroundColor,
                       size: 16,
                     ),
-                    child: Row(
+                    child: Flex(
+                      direction: tab.position == TabViewPosition.left ||
+                              tab.position == TabViewPosition.right
+                          ? Axis.vertical
+                          : Axis.horizontal,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         if (widget.icon != null)
@@ -510,18 +524,21 @@ class TabState extends State<Tab>
         }
 
         if (tab.selected) {
-          child = Stack( // Use Stack to layer the painter behind the content
+          child = Stack(
             children: [
-              Positioned.fill( // Position the painter to fill the stack
+              Positioned.fill(
                 child: CustomPaint(
                   painter: _TabPainter(
                     backgroundColor,
                     widget.outlineColor?.resolve(states),
-                    tab.isRoundedCorners,
+                    tab.position == TabViewPosition.left ||
+                            tab.position == TabViewPosition.right
+                        ? true
+                        : tab.isRoundedCorners,
                   ),
                 ),
               ),
-              child, // The original child (content)
+              child,
             ],
           );
         }
@@ -543,7 +560,7 @@ class TabState extends State<Tab>
 class _TabPainter extends CustomPainter {
   final Color color;
   final Color? outlineColor;
-  final bool isRoundedCorners; // Added parameter
+  final bool isRoundedCorners;
 
   const _TabPainter(this.color, this.outlineColor, this.isRoundedCorners);
 
@@ -553,18 +570,20 @@ class _TabPainter extends CustomPainter {
     const radius = 6.0;
 
     if (isRoundedCorners) {
-      // Rounded card look: inner rounded corner on all corners
       path.moveTo(radius, 0);
-      path.arcToPoint(const Offset(0, radius), radius: const Radius.circular(radius));
+      path.arcToPoint(const Offset(0, radius),
+          radius: const Radius.circular(radius));
       path.lineTo(0, size.height - radius);
-      path.arcToPoint(Offset(radius, size.height), radius: const Radius.circular(radius));
+      path.arcToPoint(Offset(radius, size.height),
+          radius: const Radius.circular(radius));
       path.lineTo(size.width - radius, size.height);
-      path.arcToPoint(Offset(size.width, size.height - radius), radius: const Radius.circular(radius));
+      path.arcToPoint(Offset(size.width, size.height - radius),
+          radius: const Radius.circular(radius));
       path.lineTo(size.width, radius);
-      path.arcToPoint(Offset(size.width - radius, 0), radius: const Radius.circular(radius));
+      path.arcToPoint(Offset(size.width - radius, 0),
+          radius: const Radius.circular(radius));
       path.close();
     } else {
-      // Default look: inner rounded corner on top, outer rounded corner on bottom
       path.moveTo(radius, 0);
       path.lineTo(size.width - radius, 0);
       path.quadraticBezierTo(size.width, 0, size.width, radius);

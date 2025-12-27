@@ -256,7 +256,7 @@ class PaneItem extends NavigationPaneItem {
                 padding: theme.labelPadding ?? EdgeInsetsDirectional.zero,
                 child: DefaultTextStyle(
                   style: textStyle,
-                  overflow: TextOverflow.fade,
+                  overflow: TextOverflow.ellipsis, // Use ellipsis for overflow
                   softWrap: false,
                   textAlign: TextAlign.start,
                   maxLines: 1,
@@ -280,7 +280,7 @@ class PaneItem extends NavigationPaneItem {
                         alignment: AlignmentDirectional.center,
                         clipBehavior: Clip.none,
                         children: [
-                          ?icon,
+                          icon!,
                           PositionedDirectional(
                             end: -10,
                             top: -10,
@@ -308,8 +308,9 @@ class PaneItem extends NavigationPaneItem {
                             theme.iconPadding ?? EdgeInsetsDirectional.zero,
                         child: Center(child: icon),
                       ),
-
-                      Expanded(child: textResult ?? const SizedBox.shrink()),
+                      Expanded( // Wrap the text with Expanded
+                        child: textResult ?? const SizedBox.shrink(),
+                      ),
                       if (shouldShowTrailing) ...[
                         if (infoBadge != null)
                           Padding(
@@ -338,7 +339,7 @@ class PaneItem extends NavigationPaneItem {
                       padding: theme.iconPadding ?? EdgeInsetsDirectional.zero,
                       child: Center(child: icon),
                     ),
-                    if (showTextOnTop) ?textResult,
+                    if (showTextOnTop) textResult!,
                     if (trailing != null)
                       IconTheme.merge(
                         data: const IconThemeData(size: 16),

@@ -244,7 +244,7 @@ TabView(
           child: SizedBox(
             height: 400,
             child: TabView(
-              //position: TabViewPosition.left,
+              position: TabViewPosition.right,
               tabs: tabs!,
               reservedStripWidth: 100,
               currentIndex: currentIndex,
