@@ -194,7 +194,7 @@ class MyApp extends StatelessWidget {
         Text('Updated widget: button'),
         Text('reveal focus, list tile, '),
         Text(
-          'todo: resource dictionary editor, shimmer, grjd tile widget, grid view, title bar page, card page, rounded textbox [pipspager widget, flip view widget, flip view page]',
+          'todo: shimmer, rating, grjd tile widget, grid view, title bar page, card page, resource dictionary editor, rounded textbox, tokenizing [pipspager widget, flip view widget, flip view page]',
         ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,

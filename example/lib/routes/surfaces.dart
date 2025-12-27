@@ -1,6 +1,6 @@
 export '../screens/popups/teaching_tip.dart';
-export '../screens/surface/acrylic.dart';
-export '../screens/navigation/commandbars.dart';
+export '../screens/style/acrylic.dart';
+export '../screens/toolbar/commandbars.dart';
 export '../screens/collection/expander.dart';
 export '../screens/status/info_bars.dart';
 export '../screens/status/progress_indicators.dart';

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:example/screens/surface/avatar.dart';
+import 'package:example/screens/status/avatar.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 const List<String> _pizzaToppings = <String>[
