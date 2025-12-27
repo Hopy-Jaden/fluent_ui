@@ -45,6 +45,7 @@ class TabData extends InheritedWidget {
     required this.animationCurve,
     required this.visibilityMode,
     required this.tabWidthBehavior,
+    required this.isRoundedCorners, // Added parameter
     super.key,
   });
 
@@ -85,6 +86,10 @@ class TabData extends InheritedWidget {
   ///   * [TabView.tabWidthBehavior], the property that determines the behavior
   ///     of the tab width.
   final TabWidthBehavior tabWidthBehavior;
+
+  /// If true, the tab in tab view become rounded card look instead of the default look
+  /// If false the tab in tab view remained its default look
+  final bool isRoundedCorners;
 
   /// Gets the closest [TabData] ancestor, if any.
   ///
@@ -366,11 +371,14 @@ class TabState extends State<Tab>
           }
         }).resolve(states);
 
-        const borderRadius = BorderRadius.vertical(top: Radius.circular(6));
+        final borderRadius = tab.isRoundedCorners
+            ? const BorderRadius.all(Radius.circular(6))
+            : const BorderRadius.vertical(top: Radius.circular(6));
+
         Widget child = FocusBorder(
           focused: states.isFocused,
           renderOutside: false,
-          style: const FocusThemeData(borderRadius: borderRadius),
+          style: FocusThemeData(borderRadius: borderRadius),
           child: Container(
             key: widget._tabKey,
             height: _kTileHeight,
@@ -500,15 +508,24 @@ class TabState extends State<Tab>
             child: child,
           );
         }
+
         if (tab.selected) {
-          child = CustomPaint(
-            painter: _TabPainter(
-              backgroundColor,
-              widget.outlineColor?.resolve(states),
-            ),
-            child: child,
+          child = Stack( // Use Stack to layer the painter behind the content
+            children: [
+              Positioned.fill( // Position the painter to fill the stack
+                child: CustomPaint(
+                  painter: _TabPainter(
+                    backgroundColor,
+                    widget.outlineColor?.resolve(states),
+                    tab.isRoundedCorners,
+                  ),
+                ),
+              ),
+              child, // The original child (content)
+            ],
           );
         }
+
         return Semantics(
           selected: tab.selected,
           focusable: true,
@@ -526,27 +543,37 @@ class TabState extends State<Tab>
 class _TabPainter extends CustomPainter {
   final Color color;
   final Color? outlineColor;
+  final bool isRoundedCorners; // Added parameter
 
-  const _TabPainter(this.color, this.outlineColor);
+  const _TabPainter(this.color, this.outlineColor, this.isRoundedCorners);
 
   @override
   void paint(Canvas canvas, Size size) {
     final path = Path();
     const radius = 6.0;
-    path
-      ..moveTo(-radius, size.height)
-      ..quadraticBezierTo(0, size.height, 0, size.height - radius)
-      ..lineTo(0, radius)
-      ..quadraticBezierTo(0, 0, radius, 0)
-      ..lineTo(size.width - radius, 0)
-      ..quadraticBezierTo(size.width, 0, size.width, radius)
-      ..lineTo(size.width, size.height - radius)
-      ..quadraticBezierTo(
-        size.width,
-        size.height,
-        size.width + radius,
-        size.height,
-      );
+
+    if (isRoundedCorners) {
+      // Rounded card look: inner rounded corner on all corners
+      path.moveTo(radius, 0);
+      path.arcToPoint(const Offset(0, radius), radius: const Radius.circular(radius));
+      path.lineTo(0, size.height - radius);
+      path.arcToPoint(Offset(radius, size.height), radius: const Radius.circular(radius));
+      path.lineTo(size.width - radius, size.height);
+      path.arcToPoint(Offset(size.width, size.height - radius), radius: const Radius.circular(radius));
+      path.lineTo(size.width, radius);
+      path.arcToPoint(Offset(size.width - radius, 0), radius: const Radius.circular(radius));
+      path.close();
+    } else {
+      // Default look: inner rounded corner on top, outer rounded corner on bottom
+      path.moveTo(radius, 0);
+      path.lineTo(size.width - radius, 0);
+      path.quadraticBezierTo(size.width, 0, size.width, radius);
+      path.lineTo(size.width, size.height);
+      path.lineTo(0, size.height);
+      path.lineTo(0, radius);
+      path.quadraticBezierTo(0, 0, radius, 0);
+      path.close();
+    }
 
     if (outlineColor != null) {
       final outlinePaint = Paint()
@@ -560,7 +587,10 @@ class _TabPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_TabPainter oldDelegate) => color != oldDelegate.color;
+  bool shouldRepaint(_TabPainter oldDelegate) =>
+      color != oldDelegate.color ||
+      outlineColor != oldDelegate.outlineColor ||
+      isRoundedCorners != oldDelegate.isRoundedCorners;
 
   @override
   bool shouldRebuildSemantics(_TabPainter oldDelegate) => false;

@@ -20,7 +20,7 @@ const double _kButtonWidth = 32;
 /// browser tabs. Users can switch between tabs, and optionally rearrange,
 /// open, or close tabs.
 ///
-/// ![TabView Preview](https://learn.microsoft.com/en-us/windows/apps/design/controls/images/tabview/tab-introduction.png)
+/// ![TabView Preview]
 ///
 /// {@tool snippet}
 /// This example shows a basic tab view:
@@ -37,8 +37,7 @@ const double _kButtonWidth = 32;
 ///     Tab(
 ///       text: Text('Document 2'),
 ///       body: Center(child: Text('Content 2')),
-///     ),
-///   ],
+///     ],
 ///   onNewPressed: () {
 ///     // Add a new tab
 ///   },
@@ -86,6 +85,7 @@ class TabView extends StatefulWidget {
     this.reservedStripWidth,
     this.stripBuilder,
     this.closeDelayDuration = const Duration(seconds: 1),
+    this.isRoundedCorners = false, // Added parameter
   });
 
   /// The index of the tab to be displayed
@@ -195,6 +195,10 @@ class TabView extends StatefulWidget {
   /// To enable it, ensure [onReorder] is not null.
   bool get isReorderEnabled => onReorder != null;
 
+  /// If true, the tab in tab view become rounded card look instead of the default look
+  /// If false the tab in tab view remained its default look
+  final bool isRoundedCorners;
+
   @override
   State<StatefulWidget> createState() => _TabViewState();
 
@@ -263,7 +267,15 @@ class TabView extends StatefulWidget {
       )
       ..add(DoubleProperty('minTabWidth', minTabWidth, defaultValue: 80.0))
       ..add(DoubleProperty('maxTabWidth', maxTabWidth, defaultValue: 240.0))
-      ..add(DoubleProperty('minFooterWidth', reservedStripWidth));
+      ..add(DoubleProperty('minFooterWidth', reservedStripWidth))
+      ..add(
+        FlagProperty(
+          'isRoundedCorners',
+          value: isRoundedCorners,
+          ifTrue: 'Rounded Corners',
+          ifFalse: 'Default Look',
+        ),
+      ); // Added property
   }
 }
 
@@ -369,6 +381,7 @@ class _TabViewState extends State<TabView> {
       animationCurve: FluentTheme.of(context).animationCurve,
       visibilityMode: widget.closeButtonVisibility,
       tabWidthBehavior: widget.tabWidthBehavior,
+      isRoundedCorners: widget.isRoundedCorners, // Pass the parameter
       child: tab,
     );
     final Widget child = GestureDetector(
@@ -683,6 +696,7 @@ class _TabViewState extends State<TabView> {
             ),
           ),
         ),
+        SizedBox(height: widget.isRoundedCorners ? 8.0 : 0.0),
         if (widget.tabs.isNotEmpty)
           Expanded(
             child: Focus(

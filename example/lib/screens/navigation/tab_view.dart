@@ -244,13 +244,14 @@ TabView(
           child: SizedBox(
             height: 400,
             child: TabView(
+              //position: TabViewPosition.left,
               tabs: tabs!,
               reservedStripWidth: 100,
               currentIndex: currentIndex,
               onChanged: (final index) => setState(() => currentIndex = index),
               tabWidthBehavior: tabWidthBehavior,
               closeButtonVisibility: closeButtonVisibilityMode,
-              showScrollButtons: showScrollButtons,
+              /*showScrollButtons:*/ isRoundedCorners: showScrollButtons,
               onNewPressed: () {
                 setState(() {
                   final index = tabs!.length + 1;
