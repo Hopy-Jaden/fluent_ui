@@ -1,7 +1,7 @@
 export '../screens/popups/teaching_tip.dart';
 export '../screens/surface/acrylic.dart';
-export '../screens/surface/commandbars.dart';
-export '../screens/surface/expander.dart';
-export '../screens/surface/info_bars.dart';
-export '../screens/surface/progress_indicators.dart';
-export '../screens/surface/list_view.dart';
+export '../screens/navigation/commandbars.dart';
+export '../screens/collection/expander.dart';
+export '../screens/status/info_bars.dart';
+export '../screens/status/progress_indicators.dart';
+export '../screens/collection/list_view.dart';

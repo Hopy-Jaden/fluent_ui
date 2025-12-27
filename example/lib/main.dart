@@ -2,8 +2,8 @@ import 'package:example/screens/design_pattern/tokenizing_text_box.dart';
 import 'package:example/screens/home.dart';
 import 'package:example/screens/inputs/rating.dart';
 import 'package:example/screens/settings.dart';
-import 'package:example/screens/surface/avatar.dart';
-import 'package:example/screens/surface/list_view.dart';
+import 'package:example/screens/status/avatar.dart';
+import 'package:example/screens/collection/list_view.dart';
 import 'package:fluent_ui/fluent_ui.dart' hide Page;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart' as flutter_acrylic;
@@ -395,14 +395,32 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                 body: popups.Flyout2Screen(),
               ),
               PaneItem(
+                title: const Text('Tooltip'),
+                body: popups.TooltipPage(),
+              ),
+              PaneItem(
                 title: const Text('TeachingTip'),
                 body: popups.TeachingTipPage(),
+              ),
+            ],
+          ),
+          PaneItemExpander(
+            icon: const WindowsIcon(WindowsIcons.save),
+            title: const Text('Menus & toolbars'),
+            items:[
+              PaneItem(
+                title: const Text('Title Bar'),
+                //  body: surfaces.TitleBarPage()
               ),
               PaneItem(
                 title: const Text('MenuBar'),
                 body: popups.MenuBarPage(),
               ),
-            ],
+              PaneItem(
+                title: const Text('Command Bar'),
+                body: surfaces.CommandBarsPage(),
+              ),
+            ]
           ),
           PaneItemExpander(
             icon: const WindowsIcon(WindowsIcons.global_nav_button),
@@ -420,41 +438,10 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                 title: const Text('Tab View'),
                 body: navigation.TabViewPage(),
               ),
-              PaneItem(
-                title: const Text('Command Bar'),
-                body: surfaces.CommandBarsPage(),
-              ),
             ],
           ),
           PaneItemExpander(
-            icon: const WindowsIcon(WindowsIcons.surface_hub),
-            title: const Text('Surfaces & Styles'),
-            items: [
-              PaneItem(
-                title: const Text('Acrylic'),
-                body: surfaces.AcrylicPage(),
-              ),
-              PaneItem(
-                title: const Text('Mica'),
-                //  body: surfaces.AcrylicPage()
-              ),
-              PaneItem(
-                title: const Text('Reveal Focus'),
-                body: theming.RevealFocusPage(),
-              ),
-              PaneItem(
-                title: const Text('Title Bar'),
-                //  body: surfaces.TitleBarPage()
-              ),
-              PaneItem(
-                title: const Text('Card'),
-                //  body: surfaces.CardPage()
-              ),
-            ],
-          ),
-
-          PaneItemExpander(
-            icon: const WindowsIcon(WindowsIcons.progress_ring_dots),
+            icon: const WindowsIcon(WindowsIcons.chat_bubbles),
             title: const Text('Status & info'),
             items: [
               PaneItem(
@@ -480,7 +467,25 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             ],
           ),
           PaneItemExpander(
-            icon: const WindowsIcon(WindowsIcons.text_edit),
+            icon: const WindowsIcon(WindowsIcons.color),
+            title: const Text('Styles'),
+            items: [
+              PaneItem(
+                title: const Text('Acrylic'),
+                body: surfaces.AcrylicPage(),
+              ),
+              PaneItem(
+                title: const Text('Mica'),
+                //  body: surfaces.AcrylicPage()
+              ),
+              PaneItem(
+                title: const Text('Reveal Focus'),
+                body: theming.RevealFocusPage(),
+              ),
+            ],
+          ),
+          PaneItemExpander(
+            icon: const WindowsIcon(WindowsIcons.font),
             title: const Text('Text'),
             items: [
               PaneItem(
