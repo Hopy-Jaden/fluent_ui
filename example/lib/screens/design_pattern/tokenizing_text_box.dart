@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:example/screens/status/avatar.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
 
@@ -279,6 +277,7 @@ class ToppingSuggestion extends StatelessWidget {
       key: ObjectKey(topping),
       onTap: () => onTap?.call(topping),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Avatar(child: Text(topping[0].toUpperCase())),
           Text(
@@ -314,6 +313,7 @@ class ToppingInputToken extends StatelessWidget {
             isRemovable: true,
             onRemoved: () => onDeleted(topping),
             onSelected: (bool value) => onSelected(topping),
+            contentPadding: EdgeInsetsGeometry.symmetric(vertical: 1.0, horizontal: 5),
           ),
         ],
       ),
