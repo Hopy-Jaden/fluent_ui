@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:example/screens/status/avatar.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/services.dart';
 
 const List<String> _pizzaToppings = <String>[
   'Olives',
@@ -27,7 +28,7 @@ class TokenizingTextBoxPage extends StatefulWidget {
 class TokenizingTextBoxPageState extends State<TokenizingTextBoxPage> {
   final FocusNode _TokenFocusNode = FocusNode();
   List<String> _toppings = <String>[_pizzaToppings.first];
-  List<String> _suggestions = <String>[];
+  String _currentText = '';
 
   @override
   Widget build(BuildContext context) {
@@ -37,49 +38,41 @@ class TokenizingTextBoxPageState extends State<TokenizingTextBoxPage> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TokensInput<String>(
-              values: _toppings,
-              /*decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.local_pizza_rounded),
-                hintText: 'Search for toppings',
-              ),*/
-              strutStyle: const StrutStyle(fontSize: 15),
-              onChanged: _onChanged,
-              onSubmitted: _onSubmitted,
-              TokenBuilder: _TokenBuilder,
-              onTextChanged: _onSearchChanged,
-            ),
-          ),
-          if (_suggestions.isNotEmpty)
-            Expanded(
-              child: ListView.builder(
-                itemCount: _suggestions.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ToppingSuggestion(_suggestions[index], onTap: _selectSuggestion);
-                },
+            child: RawKeyboardListener(
+              focusNode: _TokenFocusNode,
+              onKey: (event) {
+                if (event is RawKeyDownEvent) {
+                  if (event.logicalKey == LogicalKeyboardKey.enter) {
+                    // Handle Enter key press
+                    if (_currentText.trim().isNotEmpty) {
+                      setState(() {
+                        _toppings = <String>[..._toppings, _currentText.trim()];
+                      });
+                    }
+                  }
+                }
+              },
+              child: TokensInput<String>(
+                values: _toppings,
+                strutStyle: const StrutStyle(fontSize: 15),
+                onChanged: _onChanged,
+                TokenBuilder: _TokenBuilder,
+                onTextChanged: _onSearchChanged,
               ),
             ),
+          ),
         ],
       ),
     );
   }
 
   Future<void> _onSearchChanged(String value) async {
-    final List<String> results = await _suggestionCallback(value);
-    setState(() {
-      _suggestions = results.where((String topping) => !_toppings.contains(topping)).toList();
-    });
+    _currentText = value;
+    setState(() {});
   }
 
   Widget _TokenBuilder(BuildContext context, String topping) {
     return ToppingInputToken(topping: topping, onDeleted: _onTokenDeleted, onSelected: _onTokenTapped);
-  }
-
-  void _selectSuggestion(String topping) {
-    setState(() {
-      _toppings.add(topping);
-      _suggestions = <String>[];
-    });
   }
 
   void _onTokenTapped(String topping) {}
@@ -87,21 +80,7 @@ class TokenizingTextBoxPageState extends State<TokenizingTextBoxPage> {
   void _onTokenDeleted(String topping) {
     setState(() {
       _toppings.remove(topping);
-      _suggestions = <String>[];
     });
-  }
-
-  void _onSubmitted(String text) {
-    if (text.trim().isNotEmpty) {
-      setState(() {
-        _toppings = <String>[..._toppings, text.trim()];
-      });
-    } else {
-      _TokenFocusNode.unfocus();
-      setState(() {
-        _toppings = <String>[];
-      });
-    }
   }
 
   void _onChanged(List<String> data) {
@@ -110,13 +89,16 @@ class TokenizingTextBoxPageState extends State<TokenizingTextBoxPage> {
     });
   }
 
-  FutureOr<List<String>> _suggestionCallback(String text) {
-    if (text.isNotEmpty) {
-      return _pizzaToppings.where((String topping) {
-        return topping.toLowerCase().contains(text.toLowerCase());
-      }).toList();
-    }
-    return const <String>[];
+  @override
+  void initState() {
+    super.initState();
+    _TokenFocusNode.requestFocus();
+  }
+
+  @override
+  void dispose() {
+    _TokenFocusNode.dispose();
+    super.dispose();
   }
 }
 
@@ -124,24 +106,20 @@ class TokensInput<T> extends StatefulWidget {
   const TokensInput({
     super.key,
     required this.values,
-    //this.decoration = const InputDecoration(),
     this.style,
     this.strutStyle,
     required this.TokenBuilder,
     required this.onChanged,
     this.onTokenTapped,
-    this.onSubmitted,
     this.onTextChanged,
   });
 
   final List<T> values;
-  //final InputDecoration decoration;
   final TextStyle? style;
   final StrutStyle? strutStyle;
 
   final ValueChanged<List<T>> onChanged;
   final ValueChanged<T>? onTokenTapped;
-  final ValueChanged<String>? onSubmitted;
   final ValueChanged<String>? onTextChanged;
 
   final Widget Function(BuildContext context, T data) TokenBuilder;
@@ -185,10 +163,6 @@ class TokensInputState<T> extends State<TokensInput<T>> {
 
       final List<T> values = <T>[...widget.values];
 
-      // If the current number and the previous number of replacements are different, then
-      // the user has deleted the InputToken using the keyboard. In this case, we trigger
-      // the onChanged callback. We need to be sure also that the current number of
-      // replacements is different from the input Token to avoid double-deletion.
       if (currentNumber < previousNumber && currentNumber != values.length) {
         if (cursorStart == cursorEnd) {
           values.removeRange(cursorStart - 1, cursorEnd);
@@ -217,14 +191,12 @@ class TokensInputState<T> extends State<TokensInput<T>> {
   Widget build(BuildContext context) {
     controller.updateValues(<T>[...widget.values]);
     return AutoSuggestBox(
-      //minLines: 1,
-      //maxLines: 3,
-      textInputAction: TextInputAction.done,
-      //style: widget.style,
-      //strutStyle: widget.strutStyle,
+      textInputAction: TextInputAction.none,
       controller: controller,
       items: _pizzaToppings
-          .where((String topping) => !widget.values.contains(topping))
+          .where((String topping) =>
+              !widget.values.contains(topping) &&
+              topping.toLowerCase().contains(controller.textWithoutReplacements.toLowerCase()))
           .map<AutoSuggestBoxItem>((String topping) {
         return AutoSuggestBoxItem(
           value: topping,
@@ -235,50 +207,27 @@ class TokensInputState<T> extends State<TokensInput<T>> {
           }),
         );
       }).toList(),
-      /*onSelected: (AutoSuggestBoxItem item) {
-        final List<T> newValues = <T>[...widget.values, item.value as T];
-        widget.onChanged(newValues);
-      },*/
       onChanged: (text, reason) {
         widget.onTextChanged?.call(controller.textWithoutReplacements);
       },
-      //onChanged: (String value) => widget.onTextChanged?.call(controller.textWithoutReplacements),
       onSelected: (AutoSuggestBoxItem item) {
-        widget.onSubmitted?.call(controller.textWithoutReplacements);
         final List<T> newValues = <T>[...widget.values, item.value as T];
         widget.onChanged(newValues);
       },
-      
-      //(String value) => widget.onSubmitted?.call(controller.textWithoutReplacements),
     );
-
-    /*return TextBox(
-      minLines: 1,
-      maxLines: 3,
-      textInputAction: TextInputAction.done,
-      style: widget.style,
-      strutStyle: widget.strutStyle,
-      controller: controller,
-      onChanged: (String value) => widget.onTextChanged?.call(controller.textWithoutReplacements),
-      onSubmitted: (String value) => widget.onSubmitted?.call(controller.textWithoutReplacements),
-    );*/
   }
 }
 
 class TokensInputEditingController<T> extends TextEditingController {
   TokensInputEditingController(this.values, this.TokenBuilder)
-    : super(text: String.fromCharCode(kObjectReplacementChar) * values.length);
+      : super(text: String.fromCharCode(kObjectReplacementChar) * values.length);
 
-  // This constant character acts as a placeholder in the TextField text value.
-  // There will be one character for each of the InputToken displayed.
   static const int kObjectReplacementChar = 0xFFFE;
 
   List<T> values;
 
   final Widget Function(BuildContext context, T data) TokenBuilder;
 
-  /// Called whenever Token is either added or removed
-  /// from the outside the context of the text field.
   void updateValues(List<T> values) {
     if (values.length != this.values.length) {
       final String char = String.fromCharCode(kObjectReplacementChar);
@@ -304,14 +253,14 @@ class TokensInputEditingController<T> extends TextEditingController {
     TextStyle? style,
     required bool withComposing,
   }) {
-    final Iterable<WidgetSpan> TokenWidgets = values.map(
+    final Iterable<WidgetSpan> tokenWidgets = values.map(
       (T v) => WidgetSpan(child: TokenBuilder(context, v)),
     );
 
     return TextSpan(
       style: style,
       children: <InlineSpan>[
-        ...TokenWidgets,
+        ...tokenWidgets,
         if (textWithoutReplacements.isNotEmpty) TextSpan(text: textWithoutReplacements),
       ],
     );
@@ -326,11 +275,17 @@ class ToppingSuggestion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    return GestureDetector(
       key: ObjectKey(topping),
-      leading: Avatar(child: Text(topping[0].toUpperCase())),
-      title: Text(topping),
-      onPressed: () => onTap?.call(topping),
+      onTap: () => onTap?.call(topping),
+      child: Row(
+        children: [
+          Avatar(child: Text(topping[0].toUpperCase())),
+          Text(
+            topping,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -352,15 +307,15 @@ class ToppingInputToken extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(right: 3),
       child: Wrap(
-        children: [Token(
-          key: ObjectKey(topping),
-          child: Text(topping),
-          isRemovable: true,
-          onRemoved: () => onDeleted(topping),
-          onSelected: (bool value) => onSelected(topping),
-          //materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          //padding: const EdgeInsets.all(2),
-        ),]
+        children: [
+          Token(
+            key: ObjectKey(topping),
+            child: Text(topping),
+            isRemovable: true,
+            onRemoved: () => onDeleted(topping),
+            onSelected: (bool value) => onSelected(topping),
+          ),
+        ],
       ),
     );
   }
