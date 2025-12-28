@@ -2,17 +2,20 @@ import 'dart:async';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
 
-const List<String> _pizzaToppings = <String>[
-  'Olives',
-  'Tomato',
-  'Cheese',
-  'Pepperoni',
-  'Bacon',
-  'Onion',
-  'Jalapeno',
-  'Mushrooms',
-  'Pineapple',
+const List<String> _contacts = <String>[
+  'Alice Johnson',
+  'Bob Smith',
+  'Charlie Davis',
+  'Diana Prince',
+  'Ethan Hunt',
+  'Fiona Gallagher',
+  'George Miller',
+  'Hannah Abbott',
+  'Ian Wright',
+  'Julia Roberts'
 ];
+
+
 
 class TokenizingTextBoxPage extends StatefulWidget {
   const TokenizingTextBoxPage({super.key});
@@ -25,7 +28,7 @@ class TokenizingTextBoxPage extends StatefulWidget {
 
 class TokenizingTextBoxPageState extends State<TokenizingTextBoxPage> {
   final FocusNode _TokenFocusNode = FocusNode();
-  List<String> _toppings = <String>[_pizzaToppings.first];
+  List<String> _toppings = <String>[_contacts.first];
   String _currentText = '';
 
   @override
@@ -188,29 +191,57 @@ class TokensInputState<T> extends State<TokensInput<T>> {
   @override
   Widget build(BuildContext context) {
     controller.updateValues(<T>[...widget.values]);
+    debugPrint('AutoSuggestBox Text: ${controller.textWithoutReplacements}');
+
+    // Filter the pizza toppings based on the current input and existing values
+    final List<String> filteredToppings = _contacts
+        .where((String topping) =>
+            !widget.values.contains(topping) &&
+            topping.toLowerCase().contains(controller.textWithoutReplacements.toLowerCase()))
+        .toList();
+
+    final bool showCreateNew = controller.textWithoutReplacements.isNotEmpty &&
+        filteredToppings.isEmpty; // Condition to show "Create New"
+
     return AutoSuggestBox(
       textInputAction: TextInputAction.none,
       controller: controller,
-      items: _pizzaToppings
-          .where((String topping) =>
-              !widget.values.contains(topping) &&
-              topping.toLowerCase().contains(controller.textWithoutReplacements.toLowerCase()))
-          .map<AutoSuggestBoxItem>((String topping) {
-        return AutoSuggestBoxItem(
-          value: topping,
-          label: topping,
-          child: ToppingSuggestion(topping, onTap: (String value) {
-            final List<T> newValues = <T>[...widget.values, value as T];
-            widget.onChanged(newValues);
-          }),
-        );
-      }).toList(),
+      items: filteredToppings.isNotEmpty
+          ? filteredToppings.map<AutoSuggestBoxItem>((String topping) {
+              return AutoSuggestBoxItem(
+                value: topping,
+                label: topping,
+                child: ToppingSuggestion(topping, onTap: (String value) {
+                  final List<T> newValues = <T>[...widget.values, value as T];
+                  widget.onChanged(newValues);
+                }),
+              );
+            }).toList()
+          : showCreateNew
+              ? [
+                  // Show "Create New" if there are no matching toppings AND the text field is not empty
+                  AutoSuggestBoxItem(
+                    value: controller.textWithoutReplacements, // Use the current text as the value
+                    label: 'Create New "${controller.textWithoutReplacements}"',
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: Text('Create New "${controller.textWithoutReplacements}"'),
+                    ),
+                  )
+                ]
+              : [], // Show nothing if no matches and no text in the field
       onChanged: (text, reason) {
         widget.onTextChanged?.call(controller.textWithoutReplacements);
       },
       onSelected: (AutoSuggestBoxItem item) {
-        final List<T> newValues = <T>[...widget.values, item.value as T];
-        widget.onChanged(newValues);
+        if (item.value != null) {
+          // Add the new value to the list of toppings
+          final List<T> newValues = <T>[...widget.values, item.value as T];
+          widget.onChanged(newValues);
+
+          // Clear the text in the AutoSuggestBox after selection
+          controller.clear();
+        }
       },
     );
   }
