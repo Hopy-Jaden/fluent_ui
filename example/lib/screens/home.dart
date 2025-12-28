@@ -189,7 +189,7 @@ class MyApp extends StatelessWidget {
           'issue: incorrect searchbox width, no image transition, incorrect iconography code,',
         ),
         Text(
-          'added widget: token, avatar, avatar group, status ring'
+          'added widget: token, shimmer, avatar, avatar group, status ring'
         ),
         Text('Updated widget: button'),
         Text('reveal focus, list tile, '),

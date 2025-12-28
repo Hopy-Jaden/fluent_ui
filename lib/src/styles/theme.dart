@@ -568,6 +568,8 @@ class FluentThemeData with Diagnosticable {
     required this.selectionColor,
   });
 
+  dynamic get solidBackgroundFillColorBase => null;
+
   /// Creates a default light theme.
   ///
   /// This is a convenience method equivalent to:

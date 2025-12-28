@@ -87,6 +87,7 @@ export 'src/controls/surfaces/info_bar.dart';
 export 'src/controls/surfaces/list_tile.dart';
 export 'src/controls/surfaces/mica.dart';
 export 'src/controls/surfaces/progress_indicators.dart';
+export 'src/controls/surfaces/shimmer.dart';
 export 'src/controls/utils/avatar.dart';
 export 'src/controls/utils/custom_icons.dart';
 export 'src/controls/utils/divider.dart';

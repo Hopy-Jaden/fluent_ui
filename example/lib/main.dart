@@ -457,12 +457,12 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                 body: AvatarPage(),
               ),
               PaneItem(
-                title: const Text('ProgressRing'),
+                title: const Text('Progress Controls'),
                 body: surfaces.ProgressIndicatorsPage(),
               ),
               PaneItem(
-                title: const Text('ProgressBar'),
-                // body: surfaces.ProgressBarPage(),
+                title: const Text('Shimmer'),
+                body: designpattern.ShimmerPage(),
               ),
             ],
           ),
@@ -522,10 +522,6 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
               PaneItem(
                 title: const Text('Settings Control'),
                 body: designpattern.SettingsControlPage(),
-              ),
-              PaneItem(
-                title: const Text('Shimmer'),
-                body: designpattern.ShimmerPage(),
               ),
             ],
           ),

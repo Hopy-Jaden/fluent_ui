@@ -58,7 +58,7 @@ class Avatar extends StatelessWidget {
     this.foregroundDecoration,
     this.statusRing,
     this.children = const <Widget>[],
-    this.autoTextSize = false,
+    this.autoTextSize = true,
     this.color,
   });
 
