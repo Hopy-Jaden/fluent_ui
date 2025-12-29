@@ -1,3 +1,4 @@
+import 'package:example/screens/collection/grid_view.dart';
 import 'package:example/screens/design_pattern/tokenizing_text_box.dart';
 import 'package:example/screens/home.dart';
 import 'package:example/screens/inputs/rating.dart';
@@ -344,7 +345,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
               ),
               PaneItem(
                 title: const Text('Grid View'),
-                //body: forms.GridViewPage(),
+                body: GridViewPage(),
               ),
               PaneItem(
                 title: const Text('Tree View'),

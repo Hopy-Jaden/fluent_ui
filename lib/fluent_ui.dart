@@ -83,6 +83,7 @@ export 'src/controls/surfaces/acrylic.dart';
 export 'src/controls/surfaces/card.dart';
 export 'src/controls/surfaces/commandbar.dart';
 export 'src/controls/surfaces/expander.dart';
+export 'src/controls/surfaces/grid_tile.dart';
 export 'src/controls/surfaces/info_bar.dart';
 export 'src/controls/surfaces/list_tile.dart';
 export 'src/controls/surfaces/mica.dart';
