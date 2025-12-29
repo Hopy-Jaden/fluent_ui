@@ -2,6 +2,9 @@ import 'package:example/screens/collection/grid_view.dart';
 import 'package:example/screens/design_pattern/tokenizing_text_box.dart';
 import 'package:example/screens/home.dart';
 import 'package:example/screens/inputs/rating.dart';
+import 'package:example/screens/scrolling/annotated_scroll_view.dart';
+import 'package:example/screens/scrolling/pipspager.dart';
+import 'package:example/screens/scrolling/scroll_view.dart';
 import 'package:example/screens/settings.dart';
 import 'package:example/screens/status/avatar.dart';
 import 'package:example/screens/collection/list_view.dart';
@@ -340,6 +343,10 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             title: const Text('Collection'),
             items: [
               PaneItem(
+                title: Text('Flip View'),
+                body: designpattern.FlipViewPage()
+              ),
+              PaneItem(
                 title: const Text('List View'),
                 body: ListViewPage(),
               ),
@@ -442,6 +449,24 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             ],
           ),
           PaneItemExpander(
+            icon: const WindowsIcon(WindowsIcons.sort),
+            title: Text('Scrolling'),
+            items: [
+              PaneItem(
+                title: const Text('Scrollbar'),
+                body: ScrollBarPage()
+              ),
+              PaneItem(
+                title: Text('Annotated Scrollbar'),
+                body: AnnotatedScrollBarPage()
+              ),
+              PaneItem(
+                title: const Text('PipsPager'),
+                body: PipsPagerPage(),
+              )
+            ]
+          ),
+          PaneItemExpander(
             icon: const WindowsIcon(WindowsIcons.chat_bubbles),
             title: const Text('Status & info'),
             items: [
@@ -518,7 +543,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
               ),
               PaneItem(
                 title: const Text('Ribbon'),
-                body: designpattern.RibbonPage(),
+                body: designpattern.FlipViewPage(),
               ),
               PaneItem(
                 title: const Text('Settings Control'),
@@ -989,7 +1014,7 @@ final router = GoRouter(
           path: '/design_pattern/ribbon',
           builder: (final context, final state) => DeferredWidget(
             designpattern.loadLibrary,
-            () => designpattern.RibbonPage(),
+            () => designpattern.FlipViewPage(),
           ),
         ),
 

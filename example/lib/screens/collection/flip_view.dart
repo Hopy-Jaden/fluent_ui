@@ -3,14 +3,14 @@ import 'package:fluent_ui/fluent_ui.dart';
 
 import '../../../widgets/page.dart';
 
-class RibbonPage extends StatefulWidget {
-  const RibbonPage({super.key});
+class FlipViewPage extends StatefulWidget {
+  const FlipViewPage({super.key});
 
   @override
-  State<RibbonPage> createState() => _RibbonPageState();
+  State<FlipViewPage> createState() => _FlipViewPageState();
 }
 
-class _RibbonPageState extends State<RibbonPage>
+class _FlipViewPageState extends State<FlipViewPage>
     with PageMixin {
   static const double itemHeight = 500;
     bool selected = true;
@@ -29,7 +29,7 @@ class _RibbonPageState extends State<RibbonPage>
   @override
   Widget build(final BuildContext context) {
     return ScaffoldPage.scrollable(
-      header: const PageHeader(title: Text('Create your first app')),
+      header: const PageHeader(title: Text('Flip View')),
       children: [
         const Text(
           'Follow these steps to create your first Fluent UI app using the FluentApp() and ScaffoldPage() widgets:',
