@@ -21,8 +21,10 @@ class _TabViewPageState extends State<TabViewPage> with PageMixin {
   TabWidthBehavior tabWidthBehavior = TabWidthBehavior.equal;
   CloseButtonVisibilityMode closeButtonVisibilityMode =
       CloseButtonVisibilityMode.always;
+  TabViewPosition tabViewPosition = TabViewPosition.top;
   bool showScrollButtons = true;
   bool wheelScroll = false;
+  bool isRoundedCorners = false;
 
   Tab generateTab(final int index) {
     final allIcons = FluentIcons.allIcons.values;
@@ -171,6 +173,24 @@ class _TabViewPageState extends State<TabViewPage> with PageMixin {
                   ),
                 ),
               ),
+              SizedBox(
+                width: 150,
+                child: InfoLabel(
+                  label: 'Position',
+                  child: ComboBox<TabViewPosition>(
+                    isExpanded: true,
+                    value: tabViewPosition,
+                    items: TabViewPosition.values.map((final mode) {
+                      return ComboBoxItem(value: mode, child: Text(mode.name));
+                    }).toList(),
+                    onChanged: (final mode) {
+                      if (mode != null) {
+                        setState(() => tabViewPosition = mode);
+                      }
+                    },
+                  ),
+                ),
+              ),
               Checkbox(
                 checked: showScrollButtons,
                 onChanged: (final v) => setState(() => showScrollButtons = v!),
@@ -180,6 +200,11 @@ class _TabViewPageState extends State<TabViewPage> with PageMixin {
                 checked: wheelScroll,
                 onChanged: (final v) => setState(() => wheelScroll = v!),
                 content: const Text('Wheel scroll'),
+              ),
+              Checkbox(
+                checked: isRoundedCorners,
+                onChanged: (final v) => setState(() => isRoundedCorners = v!),
+                content: const Text('Rounded Corners'),
               ),
             ],
           ),
@@ -244,14 +269,15 @@ TabView(
           child: SizedBox(
             height: 400,
             child: TabView(
-              position: TabViewPosition.right,
               tabs: tabs!,
               reservedStripWidth: 100,
               currentIndex: currentIndex,
               onChanged: (final index) => setState(() => currentIndex = index),
               tabWidthBehavior: tabWidthBehavior,
               closeButtonVisibility: closeButtonVisibilityMode,
-              /*showScrollButtons:*/ isRoundedCorners: showScrollButtons,
+              showScrollButtons: showScrollButtons,
+              isRoundedCorners: isRoundedCorners,
+              tabViewPosition: tabViewPosition,
               onNewPressed: () {
                 setState(() {
                   final index = tabs!.length + 1;
