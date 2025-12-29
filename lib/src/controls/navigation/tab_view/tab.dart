@@ -558,7 +558,31 @@ class _TabPainter extends CustomPainter {
     final path = Path();
     const radius = 6.0;
 
-    if (isRoundedCorners || tabViewPosition == TabViewPosition.left || tabViewPosition == TabViewPosition.right) {
+     if (tabViewPosition == TabViewPosition.top && !isRoundedCorners) {
+      path
+        ..moveTo(-radius, size.height)
+        ..quadraticBezierTo(0, size.height, 0, size.height - radius)
+        ..lineTo(0, radius)
+        ..quadraticBezierTo(0, 0, radius, 0)
+        ..lineTo(size.width - radius, 0)
+        ..quadraticBezierTo(size.width, 0, size.width, radius)
+        ..lineTo(size.width, size.height - radius)
+        ..quadraticBezierTo(
+          size.width,
+          size.height,
+          size.width + radius,
+          size.height,
+        );
+    } else if (tabViewPosition == TabViewPosition.bottom && !isRoundedCorners) {
+      path.moveTo(-radius, 0);
+      path.quadraticBezierTo(0, 0, 0, radius);
+      path.lineTo(0, size.height - radius);
+      path.quadraticBezierTo(0, size.height, radius, size.height);
+      path.lineTo(size.width - radius, size.height);
+      path.quadraticBezierTo(size.width, size.height, size.width, size.height - radius);
+      path.lineTo(size.width, radius);
+      path.quadraticBezierTo(size.width, 0, size.width + radius, 0);
+    } else {
       path.moveTo(radius, 0);
       path.arcToPoint(const Offset(0, radius), radius: const Radius.circular(radius));
       path.lineTo(0, size.height - radius);
@@ -568,33 +592,8 @@ class _TabPainter extends CustomPainter {
       path.lineTo(size.width, radius);
       path.arcToPoint(Offset(size.width - radius, 0), radius: const Radius.circular(radius));
       path.close();
-    } else {
-      if (tabViewPosition == TabViewPosition.top) {
-        path
-          ..moveTo(-radius, size.height)
-          ..quadraticBezierTo(0, size.height, 0, size.height - radius)
-          ..lineTo(0, radius)
-          ..quadraticBezierTo(0, 0, radius, 0)
-          ..lineTo(size.width - radius, 0)
-          ..quadraticBezierTo(size.width, 0, size.width, radius)
-          ..lineTo(size.width, size.height - radius)
-          ..quadraticBezierTo(
-            size.width,
-            size.height,
-            size.width + radius,
-            size.height,
-          );
-      } else {
-        path.moveTo(-radius, 0);
-        path.quadraticBezierTo(0, 0, 0, radius);
-        path.lineTo(0, size.height - radius);
-        path.quadraticBezierTo(0, size.height, radius, size.height);
-        path.lineTo(size.width - radius, size.height);
-        path.quadraticBezierTo(size.width, size.height, size.width, size.height - radius);
-        path.lineTo(size.width, radius);
-        path.quadraticBezierTo(size.width, 0, size.width + radius, 0);
-      }
     }
+    
 
     if (outlineColor != null) {
       final outlinePaint = Paint()

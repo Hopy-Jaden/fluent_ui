@@ -13,6 +13,8 @@ const double _kMinTileWidth = 80;
 const double _kMaxTileWidth = 240;
 const double _kTileHeight = 34;
 const double _kButtonWidth = 32;
+const double _kSidePaneWidth = 200; // Define the width of the side pane
+const double _kNewTabHeight = 40; // Define the height of the "New Tab" button
 
 
 /// Define the position of the tab view
@@ -450,7 +452,7 @@ class _TabViewState extends State<TabView> {
     );
   }
 
-  Widget _buttonTabBuilder(
+  Widget _iconButtonTabBuilder(
     BuildContext context,
     Widget icon,
     VoidCallback? onPressed,
@@ -461,6 +463,43 @@ class _TabViewState extends State<TabView> {
       height: 28,
       child: IconButton(
         icon: Center(child: icon),
+        onPressed: onPressed,
+        style: ButtonStyle(
+          foregroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.isDisabled) {
+              return FluentTheme.of(
+                context,
+              ).resources.accentTextFillColorDisabled;
+            } else {
+              return FluentTheme.of(context).inactiveColor;
+            }
+          }),
+          backgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.isDisabled || states.isNone) return Colors.transparent;
+            return ButtonThemeData.uncheckedInputColor(
+              FluentTheme.of(context),
+              states,
+            );
+          }),
+          padding: const WidgetStatePropertyAll(EdgeInsetsDirectional.zero),
+        ),
+      ),
+    );
+    if (onPressed == null) return item;
+    return Tooltip(message: tooltip, child: item);
+  }
+
+  Widget _buttonTabBuilder(
+    BuildContext context,
+    Widget child,
+    VoidCallback? onPressed,
+    String tooltip,
+  ) {
+    final item = SizedBox(
+      //width: _kButtonWidth,
+      height: 28,
+      child: IconButton(
+        icon: child,
         onPressed: onPressed,
         style: ButtonStyle(
           foregroundColor: WidgetStateProperty.resolveWith((states) {
@@ -515,6 +554,277 @@ class _TabViewState extends State<TabView> {
 
     final headerFooterTextStyle =
         theme.typography.bodyLarge ?? const TextStyle();
+    
+    final sidePane = SizedBox(
+            width: _kSidePaneWidth,
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: widget.tabs.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: widget.tabViewPosition == TabViewPosition.left ? const EdgeInsets.only(right: 8) : const EdgeInsets.only(left: 8),
+                        child: _tabBuilder(
+                          context,
+                          index,
+                          _kSidePaneWidth, // Use side pane width as preferred width
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: const Divider(),
+                ),
+                // "New Tab" button
+                
+                  Padding(
+                    padding: widget.tabViewPosition == TabViewPosition.left ? const EdgeInsets.only(right: 8) : const EdgeInsets.only(left: 8),
+                    child: HoverButton(
+                      onPressed: widget.onNewPressed,
+                      builder: (context, states) {
+                        final foregroundColor =
+                            WidgetStateProperty.resolveWith<Color>((states) {
+                              if (states.isPressed) {
+                                return FluentTheme.of(
+                                  context,
+                                ).resources.textFillColorSecondary;
+                              } else if (states.isHovered) {
+                                return FluentTheme.of(
+                                  context,
+                                ).resources.textFillColorPrimary;
+                              } else if (states.isDisabled) {
+                                return FluentTheme.of(
+                                  context,
+                                ).resources.textFillColorDisabled;
+                              } else {
+                                return FluentTheme.of(
+                                  context,
+                                ).resources.textFillColorSecondary;
+                              }
+                            }).resolve(states);
+                        final backgroundColor =
+                            WidgetStateProperty.resolveWith<Color>((states) {
+                              if (states.isPressed) {
+                                return FluentTheme.of(
+                                  context,
+                                ).resources.layerOnMicaBaseAltFillColorDefault;
+                              } else if (states.isHovered) {
+                                return FluentTheme.of(context)
+                                    .resources
+                                    .layerOnMicaBaseAltFillColorSecondary;
+                              } else if (states.isDisabled) {
+                                return FluentTheme.of(context)
+                                    .resources
+                                    .layerOnMicaBaseAltFillColorTransparent;
+                              } else {
+                                return FluentTheme.of(context)
+                                    .resources
+                                    .layerOnMicaBaseAltFillColorTransparent;
+                              }
+                            }).resolve(states);
+
+                        final borderRadius = widget.isRoundedCorners
+                            ? const BorderRadius.all(Radius.circular(6))
+                            : const BorderRadius.vertical(
+                                top: Radius.circular(6),
+                              );
+
+                        Widget child = FocusBorder(
+                          focused: states.isFocused,
+                          renderOutside: false,
+                          style: FocusThemeData(borderRadius: borderRadius),
+                          child: Container(
+                            height: _kTileHeight,
+                            constraints:
+                                widget.tabWidthBehavior ==
+                                    TabWidthBehavior.sizeToContent
+                                ? const BoxConstraints(minHeight: 28)
+                                : const BoxConstraints(
+                                    maxWidth: _kMaxTileWidth,
+                                    minHeight: 28,
+                                  ),
+                            padding: const EdgeInsetsDirectional.only(
+                              start: 8,
+                              top: 3,
+                              end: 4,
+                              bottom: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: borderRadius,
+                              // if selected, the background is painted by _TabPainter
+                              color: backgroundColor,
+                            ),
+                            child: () {
+                              final result = ClipRect(
+                                child: DefaultTextStyle.merge(
+                                  style:
+                                      (theme.typography.body ??
+                                              const TextStyle())
+                                          .copyWith(
+                                            fontSize: 12,
+                                            color: foregroundColor,
+                                          ),
+                                  child: IconTheme.merge(
+                                    data: IconThemeData(
+                                      color: foregroundColor,
+                                      size: 16,
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.only(
+                                                end: 10,
+                                              ),
+                                          child: Icon(WindowsIcons.add),
+                                        ),
+                                        if (widget.tabWidthBehavior !=
+                                            TabWidthBehavior.compact)
+                                          Flexible(
+                                            fit:
+                                                widget.tabWidthBehavior ==
+                                                    TabWidthBehavior.equal
+                                                ? FlexFit.tight
+                                                : FlexFit.loose,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional.only(
+                                                    end: 4,
+                                                  ),
+                                              child: DefaultTextStyle.merge(
+                                                softWrap: false,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.clip,
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                                child: Text(
+                                                  localizations.newTabLabel,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                              return result;
+                            }(),
+                          ),
+                        );
+                        child = Tooltip(
+                          message: localizations.newTabLabel,
+                          style: const TooltipThemeData(preferBelow: true),
+                          child: child,
+                        );
+
+                        return Semantics(
+                          focusable: true,
+                          focused: states.isFocused,
+                          child: SmallIconButton(child: child),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+            ),
+          );
+    
+    /*if (widget.shortcutsEnabled) {
+      void onClosePressed() {
+        close(widget.currentIndex);
+      }
+
+      // For more info, refer to [SingleActivator] docs
+      var ctrl = true;
+      var meta = false;
+      if (!kIsWeb &&
+          [
+            TargetPlatform.iOS,
+            TargetPlatform.macOS,
+          ].contains(defaultTargetPlatform)) {
+        ctrl = false;
+        meta = true;
+      }
+
+    final finalSidePane = FocusScope(
+        autofocus: true,
+        child: CallbackShortcuts(
+          bindings: {
+            SingleActivator(LogicalKeyboardKey.f4, control: ctrl, meta: meta):
+                onClosePressed,
+            SingleActivator(LogicalKeyboardKey.keyW, control: ctrl, meta: meta):
+                onClosePressed,
+            SingleActivator(
+              LogicalKeyboardKey.keyT,
+              control: ctrl,
+              meta: meta,
+            ): () =>
+                widget.onNewPressed?.call(),
+            ...Map.fromIterable(
+              List<int>.generate(9, (index) => index),
+              key: (i) {
+                final digits = [
+                  LogicalKeyboardKey.digit1,
+                  LogicalKeyboardKey.digit2,
+                  LogicalKeyboardKey.digit3,
+                  LogicalKeyboardKey.digit4,
+                  LogicalKeyboardKey.digit5,
+                  LogicalKeyboardKey.digit6,
+                  LogicalKeyboardKey.digit7,
+                  LogicalKeyboardKey.digit8,
+                  LogicalKeyboardKey.digit9,
+                ];
+                return SingleActivator(
+                  digits[i as int],
+                  control: ctrl,
+                  meta: meta,
+                );
+              },
+              value: (i) {
+                final index = i as int;
+                return () {
+                  // If it's the last, move to the last tab
+                  if (index == 8) {
+                    widget.onChanged?.call(widget.tabs.length - 1);
+                  } else {
+                    if (widget.tabs.length - 1 >= index) {
+                      widget.onChanged?.call(index);
+                    }
+                  }
+                };
+              },
+            ),
+          },
+          child: sidePane,
+        ),
+      );
+    }*/
+
+    if (widget.tabViewPosition == TabViewPosition.left || widget.tabViewPosition == TabViewPosition.right) {
+      return Row(
+        children: [
+          // Side pane for tabs
+          if (widget.tabViewPosition == TabViewPosition.left)
+         sidePane,
+          // Main content area
+          Expanded(
+            child: Focus(
+              autofocus: true,
+              child: _TabBody(index: widget.currentIndex, tabs: widget.tabs),
+            ),
+          ),
+          // Side pane for tabs
+          if (widget.tabViewPosition == TabViewPosition.right)
+          sidePane
+          ],
+      );
+    }
 
     final Widget tabBar = Column(
       children: [
@@ -620,7 +930,7 @@ class _TabViewState extends State<TabView> {
                               end: 3,
                               bottom: 3,
                             ),
-                            child: _buttonTabBuilder(
+                            child: _iconButtonTabBuilder(
                               context,
                               const WindowsIcon(
                                 WindowsIcons.caret_left_solid8,
@@ -647,7 +957,7 @@ class _TabViewState extends State<TabView> {
                               end: 8,
                               bottom: 3,
                             ),
-                            child: _buttonTabBuilder(
+                            child: _iconButtonTabBuilder(
                               context,
                               const WindowsIcon(
                                 WindowsIcons.caret_right_solid8,
@@ -691,7 +1001,7 @@ class _TabViewState extends State<TabView> {
                                   start: 3,
                                   bottom: 3,
                                 ),
-                                child: _buttonTabBuilder(
+                                child: _iconButtonTabBuilder(
                                   context,
                                   IconTheme.merge(
                                     data: const IconThemeData(size: 12),
@@ -840,7 +1150,7 @@ class _TabViewState extends State<TabView> {
                               end: 3,
                               bottom: 3,
                             ),
-                            child: _buttonTabBuilder(
+                            child: _iconButtonTabBuilder(
                               context,
                               const WindowsIcon(
                                 WindowsIcons.caret_left_solid8,
@@ -867,7 +1177,7 @@ class _TabViewState extends State<TabView> {
                               end: 8,
                               bottom: 3,
                             ),
-                            child: _buttonTabBuilder(
+                            child: _iconButtonTabBuilder(
                               context,
                               const WindowsIcon(
                                 WindowsIcons.caret_right_solid8,
@@ -911,7 +1221,7 @@ class _TabViewState extends State<TabView> {
                                   start: 3,
                                   bottom: 3,
                                 ),
-                                child: _buttonTabBuilder(
+                                child: _iconButtonTabBuilder(
                                   context,
                                   IconTheme.merge(
                                     data: const IconThemeData(size: 12),
