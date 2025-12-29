@@ -427,6 +427,7 @@ class _TabViewState extends State<TabView> {
                 : FlexFit.loose,
             child: tabWidget,
           ),
+          if (widget.tabViewPosition == TabViewPosition.top || widget.tabViewPosition == TabViewPosition.bottom)
           divider(index),
         ],
       ),
