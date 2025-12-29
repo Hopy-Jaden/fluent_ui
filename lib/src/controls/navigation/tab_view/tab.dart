@@ -558,7 +558,7 @@ class _TabPainter extends CustomPainter {
     final path = Path();
     const radius = 6.0;
 
-    if (isRoundedCorners) {
+    if (isRoundedCorners || tabViewPosition == TabViewPosition.left || tabViewPosition == TabViewPosition.right) {
       path.moveTo(radius, 0);
       path.arcToPoint(const Offset(0, radius), radius: const Radius.circular(radius));
       path.lineTo(0, size.height - radius);
