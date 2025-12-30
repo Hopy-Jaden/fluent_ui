@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 
 /// The default icon data for the rating bar.
-const IconData kRatingBarIcon = FluentIcons.favorite_star_fill;
+const IconData kRatingBarIcon = WindowsIcons.favorite_star_fill;
 
 /// A control for viewing and setting star ratings.
 ///
