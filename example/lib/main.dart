@@ -8,6 +8,7 @@ import 'package:example/screens/scrolling/scroll_view.dart';
 import 'package:example/screens/settings.dart';
 import 'package:example/screens/status/avatar.dart';
 import 'package:example/screens/collection/list_view.dart';
+import 'package:example/screens/toolbar/title_bar.dart';
 import 'package:fluent_ui/fluent_ui.dart' hide Page;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart' as flutter_acrylic;
@@ -418,7 +419,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             items:[
               PaneItem(
                 title: const Text('Title Bar'),
-                //  body: surfaces.TitleBarPage()
+                body: TitleBarPage()
               ),
               PaneItem(
                 title: const Text('MenuBar'),

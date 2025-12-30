@@ -14,7 +14,6 @@ const double _kMaxTileWidth = 240;
 const double _kTileHeight = 34;
 const double _kButtonWidth = 32;
 const double _kSidePaneWidth = 200; // Define the width of the side pane
-const double _kNewTabHeight = 40; // Define the height of the "New Tab" button
 
 
 /// Define the position of the tab view
@@ -464,43 +463,6 @@ class _TabViewState extends State<TabView> {
       height: 28,
       child: IconButton(
         icon: Center(child: icon),
-        onPressed: onPressed,
-        style: ButtonStyle(
-          foregroundColor: WidgetStateProperty.resolveWith((states) {
-            if (states.isDisabled) {
-              return FluentTheme.of(
-                context,
-              ).resources.accentTextFillColorDisabled;
-            } else {
-              return FluentTheme.of(context).inactiveColor;
-            }
-          }),
-          backgroundColor: WidgetStateProperty.resolveWith((states) {
-            if (states.isDisabled || states.isNone) return Colors.transparent;
-            return ButtonThemeData.uncheckedInputColor(
-              FluentTheme.of(context),
-              states,
-            );
-          }),
-          padding: const WidgetStatePropertyAll(EdgeInsetsDirectional.zero),
-        ),
-      ),
-    );
-    if (onPressed == null) return item;
-    return Tooltip(message: tooltip, child: item);
-  }
-
-  Widget _buttonTabBuilder(
-    BuildContext context,
-    Widget child,
-    VoidCallback? onPressed,
-    String tooltip,
-  ) {
-    final item = SizedBox(
-      //width: _kButtonWidth,
-      height: 28,
-      child: IconButton(
-        icon: child,
         onPressed: onPressed,
         style: ButtonStyle(
           foregroundColor: WidgetStateProperty.resolveWith((states) {
