@@ -23,8 +23,16 @@ class _Flyout2ScreenState extends State<Flyout2Screen> with PageMixin {
   final itemsController = FlyoutController();
   final itemsAttachKey = GlobalKey();
 
-  final contextController = FlyoutController();
-  final contextAttachKey = GlobalKey();
+  final commandBarController = FlyoutController();
+  final commandBarAttachKey = GlobalKey();
+
+  final contextController2 = FlyoutController();
+  final contextAttachKey2 = GlobalKey();
+
+  final selectableTextController = FlyoutController();
+  final selectableTextAttachKey = GlobalKey();
+  final selectableTextController2 = FlyoutController();
+  final selectableTextAttachKey2 = GlobalKey();
 
   bool barrierDismissible = true;
   bool dismissOnPointerMoveAway = false;
@@ -43,7 +51,7 @@ class _Flyout2ScreenState extends State<Flyout2Screen> with PageMixin {
   void dispose() {
     controller.dispose();
     menuController.dispose();
-    contextController.dispose();
+    commandBarController.dispose();
     super.dispose();
   }
 
@@ -112,6 +120,9 @@ class _Flyout2ScreenState extends State<Flyout2Screen> with PageMixin {
             ),
           ),
         ),
+
+        SizedBox(height: 50),
+        Text('Simple Flyout', style: FluentTheme.of(context).typography.title),
         subtitle(content: const Text('A button with a flyout')),
         CardHighlight(
           codeSnippet:
@@ -531,7 +542,10 @@ FlyoutTarget(
             ],
           ),
         ),
-        subtitle(content: const Text('Context Menus')),
+
+        //subtitle(content: const Text('Context Menus')),
+        SizedBox(height: 30),
+        Text('Commandbar', style: FluentTheme.of(context).typography.title),
         description(
           content: const Text(
             'The command bar flyout lets you provide users with easy access '
@@ -540,74 +554,10 @@ FlyoutTarget(
             'open the context menu.',
           ),
         ),
-        CardHighlight(
-          codeSnippet: '''
-final contextController = FlyoutController();
-final contextAttachKey = GlobalKey();
-
-return GestureDetector(
-  onSecondaryTapUp: (d) {
-
-    // This calculates the position of the flyout according to the parent navigator
-    final targetContext = contextAttachKey.currentContext;
-    if (targetContext == null) return;
-    final box = targetContext.findRenderObject() as RenderBox;
-    final position = box.localToGlobal(
-      d.localPosition,
-      ancestor: Navigator.of(context).context.findRenderObject(),
-    );
-
-    contextController.showFlyout<void>(
-      barrierColor: Colors.black.withValues(alpha: 0.1),
-      position: position,
-      builder: (context) {
-        return FlyoutContent(
-          child: SizedBox(
-            width: 130.0,
-            child: CommandBar(
-              primaryItems: [
-                CommandBarButton(
-                  icon: const WindowsIcon(WindowsIcons.add_favorite),
-                  label: const Text('Favorite'),
-                  onPressed: () {},
-                ),
-                CommandBarButton(
-                  icon: const WindowsIcon(WindowsIcons.copy),
-                  label: const Text('Copy'),
-                  onPressed: () {},
-                ),
-                CommandBarButton(
-                  icon: const WindowsIcon(WindowsIcons.share),
-                  label: const Text('Share'),
-                  onPressed: () {},
-                ),
-                CommandBarButton(
-                  icon: const WindowsIcon(WindowsIcons.save),
-                  label: const Text('Save'),
-                  onPressed: () {},
-                ),
-                CommandBarButton(
-                  icon: const WindowsIcon(WindowsIcons.delete),
-                  label: const Text('Delete'),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  },
-  child: FlyoutTarget(
-    key: contextAttachKey,
-    controller: contextController,
-    child: const FlutterLogo(size: 400.0),
-  ),
-);
-''',
-          child: GestureDetector(
+        GestureDetector(
             onSecondaryTapUp: (final d) {
-              final targetContext = contextAttachKey.currentContext;
+              final targetContext = contextAttachKey2
+                  .currentContext; // Use a new key for the second widget
               if (targetContext == null) return;
 
               final box = targetContext.findRenderObject()! as RenderBox;
@@ -617,7 +567,302 @@ return GestureDetector(
               );
 
               void showFlyout(final Offset position) {
-                contextController.showFlyout<void>(
+                commandBarController.showFlyout<void>(
+                  barrierColor: Colors.black.withValues(alpha: 0.1),
+                  position: position,
+                  barrierRecognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.of(context).pop();
+                    }
+                    ..onSecondaryTapUp = (final d) {
+                      Navigator.of(context).pop();
+
+                      final box =
+                          Navigator.of(context).context.findRenderObject()!
+                              as RenderBox;
+                      final position = box.localToGlobal(
+                        d.localPosition,
+                        ancestor: box,
+                      );
+
+                      showFlyout(position);
+                    },
+                  builder: (final context) {
+                    return MenuFlyout(
+                      constraints: BoxConstraints(minWidth: 250),
+                      items: [
+                        MenuFlyoutItemBuilder(
+                          builder: (context) {
+                            return CommandBar(
+                              overflowBehavior:
+                                  CommandBarOverflowBehavior.scrolling,
+                              isCompact: true,
+                              primaryItems: [
+                                CommandBarButton(
+                                  icon: const WindowsIcon(WindowsIcons.cut),
+                                  label: const Text('Cut'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                                CommandBarButton(
+                                  icon: const WindowsIcon(WindowsIcons.copy),
+                                  label: const Text('Copy'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                                CommandBarButton(
+                                  icon: const WindowsIcon(WindowsIcons.paste),
+                                  label: const Text('Paste'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                                CommandBarButton(
+                                  icon: const WindowsIcon(WindowsIcons.rename),
+                                  label: const Text('Rename'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                                CommandBarButton(
+                                  icon: const WindowsIcon(WindowsIcons.delete),
+                                  label: const Text('Delete'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                        MenuFlyoutSeparator(),
+                        MenuFlyoutSubItem(
+                          leading: const WindowsIcon(WindowsIcons.open_file),
+                          text: const Text('Open'),
+                          items: (context) => [
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.open_file,
+                              ),
+                              text: const Text('Open File'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(WindowsIcons.favicon2),
+                              text: const Text('Open in new tab'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.open_in_new_window,
+                              ),
+                              text: const Text('Open in new windows'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.open_with,
+                              ),
+                              text: const Text('Open with other apps'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                          ],
+                        ),
+                        MenuFlyoutSubItem(
+                          leading: const WindowsIcon(WindowsIcons.clickto_do),
+                          text: const Text('AI actions'),
+                          items: (context) => [
+                            MenuFlyoutItem(
+                              text: const Text('Action 1'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              text: const Text('Action 2'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              text: const Text('Action 3'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              text: const Text('Action 4'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                          ],
+                        ),
+                        MenuFlyoutItem(
+                          leading: const WindowsIcon(WindowsIcons.print),
+                          text: const Text('Print'),
+                          onPressed: Flyout.of(context).close,
+                        ),
+                        const MenuFlyoutSeparator(),
+
+                        MenuFlyoutSubItem(
+                          leading: const WindowsIcon(WindowsIcons.select_all),
+                          text: const Text('Select'),
+                          items: (context) => [
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(WindowsIcons.select_all),
+                              text: const Text('Select All'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(WindowsIcons.multi_select),
+                              text: const Text('Invert Selection'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(WindowsIcons.clear_selection),
+                              text: const Text('Select None'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                          ],
+                        ),
+                        MenuFlyoutSubItem(
+                          leading: const WindowsIcon(WindowsIcons.view),
+                          text: const Text('View'),
+                          items: (context) => [
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.grid_view,
+                              ),
+                              text: const Text('Grid View'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.list,
+                              ),
+                              text: const Text('List View'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                          ],
+                        ),
+                        MenuFlyoutSubItem(
+                          leading: const WindowsIcon(WindowsIcons.sort),
+                          text: const Text('Sort'),
+                          items: (context) => [
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.clickto_do,
+                              ),
+                              text: const Text('AI actions'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.clickto_do,
+                              ),
+                              text: const Text('AI actions'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.clickto_do,
+                              ),
+                              text: const Text('AI actions'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.clickto_do,
+                              ),
+                              text: const Text('AI actions'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                          ],
+                        ),
+
+                        const MenuFlyoutSeparator(),
+                        MenuFlyoutItem(
+                          leading: const WindowsIcon(WindowsIcons.pin),
+                          text: const Text('Pin/Unpin'),
+                          onPressed: Flyout.of(context).close,
+                        ),
+                        MenuFlyoutItem(
+                          leading: const WindowsIcon(
+                            WindowsIcons.favorite_star,
+                          ),
+                          text: const Text('Favourite'),
+                          onPressed: Flyout.of(context).close,
+                        ),
+                        MenuFlyoutSeparator(),
+                        MenuFlyoutSubItem(
+                          leading: WindowsIcon(WindowsIcons.send),
+                          text: const Text('Send to'),
+                          items: (_) => [
+                            MenuFlyoutItem(
+                              text: const Text('Bluetooth'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              text: const Text('Desktop (shortcut)'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutSubItem(
+                              text: const Text('Compressed file'),
+                              items: (context) => [
+                                MenuFlyoutItem(
+                                  text: const Text('Compress and email'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                                MenuFlyoutItem(
+                                  text: const Text('Compress to .7z'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                                MenuFlyoutItem(
+                                  text: const Text('Compress to .zip'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        MenuFlyoutItem(
+                          leading: const WindowsIcon(WindowsIcons.share),
+                          text: const Text('Share'),
+                          onPressed: Flyout.of(context).close,
+                        ),
+                        MenuFlyoutItem(
+                          leading: const WindowsIcon(
+                            WindowsIcons.contact,
+                          ),
+                          text: const Text('Manage Access'),
+                          onPressed: Flyout.of(context).close,
+                        ),
+                        MenuFlyoutItem(
+                          leading: const WindowsIcon(WindowsIcons.link),
+                          text: const Text('Create Shortcut'),
+                          onPressed: Flyout.of(context).close,
+                        ),
+
+                        const MenuFlyoutSeparator(),
+                        MenuFlyoutItem(
+                          leading: const WindowsIcon(WindowsIcons.info),
+                          text: const Text('Properties'),
+                          onPressed: Flyout.of(context).close,
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+
+              showFlyout(position);
+            },
+            child: FlyoutTarget(
+              controller: selectableTextController,
+              key: selectableTextAttachKey,
+              child: SelectableText('table',)
+              ),
+          ),
+        CardHighlight(
+          codeSnippet: '''''',
+          child: GestureDetector(
+            onSecondaryTapUp: (final d) {
+              final targetContext = commandBarAttachKey.currentContext;
+              if (targetContext == null) return;
+
+              final box = targetContext.findRenderObject()! as RenderBox;
+              final position = box.localToGlobal(
+                d.localPosition,
+                ancestor: Navigator.of(context).context.findRenderObject(),
+              );
+
+              void showFlyout(final Offset position) {
+                commandBarController.showFlyout<void>(
                   barrierColor: Colors.black.withValues(alpha: 0.1),
                   position: position,
                   barrierRecognizer: TapGestureRecognizer()
@@ -681,19 +926,341 @@ return GestureDetector(
 
               showFlyout(position);
             },
-            child: FlyoutTarget(
-              key: contextAttachKey,
-              controller: contextController,
-              child: ShaderMask(
-                shaderCallback: (final rect) {
-                  final color = context.read<AppTheme>().color.defaultBrushFor(
-                    FluentTheme.of(context).brightness,
-                  );
-                  return LinearGradient(
-                    colors: [color, color],
-                  ).createShader(rect);
-                },
-                child: const FlutterLogo(size: 400),
+            child: SizedBox(
+              // Add a SizedBox to constrain the size
+              width: 400, // Set a width value
+              height: 400, // Set a height value
+              child: FlyoutTarget(
+                key: commandBarAttachKey,
+                controller: commandBarController,
+                child: ShaderMask(
+                  shaderCallback: (final rect) {
+                    final color = context
+                        .read<AppTheme>()
+                        .color
+                        .defaultBrushFor(FluentTheme.of(context).brightness);
+                    return LinearGradient(
+                      colors: [color, color],
+                    ).createShader(rect);
+                  },
+                  child: const FlutterLogo(size: 400),
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        SizedBox(height: 50),
+        Text('Context Menu', style: FluentTheme.of(context).typography.title),
+        CardHighlight(
+          codeSnippet: '''''',
+          child: GestureDetector(
+            onSecondaryTapUp: (final d) {
+              final targetContext = contextAttachKey2
+                  .currentContext; // Use a new key for the second widget
+              if (targetContext == null) return;
+
+              final box = targetContext.findRenderObject()! as RenderBox;
+              final position = box.localToGlobal(
+                d.localPosition,
+                ancestor: Navigator.of(context).context.findRenderObject(),
+              );
+
+              void showFlyout(final Offset position) {
+                commandBarController.showFlyout<void>(
+                  barrierColor: Colors.black.withValues(alpha: 0.1),
+                  position: position,
+                  barrierRecognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.of(context).pop();
+                    }
+                    ..onSecondaryTapUp = (final d) {
+                      Navigator.of(context).pop();
+
+                      final box =
+                          Navigator.of(context).context.findRenderObject()!
+                              as RenderBox;
+                      final position = box.localToGlobal(
+                        d.localPosition,
+                        ancestor: box,
+                      );
+
+                      showFlyout(position);
+                    },
+                  builder: (final context) {
+                    return MenuFlyout(
+                      constraints: BoxConstraints(minWidth: 250),
+                      items: [
+                        MenuFlyoutItemBuilder(
+                          builder: (context) {
+                            return CommandBar(
+                              overflowBehavior:
+                                  CommandBarOverflowBehavior.scrolling,
+                              isCompact: true,
+                              primaryItems: [
+                                CommandBarButton(
+                                  icon: const WindowsIcon(WindowsIcons.cut),
+                                  label: const Text('Cut'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                                CommandBarButton(
+                                  icon: const WindowsIcon(WindowsIcons.copy),
+                                  label: const Text('Copy'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                                CommandBarButton(
+                                  icon: const WindowsIcon(WindowsIcons.paste),
+                                  label: const Text('Paste'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                                CommandBarButton(
+                                  icon: const WindowsIcon(WindowsIcons.rename),
+                                  label: const Text('Rename'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                                CommandBarButton(
+                                  icon: const WindowsIcon(WindowsIcons.delete),
+                                  label: const Text('Delete'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                        MenuFlyoutSeparator(),
+                        MenuFlyoutSubItem(
+                          leading: const WindowsIcon(WindowsIcons.open_file),
+                          text: const Text('Open'),
+                          items: (context) => [
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.open_file,
+                              ),
+                              text: const Text('Open File'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(WindowsIcons.favicon2),
+                              text: const Text('Open in new tab'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.open_in_new_window,
+                              ),
+                              text: const Text('Open in new windows'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.open_with,
+                              ),
+                              text: const Text('Open with other apps'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                          ],
+                        ),
+                        MenuFlyoutSubItem(
+                          leading: const WindowsIcon(WindowsIcons.clickto_do),
+                          text: const Text('AI actions'),
+                          items: (context) => [
+                            MenuFlyoutItem(
+                              text: const Text('Action 1'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              text: const Text('Action 2'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              text: const Text('Action 3'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              text: const Text('Action 4'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                          ],
+                        ),
+                        MenuFlyoutItem(
+                          leading: const WindowsIcon(WindowsIcons.print),
+                          text: const Text('Print'),
+                          onPressed: Flyout.of(context).close,
+                        ),
+                        const MenuFlyoutSeparator(),
+
+                        MenuFlyoutSubItem(
+                          leading: const WindowsIcon(WindowsIcons.select_all),
+                          text: const Text('Select'),
+                          items: (context) => [
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(WindowsIcons.select_all),
+                              text: const Text('Select All'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(WindowsIcons.multi_select),
+                              text: const Text('Invert Selection'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(WindowsIcons.clear_selection),
+                              text: const Text('Select None'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                          ],
+                        ),
+                        MenuFlyoutSubItem(
+                          leading: const WindowsIcon(WindowsIcons.view),
+                          text: const Text('View'),
+                          items: (context) => [
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.grid_view,
+                              ),
+                              text: const Text('Grid View'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.list,
+                              ),
+                              text: const Text('List View'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                          ],
+                        ),
+                        MenuFlyoutSubItem(
+                          leading: const WindowsIcon(WindowsIcons.sort),
+                          text: const Text('Sort'),
+                          items: (context) => [
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.clickto_do,
+                              ),
+                              text: const Text('AI actions'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.clickto_do,
+                              ),
+                              text: const Text('AI actions'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.clickto_do,
+                              ),
+                              text: const Text('AI actions'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              leading: const WindowsIcon(
+                                WindowsIcons.clickto_do,
+                              ),
+                              text: const Text('AI actions'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                          ],
+                        ),
+
+                        const MenuFlyoutSeparator(),
+                        MenuFlyoutItem(
+                          leading: const WindowsIcon(WindowsIcons.pin),
+                          text: const Text('Pin/Unpin'),
+                          onPressed: Flyout.of(context).close,
+                        ),
+                        MenuFlyoutItem(
+                          leading: const WindowsIcon(
+                            WindowsIcons.favorite_star,
+                          ),
+                          text: const Text('Favourite'),
+                          onPressed: Flyout.of(context).close,
+                        ),
+                        MenuFlyoutSeparator(),
+                        MenuFlyoutSubItem(
+                          leading: WindowsIcon(WindowsIcons.send),
+                          text: const Text('Send to'),
+                          items: (_) => [
+                            MenuFlyoutItem(
+                              text: const Text('Bluetooth'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutItem(
+                              text: const Text('Desktop (shortcut)'),
+                              onPressed: Flyout.of(context).close,
+                            ),
+                            MenuFlyoutSubItem(
+                              text: const Text('Compressed file'),
+                              items: (context) => [
+                                MenuFlyoutItem(
+                                  text: const Text('Compress and email'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                                MenuFlyoutItem(
+                                  text: const Text('Compress to .7z'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                                MenuFlyoutItem(
+                                  text: const Text('Compress to .zip'),
+                                  onPressed: Flyout.of(context).close,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        MenuFlyoutItem(
+                          leading: const WindowsIcon(WindowsIcons.share),
+                          text: const Text('Share'),
+                          onPressed: Flyout.of(context).close,
+                        ),
+                        MenuFlyoutItem(
+                          leading: const WindowsIcon(
+                            WindowsIcons.contact,
+                          ),
+                          text: const Text('Manage Access'),
+                          onPressed: Flyout.of(context).close,
+                        ),
+                        MenuFlyoutItem(
+                          leading: const WindowsIcon(WindowsIcons.link),
+                          text: const Text('Create Shortcut'),
+                          onPressed: Flyout.of(context).close,
+                        ),
+
+                        const MenuFlyoutSeparator(),
+                        MenuFlyoutItem(
+                          leading: const WindowsIcon(WindowsIcons.info),
+                          text: const Text('Properties'),
+                          onPressed: Flyout.of(context).close,
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+
+              showFlyout(position);
+            },
+            child: SizedBox(
+              // Add a SizedBox here as well
+              width: 400, // Set a width value
+              height: 400, // Set a height value
+              child: FlyoutTarget(
+                key: contextAttachKey2, // Use the new key here
+                controller: contextController2,
+                child: ShaderMask(
+                  shaderCallback: (final rect) {
+                    final color = context
+                        .read<AppTheme>()
+                        .color
+                        .defaultBrushFor(FluentTheme.of(context).brightness);
+                    return LinearGradient(
+                      colors: [color, color],
+                    ).createShader(rect);
+                  },
+                  child: const FlutterLogo(size: 400),
+                ),
               ),
             ),
           ),
