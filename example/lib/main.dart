@@ -2,7 +2,7 @@ import 'package:example/screens/collection/grid_view.dart';
 import 'package:example/screens/design_pattern/tokenizing_text_box.dart';
 import 'package:example/screens/home.dart';
 import 'package:example/screens/inputs/rating.dart';
-import 'package:example/screens/scrolling/annotated_scroll_view.dart';
+import 'package:example/screens/design_pattern/scroll_view.dart';
 import 'package:example/screens/scrolling/pipspager.dart';
 import 'package:example/screens/scrolling/scroll_view.dart';
 import 'package:example/screens/settings.dart';
@@ -211,9 +211,9 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                   },
                   placeholder: 'Search Controls and Samples...',
                   trailingIcon: Padding(
-                    padding: EdgeInsetsDirectional.only(end: 4),
+                    padding: const EdgeInsetsDirectional.only(end: 4),
                     child: IconButton(
-                      icon: WindowsIcon(WindowsIcons.search),
+                      icon: const WindowsIcon(WindowsIcons.search),
                       onPressed: () {},
                     ),
                   ),
@@ -330,12 +330,12 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                 body: forms.ComboBoxPage(),
               ),
               PaneItem(
-                title: const Text('Color Picker'),
+                title: const Text('ColorPicker'),
                 body: forms.ColorPickerPage(),
               ),
               PaneItem(
-                title: const Text('Ratings'),
-                body: RatingPage(),
+                title: const Text('RatingBar'),
+                body: const RatingBarPage(),
               ),
             ],
           ),
@@ -344,23 +344,23 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             title: const Text('Collection'),
             items: [
               PaneItem(
-                title: Text('Flip View'),
+                title: const Text('FlipView'),
                 body: designpattern.FlipViewPage()
               ),
               PaneItem(
-                title: const Text('List View'),
-                body: ListViewPage(),
+                title: const Text('ListView'),
+                body: const ListViewPage(),
               ),
               PaneItem(
-                title: const Text('Grid View'),
-                body: GridViewPage(),
+                title: const Text('GridView'),
+                body: const GridViewPage(),
               ),
               PaneItem(
-                title: const Text('Tree View'),
+                title: const Text('TreeView'),
                 body: navigation.TreeViewPage(),
               ),
               PaneItem(
-                title: const Text('Token View'),
+                title: const Text('TokenView'),
                 body: navigation.TokenViewPage(),
               ),
               PaneItem(
@@ -418,15 +418,15 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             title: const Text('Menus & toolbars'),
             items:[
               PaneItem(
-                title: const Text('Title Bar'),
-                body: TitleBarPage()
+                title: const Text('TitleBar'),
+                body: const TitleBarPage()
               ),
               PaneItem(
                 title: const Text('MenuBar'),
                 body: popups.MenuBarPage(),
               ),
               PaneItem(
-                title: const Text('Command Bar'),
+                title: const Text('CommandBar'),
                 body: surfaces.CommandBarsPage(),
               ),
             ]
@@ -436,34 +436,30 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             title: const Text('Navigation'),
             items: [
               PaneItem(
-                title: const Text('Breadcrumb Bar'),
+                title: const Text('BreadcrumbBar'),
                 body: navigation.BreadcrumbBarPage(),
               ),
               PaneItem(
-                title: const Text('Navigation View'),
+                title: const Text('NavigationView'),
                 body: navigation.NavigationViewPage(),
               ),
               PaneItem(
-                title: const Text('Tab View'),
+                title: const Text('TabView'),
                 body: navigation.TabViewPage(),
               ),
             ],
           ),
           PaneItemExpander(
             icon: const WindowsIcon(WindowsIcons.sort),
-            title: Text('Scrolling'),
+            title: const Text('Scrolling'),
             items: [
               PaneItem(
                 title: const Text('Scrollbar'),
-                body: ScrollBarPage()
-              ),
-              PaneItem(
-                title: Text('Annotated Scrollbar'),
-                body: AnnotatedScrollBarPage()
+                body: const ScrollBarPage()
               ),
               PaneItem(
                 title: const Text('PipsPager'),
-                body: PipsPagerPage(),
+                body: const PipsPagerPage(),
               )
             ]
           ),
@@ -481,10 +477,10 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
               ),
               PaneItem(
                 title: const Text('Avatar'),
-                body: AvatarPage(),
+                body: const AvatarPage(),
               ),
               PaneItem(
-                title: const Text('Progress Controls'),
+                title: const Text('ProgressControls'),
                 body: surfaces.ProgressIndicatorsPage(),
               ),
               PaneItem(
@@ -506,7 +502,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
                 //  body: surfaces.AcrylicPage()
               ),
               PaneItem(
-                title: const Text('Reveal Focus'),
+                title: const Text('RevealFocus'),
                 body: theming.RevealFocusPage(),
               ),
             ],
@@ -535,19 +531,19 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             title: const Text('Design Pattern'),
             items: [
               PaneItem(
-                title: const Text('Tokenizing Text Box'),
-                body: TokenizingTextBoxPage(), //designpattern.TokenizingTextBoxPage(),
+                title: const Text('ScrollView'),
+                body: ScrollViewPage(),
               ),
               PaneItem(
-                title: const Text('Data Table'),
+                title: const Text('TokenizingTextbox'),
+                body: const TokenizingTextBoxPage(), //designpattern.TokenizingTextBoxPage(),
+              ),
+              PaneItem(
+                title: const Text('DataTable'),
                 body: designpattern.DataTablePage(),
               ),
               PaneItem(
-                title: const Text('Ribbon'),
-                body: designpattern.FlipViewPage(),
-              ),
-              PaneItem(
-                title: const Text('Settings Control'),
+                title: const Text('SettingsControl'),
                 body: designpattern.SettingsControlPage(),
               ),
             ],

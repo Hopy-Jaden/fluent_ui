@@ -226,6 +226,18 @@ class GridTile extends StatelessWidget {
     }
   }
 
+  static Color backgroundColor(FluentThemeData theme, Set<WidgetState> states) {
+    if (states.isDisabled) {
+      return theme.resources.accentFillColorDisabled;
+    } else if (states.isPressed) {
+      return theme.accentColor.tertiaryBrushFor(theme.brightness);
+    } else if (states.isHovered) {
+      return theme.accentColor.secondaryBrushFor(theme.brightness);
+    } else {
+      return theme.accentColor.defaultBrushFor(theme.brightness);
+    }
+  }
+
   Alignment _getCheckboxAlignment() {
     switch (checkboxLocation) {
       case CheckboxLocation.topRight:
@@ -306,14 +318,11 @@ class GridTile extends StatelessWidget {
             child: FocusTheme(
               data: FocusThemeData(
                 borderRadius: BorderRadius.circular(8.0),
-                glowColor: theme.accentColor,
                 glowFactor: 0,
-                primaryBorder: selected
-                    ? BorderSide(
+                primaryBorder: BorderSide(
                         width: 1,
-                        color: theme.accentColor,
-                      )
-                    : null,
+                        color: Colors.red,
+                      ),
               ),
               child: Container(
                 decoration: ShapeDecoration(shape: shape, color: tileColor),

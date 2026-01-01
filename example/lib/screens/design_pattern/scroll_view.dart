@@ -3,14 +3,14 @@ import 'package:fluent_ui/fluent_ui.dart';
 
 import '../../../widgets/page.dart';
 
-class AnnotatedScrollBarPage extends StatefulWidget {
-  const AnnotatedScrollBarPage({super.key});
+class ScrollViewPage extends StatefulWidget {
+  const ScrollViewPage({super.key});
 
   @override
-  State<AnnotatedScrollBarPage> createState() => _AnnotatedScrollBarPageState();
+  State<ScrollViewPage> createState() => _ScrollViewPageState();
 }
 
-class _AnnotatedScrollBarPageState extends State<AnnotatedScrollBarPage>
+class _ScrollViewPageState extends State<ScrollViewPage>
     with PageMixin {
   static const double itemHeight = 500;
     bool selected = true;
@@ -29,7 +29,7 @@ class _AnnotatedScrollBarPageState extends State<AnnotatedScrollBarPage>
   @override
   Widget build(final BuildContext context) {
     return ScaffoldPage.scrollable(
-      header: const PageHeader(title: Text('Annotated Scrollbar')),
+      header: const PageHeader(title: Text('ScrollView')),
       children: [
         const Text(
           'Follow these steps to create your first Fluent UI app using the FluentApp() and ScaffoldPage() widgets:',

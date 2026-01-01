@@ -108,12 +108,12 @@ class Person {
                             transparentWhenNone: true,
                           ),
                         ),
-                        child: Card(child: SizedBox(height: 200, width:150, child: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center, children: [
+                        child: Card(child: SizedBox(height: 200, width:150, child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(height: 100, width: 100, decoration: BoxDecoration(
                     image: DecorationImage(image: NetworkImage(imageUrl)),
                     shape: BoxShape.circle,),
                   ),
-                          SizedBox(height:15),
+                          const SizedBox(height:15),
                           Text(username ?? name, style: FluentTheme.of(context).typography.bodyStrong,),
                   ],),),),
                       ),

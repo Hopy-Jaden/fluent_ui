@@ -114,15 +114,15 @@ class IconButton extends BaseButton {
         isSmall ? kDefaultButtonPadding : const EdgeInsetsDirectional.all(8),
       ),
       backgroundColor: WidgetStateProperty.resolveWith((states) {
-        if (states.isDisabled) {
+        /*if (states.isDisabled) {
           return ButtonThemeData.buttonColor(context, states);
-        } else {
+        } else {*/
           return ButtonThemeData.uncheckedInputColor(
             theme,
             states,
             transparentWhenNone: true,
           );
-        }
+        //}
       }),
       foregroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.isDisabled) return theme.resources.textFillColorDisabled;

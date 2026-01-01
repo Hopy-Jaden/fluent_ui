@@ -30,7 +30,7 @@ class _GridViewPageState extends State<GridViewPage> with PageMixin {
             'GridTile is a single item within the GridView.',
           ),
         ),
-        subtitle(content: const Text('Basic GridView with GridTile')),
+        subtitle(content: const Text('Basic GridView with selectable GridTile')),
         CardHighlight(
           codeSnippet: '''
 GridView.count(
@@ -54,15 +54,11 @@ GridView.count(
               padding: const EdgeInsets.all(8),
               children: List.generate(9, (index) {
                 return GridTile.selectable(
-                  
-                  //selectionMode: GridTileSelectionMode.none,
-                  //tileColor: WidgetStateColor.resolveWith((state)=> FluentTheme.of(context).resources.cardBackgroundFillColorDefault),
-                  /*tileColor: WidgetStateColor.resolveWith((states) {
-  if (states.isHovered) {
-    return Colors.accentColors[index % Colors.accentColors.length].withOpacity(0.8); // Slightly lighter on hover
-  }
-  return Colors.accentColors[index % Colors.accentColors.length]; // Default color
-}),*/
+                  selectionMode: GridTileSelectionMode.single,
+                  selected: selectedItem == index.toString(),
+                  onPressed: () => setState(() {
+                    selectedItem = index.toString();
+                  }),
                   child: Center(
                     child: Text(
                       'Item $index',
@@ -74,7 +70,7 @@ GridView.count(
             ),
           ),
         ),
-        subtitle(content: const Text('Selectable GridView with GridTile')),
+        subtitle(content: const Text('GridTiles that are multi-selectable')),
         CardHighlight(
           codeSnippet: '''
 GridView.count(

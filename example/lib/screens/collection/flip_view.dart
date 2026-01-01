@@ -29,67 +29,29 @@ class _FlipViewPageState extends State<FlipViewPage>
   @override
   Widget build(final BuildContext context) {
     return ScaffoldPage.scrollable(
-      header: const PageHeader(title: Text('Flip View')),
+      header: const PageHeader(title: Text('FlipView')),
       children: [
         const Text(
-          'Follow these steps to create your first Fluent UI app using the FluentApp() and ScaffoldPage() widgets:',
+          'The FlipView lets you flip through a collection of items, one at a time. It\'s great for displaying images from a gallery, pages of a magazine, or similar items.',
         ),
         const SizedBox(height: 30),
-        Text('Installation', style: FluentTheme.of(context).typography.subtitle,),
-        const SizedBox(height: 10,),
-        Text( 
-          'Before you begin, ensure you have Flutter installed on your machine. Then, add the '
-          'fluent_ui package to your project by including it in your pubspec.yaml file:',
-        ),
+        Text('A simple FlipView with items declared inline', style: FluentTheme.of(context).typography.subtitle,),
         const SizedBox(height: 20),
-        CardHighlight(
-          initiallyOpen: false,
+        const CardHighlight(
           codeSnippet: '''
 dependencies:
   fluent_ui: ^4.13.0''',
         ),
         const SizedBox(height: 30),
-        Text('Step 1: Create a FluentApp() widget', style: FluentTheme.of(context).typography.subtitle,),
-        const SizedBox(height: 10,),
-        Text(
-          'The FluentApp widget is the root of your application. It provides '
-          'theming and navigation capabilities for Fluent UI apps.',
-        ),
-        const SizedBox(height: 20),
-        CardHighlight(
-          initiallyOpen: true,
-          codeSnippet: '''
-import 'package:fluent_ui/fluent_ui.dart';
 
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return FluentApp(
-      title: 'Windows UI for Flutter',
-      theme: FluentThemeData(
-        brightness: Brightness.light,
-        accentColor: Colors.blue,
-      ),
-      home: const HomePage(), //which is usually a ScaffoldPage() or NavigationView()
-    );
-  }
-}
-''', 
-        ),
-        const SizedBox(height: 30,),
-        Text('Step 2: Set ScaffoldPage() widget as the home of FluentApp()', style: FluentTheme.of(context).typography.subtitle,),
+        Text('Vertical FlipView', style: FluentTheme.of(context).typography.subtitle,),
         const SizedBox(height: 10,),
         const Text(
-          'The ScaffoldPage widget provides a basic structure for your app\'s '
+          "The ScaffoldPage widget provides a basic structure for your app's "
           'UI, including a header and content area.',
         ),
         const SizedBox(height: 20),
         CardHighlight(
-          initiallyOpen: false,
           codeSnippet: '''
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -115,15 +77,16 @@ class HomePage extends StatelessWidget {
       ),
     ))
         ),
-        const SizedBox(height: 30,),
-        Text('Step 3: Continue your app development!', style: FluentTheme.of(context).typography.subtitle,),
-        const SizedBox(height: 10,),
-        Text(
-          'Now that you have set up the basic structure of your Fluent UI app, '
-          'you can start adding more features and functionality to it. Explore other '
-          'pages to learn more about the available widgets and how to use them in your app.',
-        ),
-        const SizedBox(height: 20),
+
+        Scrollbar(
+    child: InteractiveViewer(
+      boundaryMargin: EdgeInsets.all(20.0),
+      minScale: 0.1,
+      maxScale: 4.0, // Allows zooming up to 4x the original size
+      child: Image.network(
+        'https://avatars.githubusercontent.com/u/9919?s=200&v=4', // Or use Image.asset
+      ),
+    ),),
       ],
     );
   }

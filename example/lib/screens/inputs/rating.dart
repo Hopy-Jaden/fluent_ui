@@ -5,21 +5,21 @@ import 'package:fluent_ui/fluent_ui.dart';
 
 import '../../widgets/card_highlight.dart';
 
-class RatingPage extends StatefulWidget {
-  const RatingPage({super.key});
+class RatingBarPage extends StatefulWidget {
+  const RatingBarPage({super.key});
 
   @override
-  State<RatingPage> createState() => _RatingPageState();
+  State<RatingBarPage> createState() => _RatingBarPageState();
 }
 
-class _RatingPageState extends State<RatingPage> with PageMixin {
+class _RatingBarPageState extends State<RatingBarPage> with PageMixin {
   double determinateValue = 0;
   double amount = 5;
   double spacing = 4; //Random().nextDouble() * 100;
   @override
   Widget build(final BuildContext context) {
     return ScaffoldPage.scrollable(
-      header: const PageHeader(title: Text('Rating controls')),
+      header: const PageHeader(title: Text('RatingBar')),
       children: [
         description(
           content: const Text(

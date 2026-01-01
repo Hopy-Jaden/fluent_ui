@@ -28,11 +28,11 @@ class _ListViewPageState extends State<ListViewPage> with PageMixin {
   Widget build(final BuildContext context) {
     final theme = FluentTheme.of(context);
     return ScaffoldPage.scrollable(
-      header: const PageHeader(title: Text('List View')),
+      header: const PageHeader(title: Text('ListView')),
       children: [
         description(
           content: const Text(
-            'List View lets you show a collection of item in a list that scrolls vertically, usually List Tiles.',
+            'ListView lets you show a collection of item in a list that scrolls vertically, usually List Tiles.',
           ),
         ),
         subtitle(content: const Text('Basic ListView with selectable tiles')),

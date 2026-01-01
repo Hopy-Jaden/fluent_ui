@@ -35,7 +35,7 @@ class _TokenViewPageState extends State<TokenViewPage> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldPage.scrollable(
-      header: PageHeader(title: const Text('Token View')),
+      header: PageHeader(title: const Text('TokenView')),
       children: [
         const Text(
           'A Token View is a control that displays a collection of tokens, '
